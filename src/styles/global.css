@@ -1,0 +1,78 @@
+.time-line-container>div:last-child .education__time>.education__line {
+    display: none;
+}
+
+/* Fix for drawer toggle - make it invisible but functional */
+.drawer-toggle {
+    opacity: 0;
+    position: absolute;
+    pointer-events: none;
+    width: 0;
+    height: 0;
+}
+
+/* Ensure proper drawer structure and positioning */
+.drawer {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: 1fr;
+    width: 100%;
+    height: 100vh;
+}
+
+.drawer-content {
+    grid-column-start: 2;
+    grid-row-start: 1;
+    min-height: 100vh;
+    background-color: oklch(var(--b1));
+}
+
+.drawer-side {
+    grid-column-start: 1;
+    grid-row-start: 1;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    height: 100vh;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Show sidebar on large screens */
+@media (min-width: 1024px) {
+    .lg\:drawer-open .drawer-side {
+        position: sticky;
+        transform: translateX(0);
+        grid-column-start: 1;
+    }
+    
+    .lg\:drawer-open .drawer-content {
+        grid-column-start: 2;
+        margin-left: 0;
+    }
+}
+
+/* Mobile drawer toggle */
+.drawer-toggle:checked ~ .drawer-side {
+    transform: translateX(0);
+}
+
+/* Overlay */
+.drawer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background-color: transparent;
+    transition: background-color 0.3s ease-in-out;
+}
+
+@media (max-width: 1023px) {
+    .drawer-toggle:checked ~ .drawer-side .drawer-overlay {
+        background-color: rgba(0, 0, 0, 0.4);
+        z-index: 1;
+    }
+}

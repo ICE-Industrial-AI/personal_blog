@@ -1,0 +1,225 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import TeamCard from "../components/about/TeamCard.astro";
+import CompetenceCard from "../components/about/CompetenceCard.astro";
+import FeatureHighlight from "../components/about/FeatureHighlight.astro";
+---
+
+<BaseLayout title="About Us" sideBarActiveItemID="cv">
+  <div class="mb-5">
+    <div class="text-3xl w-full font-bold">About ICE Industrial-AI</div>
+  </div>
+
+  <div class="mb-10 text-justify">
+    <p class="mb-4">
+      The ICE Industrial-AI team is a specialized research and development unit focused on applied artificial intelligence 
+      in industrial environments. As part of the Institute for Computational Engineering (ICE), we bridge the gap between 
+      cutting-edge AI research and practical industrial applications.
+    </p>
+    <p class="mb-4">
+      Our mission is to empower industries with intelligent solutions that enhance efficiency, safety, and sustainability. 
+      We collaborate closely with industry partners to understand real-world challenges and develop AI-powered solutions 
+      that deliver measurable impact.
+    </p>
+    <p>
+      From database-driven and hybrid process modeling to advanced physical simulations, robotics, and intelligent agent systems,
+      we harness the power of AI to transform industrial operations. 
+      Our expertise spans natural language processing, large language model integration, computer vision, 
+      and data analytics—enabling predictive maintenance, process optimization, quality control, and smart supply chain management. 
+      By combining machine learning with domain-specific physical modeling, we deliver solutions that drive efficiency, reliability, 
+      and innovation across the industrial landscape.
+    </p>
+  </div>
+
+  <div class="mb-5">
+    <div class="text-3xl w-full font-bold">Our Team</div>
+  </div>
+
+<div class="grid md:grid-cols-2 gap-6 mb-10">
+  <TeamCard
+    title="Team Leader and Professors"
+    subtitle="PhD holders with extensive academic and industrial expertise"
+    icon="🎯"
+  >
+    Guiding the research vision, supervising projects, and ensuring scientific excellence. 
+    Bringing decades of combined experience in AI, engineering, and applied research.
+  </TeamCard>
+
+  <TeamCard
+    title="Senior Research Scientists"
+    subtitle="Experienced postdoctoral and senior-level researchers"
+    icon="🧠"
+  >
+    Leading advanced research initiatives, mentoring junior team members, and driving 
+    innovation in AI methodologies and applications across multiple domains.
+  </TeamCard>
+
+  <TeamCard
+    title="PhD Students and Junior Researchers"
+    subtitle="Emerging experts in AI and engineering"
+    icon="🔬"
+  >
+    Engaging in cutting-edge research, contributing novel ideas, and collaborating closely 
+    with senior scientists to solve challenging real-world problems.
+  </TeamCard>
+
+  <TeamCard
+    title="Master Students (Thesis Support)"
+    subtitle="Graduate students working on research-driven master's theses"
+    icon="📚"
+  >
+    Developing specialized skills while contributing to ongoing research projects. 
+    Gaining practical experience in AI and data-driven engineering solutions.
+  </TeamCard>
+</div>
+
+<div class="mb-5">
+  <div class="text-3xl w-full font-bold">Core Competences</div>
+</div>
+
+<div class="grid md:grid-cols-2 gap-6 mb-10">
+  <CompetenceCard
+    title="Database & Hybrid Process Modeling"
+    subtitle="Data-driven and physics-informed models for industry"
+    badge="CORE"
+    technologies={["Machine Learning", "Hybrid AI", "Process Simulation", "Big Data"]}
+  >
+    Development of AI models that integrate historical process data with physical simulations to accurately 
+    predict system performance. Our hybrid modeling approach enhances reliability, reduces calibration needs, 
+    and accelerates deployment.
+  </CompetenceCard>
+  
+  <CompetenceCard
+    title="Predictive Maintenance"
+    subtitle="Advanced analytics for equipment health monitoring"
+    badge="ADVANCED"
+    technologies={["Machine Learning", "IoT", "Signal Processing", "Time Series"]}
+  >
+    AI-driven analysis of sensor data, vibration signals, and operational metrics to forecast equipment failures. 
+    These solutions minimize unplanned downtime, extend asset lifespan, and reduce maintenance costs.
+  </CompetenceCard>
+  
+  <CompetenceCard
+    title="Robotics & Intelligent Control"
+    subtitle="AI-driven automation and adaptive control systems"
+    badge="SPECIALIZED"
+    technologies={["Robotics", "Control Systems", "Reinforcement Learning", "Edge AI"]}
+  >
+    Development of autonomous and semi-autonomous robotic systems with adaptive decision-making capabilities. 
+    Our solutions improve throughput, reduce errors, and enable safe human-robot collaboration in industrial environments.
+  </CompetenceCard>
+  
+  <CompetenceCard
+    title="NLP & LLM Agent Systems"
+    subtitle="Language-powered industrial intelligence"
+    badge="INNOVATIVE"
+    technologies={["NLP", "LLM Integration", "AI Agents", "Knowledge Graphs"]}
+  >
+    Integration of natural language processing and large language model agents for process monitoring, 
+    documentation automation, and intelligent decision support. These systems bridge human expertise 
+    with AI-driven insights for faster, more accurate operations.
+  </CompetenceCard>
+  
+  <CompetenceCard
+    title="Computer Vision & Quality Control"
+    subtitle="Automated inspection and defect detection"
+    badge="SPECIALIZED"
+    technologies={["Computer Vision", "CNN", "Image Processing", "Edge AI"]}
+  >
+    AI-powered visual inspection systems for real-time defect detection and process monitoring. 
+    Our solutions operate at industrial speeds with accuracy surpassing traditional QC methods.
+  </CompetenceCard>
+  
+  <CompetenceCard
+    title="Process Optimization"
+    subtitle="Continuous improvement through AI"
+    badge="ADVANCED"
+    technologies={["Optimization", "Deep Learning", "Control Systems", "Real-time Analytics"]}
+  >
+    Implementation of adaptive AI algorithms that optimize energy usage, reduce waste, 
+    and improve yield. Our solutions dynamically adjust to changing production conditions 
+    for maximum efficiency.
+  </CompetenceCard>
+</div>
+
+<div class="mb-5">
+  <div class="text-3xl w-full font-bold">Research Areas</div>
+</div>
+
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
+  <div class="bg-base-200 p-4 rounded-lg">
+    <h4 class="font-semibold mb-2">🔗 Edge AI for Industrial IoT</h4>
+    <p class="text-sm">Lightweight AI models for real-time processing at the edge</p>
+  </div>
+  <div class="bg-base-200 p-4 rounded-lg">
+    <h4 class="font-semibold mb-2">🛠 Hybrid AI & Physics Modeling</h4>
+    <p class="text-sm">Combining domain knowledge and data-driven learning for process simulation</p>
+  </div>
+  <div class="bg-base-200 p-4 rounded-lg">
+    <h4 class="font-semibold mb-2">🤖 Robotics & Autonomous Systems</h4>
+    <p class="text-sm">AI-driven adaptive control and decision-making in robotics</p>
+  </div>
+  <div class="bg-base-200 p-4 rounded-lg">
+    <h4 class="font-semibold mb-2">🗣 LLM Agents for Industry</h4>
+    <p class="text-sm">Industrial workflow automation using intelligent language agents</p>
+  </div>
+  <div class="bg-base-200 p-4 rounded-lg">
+    <h4 class="font-semibold mb-2">📊 Predictive Maintenance & Optimization</h4>
+    <p class="text-sm">Proactive equipment health monitoring and process improvement</p>
+  </div>
+  <div class="bg-base-200 p-4 rounded-lg">
+    <h4 class="font-semibold mb-2">👁 Advanced Computer Vision</h4>
+    <p class="text-sm">Automated inspection, defect detection, and visual process analytics</p>
+  </div>
+</div>
+
+  <div class="mb-5">
+    <div class="text-3xl w-full font-bold">Technologies & Tools</div>
+  </div>
+
+  <div class="grid md:grid-cols-3 gap-6 mb-10">
+    <div class="bg-base-200 p-4 rounded-lg">
+      <h4 class="font-semibold mb-3">🧠 AI & Machine Learning</h4>
+      <div class="flex flex-wrap gap-1">
+        <span class="badge badge-primary badge-sm">PyTorch</span>
+        <span class="badge badge-primary badge-sm">PyTorch-Lightning</span>
+        <span class="badge badge-primary badge-sm">NVIDIA-IsaacSim</span>
+        <span class="badge badge-primary badge-sm">LangChain</span>
+      </div>
+    </div>
+    <div class="bg-base-200 p-4 rounded-lg">
+      <h4 class="font-semibold mb-3">⚡ Infrastructure</h4>
+      <div class="flex flex-wrap gap-1">
+        <span class="badge badge-secondary badge-sm">Docker</span>
+        <span class="badge badge-secondary badge-sm">GPU-Computing</span>
+        <span class="badge badge-secondary badge-sm">Ansys</span>
+        <span class="badge badge-secondary badge-sm">Comsol</span>
+      </div>
+    </div>
+    <div class="bg-base-200 p-4 rounded-lg">
+      <h4 class="font-semibold mb-3">🔧 Industrial</h4>
+      <div class="flex flex-wrap gap-1">
+        <span class="badge badge-accent badge-sm">Edge Computing</span>
+        <span class="badge badge-accent badge-sm">Process Integrated Developement</span>
+        <span class="badge badge-accent badge-sm">Custom Solutions</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-5">
+    <div class="text-3xl w-full font-bold">Industry Partnerships</div>
+  </div>
+
+  <div class="bg-base-200 p-6 rounded-lg mb-10">
+    <p class="mb-4">
+      We maintain active collaborations with leading industrial companies across various sectors including manufacturing, 
+      energy, automotive, and process industries. These partnerships enable us to tackle real-world challenges and ensure 
+      our research has immediate practical applications.
+    </p>
+    <p>
+      Our collaborative approach involves joint research projects, technology transfer initiatives, and custom solution 
+      development. We work closely with industry partners from problem identification through solution deployment and 
+      ongoing support.
+    </p>
+  </div>
+</BaseLayout>

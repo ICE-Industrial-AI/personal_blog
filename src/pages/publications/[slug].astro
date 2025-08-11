@@ -1,0 +1,50 @@
+:\Users\philippgerard.tremue\Documents\Projekte\ICE-Industrial-AI\src\pages\publications\[slug].astro
+---
+import { CollectionEntry, getCollection } from "astro:content";
+import { PublicationsSchema } from "../../content/config";
+import PostLayout from "../../layouts/PostLayout.astro";
+import createSlug from "../../lib/createSlug"
+
+export async function getStaticPaths() {
+  const publicationEntries = await getCollection("publications");
+  return publicationEntries.map((entry) => ({
+    params: { slug: createSlug(entry.data.title, entry.slug) },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<"publications">;
+}
+
+const { entry } = Astro.props;
+const publication: PublicationsSchema = entry.data;
+const { Content } = await entry.render();
+---
+
+<PostLayout
+  title={publication.title}
+  description={publication.description}
+  pubDate={publication.pubDate}
+  heroImage={publication.heroImage}
+  updatedDate={publication.updatedDate}
+  badge={publication.badge}
+  tags={publication.tags}
+>
+  {publication.journal && (
+    <div class="mb-4 p-4 bg-base-200 rounded-lg">
+      <h3 class="font-semibold mb-2">Publication Details</h3>
+      <p><strong>Journal/Conference:</strong> {publication.journal}</p>
+      {publication.authors && (
+        <p><strong>Authors:</strong> {publication.authors.join(", ")}</p>
+      )}
+      {publication.doi && (
+        <p><strong>DOI:</strong> <a href={`https://doi.org/${publication.doi}`} class="link link-primary" target="_blank">{publication.doi}</a></p>
+      )}
+      {publication.url && (
+        <p><strong>External Link:</strong> <a href={publication.url} class="link link-primary" target="_blank">View Publication</a></p>
+      )}
+    </div>
+  )}
+  <Content />
+</PostLayout>

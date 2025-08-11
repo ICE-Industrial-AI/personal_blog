@@ -1,0 +1,114 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import HorizontalCard from "../components/HorizontalCard.astro";
+import { getCollection } from "astro:content";
+import createSlug from "../lib/createSlug"
+
+const posts = (await getCollection("blog")).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const events = (await getCollection("events")).sort((a, b) => b.data.updatedDate.valueOf() - a.data.updatedDate.valueOf());
+const projects = (await getCollection("projects")).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const publications = (await getCollection("publications")).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const last_posts = posts.slice(0, 3);
+const latest_events = events.slice(0, 3);
+const latest_projects = projects.slice(0, 3);
+const latest_publications = publications.slice(0, 3);
+---
+
+<BaseLayout sideBarActiveItemID="home">
+  <div class="pb-12 mt-5">
+    <div class="text-xl py-1">Applied Artificial Intelligence</div>
+    <div class="text-5xl font-bold">ICE Industrial-AI</div>
+    <div class="text-3xl py-3 font-bold">Research & Developement Project Partner</div>
+    <div class="py-2">
+      <text class="text-lg">
+        Welcome to <b>ICE Industrial-AI</b> — your research and development partner for applied industrial artificial intelligence.
+        We bridge cutting-edge AI technologies with real-world industrial challenges to drive innovation, efficiency, and performance.
+        From concept to deployment, we collaborate with industry to create intelligent, future-ready solutions.
+      </text>
+    </div>
+  </div>
+
+  <div>
+    <div class="text-3xl w-full font-bold mb-5 mt-10">Latest from blog</div>
+  </div>
+
+  {
+    last_posts.map((post) => (
+      <>
+        <HorizontalCard
+          title={post.data.title}
+          img={post.data.heroImage}
+          desc={post.data.description}
+          url={"/personal_blog/blog/" + createSlug(post.data.title, post.slug)}
+          target="_self"
+          badge={post.data.badge}
+        />
+        <div class="divider my-0" />
+      </>
+    ))
+  }
+
+  <div>
+    <div class="text-3xl w-full font-bold mb-5 mt-10">Latest Events</div>
+  </div>
+
+    {
+    latest_events.map((event) => (
+      <>
+        <HorizontalCard
+          title={event.data.title}
+          img={event.data.heroImage}
+          desc={event.data.description}
+          url={"/personal_blog/events/" + event.slug}
+          target="_self"
+          badge={event.data.badge}
+        />
+        <div class="divider my-0" />
+      </>
+    ))
+  }
+
+  <div>
+    <div class="text-3xl w-full font-bold mb-5 mt-10">Latest Projects</div>
+  </div>
+
+  {
+    latest_projects.map((project) => (
+      <>
+        <HorizontalCard
+          title={project.data.title}
+          img={project.data.heroImage}
+          desc={project.data.description}
+          url={"/personal_blog/projects/" + createSlug(project.data.title, project.slug)}
+          target="_self"
+          badge={project.data.badge}
+          tags={project.data.tags}
+        />
+        <div class="divider my-0" />
+      </>
+    ))
+  }
+
+  <div>
+    <div class="text-3xl w-full font-bold mb-5 mt-10">Latest Publications</div>
+  </div>
+
+  {
+    latest_publications.map((publication) => (
+      <>
+        <HorizontalCard
+          title={publication.data.title}
+          img={publication.data.heroImage}
+          desc={publication.data.description}
+          url={"/personal_blog/publications/" + createSlug(publication.data.title, publication.slug)}
+          target="_self"
+          badge={publication.data.badge}
+          tags={publication.data.tags}
+        />
+        <div class="divider my-0" />
+      </>
+    ))
+  }
+
+</BaseLayout>

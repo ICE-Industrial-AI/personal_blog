@@ -1,0 +1,22 @@
+---
+const { title, subtitle, icon } = Astro.props;
+---
+
+<div class="card bg-base-100 shadow-xl border border-base-300">
+  <div class="card-body">
+    <div class="flex items-center gap-3 mb-3">
+      {icon && (
+        <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-primary-content text-xl">
+          {icon}
+        </div>
+      )}
+      <div>
+        <h3 class="card-title text-lg">{title}</h3>
+        <p class="text-sm text-base-content/70">{subtitle}</p>
+      </div>
+    </div>
+    <div class="text-sm leading-relaxed">
+      <slot />
+    </div>
+  </div>
+</div>
