@@ -41,7 +41,7 @@ $$A_i^{\text{Sens}}(x) = \frac{\partial F(x)}{\partial x_i}$$
 
 Die gesamte Attributionskarte ist somit der Gradient des Outputs bezüglich des Inputs:
 
-$$A^{\text{Sens}}(x) = \nabla_x F(x) \tag{3}$$
+$$A^{\text{Sens}}(x) = \nabla_x F(x)$$
 
 **Interpretation:** Der Wert $\frac{\partial F(x)}{\partial x_i}$ gibt an, wie stark sich der Output $F(x)$ ändert, wenn das Pixel $x_i$ infinitesimal klein verändert wird. Ein hoher absoluter Wert bedeutet eine hohe Relevanz des Pixels für die Entscheidung. Zur Visualisierung wird oft der Absolutbetrag oder das Quadrat des Gradienten verwendet.
 
@@ -51,14 +51,14 @@ Ein Problem der einfachen Gradientenmethode ist die Sättigung. Wenn ein Neuron 
 
 **Definition (Integrated Gradients):** Die Attribution eines Pixels $x_i$ mittels IG ist definiert als:
 
-$$A_i^{\text{IG}}(x) ::= (x_i - x'_i) \times \int_{\alpha=0}^{1} \frac{\partial F(x)}{\partial x_i}\Big|_{x' + \alpha(x - x')} d\alpha \tag{4}$$
+$$A_i^{\text{IG}}(x) ::= (x_i - x'_i) \times \int_{\alpha=0}^{1} \frac{\partial F(x)}{\partial x_i}\Big|_{x' + \alpha(x - x')} d\alpha$$
 
 #### Eigenschaften und Interpretation:
 
 - **Pfadintegral:** Die Formel integriert die Gradienten entlang der geraden Linie im Merkmalsraum von der Baseline $x'$ zum Bild $x$.
 - **Vollständigkeit (Completeness):** Eine wichtige Eigenschaft von IG ist, dass die Summe aller Attributionswerte der Differenz der Modellvorhersage zwischen dem Bild $x$ und der Baseline $x'$ entspricht:
 
-$$\sum_{i=1}^{d} A_i^{\text{IG}}(x) = F(x) - F(x') \tag{5}$$
+$$\sum_{i=1}^{d} A_i^{\text{IG}}(x) = F(x) - F(x')$$
 
 Dies macht die Attributionen "vollständig" und direkt interpretierbar als Beiträge zur Gesamtänderung des Outputs.
 
@@ -113,7 +113,7 @@ SUMMIT erweitert den Begriff der Attribution. Statt die Relevanz von Input-Pixel
 
 **Mathematische Definition:** Sei $a_k^l(x)$ die Aktivierung des $k$-ten Neurons im Layer $l$ für das Eingangsbild $x$. Die Attribution der Aktivierung des Neurons $i$ in Layer $l_1$ auf die Aktivierung des Neurons $j$ in einem späteren Layer $l_2$ wird definiert als:
 
-$$\text{Attribution}(a_i^{l_1}, a_j^{l_2}) = \int_{\alpha=0}^{1} \frac{\partial a_j^{l_2}(\text{path}(\alpha))}{\partial a_i^{l_1}} d\alpha \tag{6}$$
+$$\text{Attribution}(a_i^{l_1}, a_j^{l_2}) = \int_{\alpha=0}^{1} \frac{\partial a_j^{l_2}(\text{path}(\alpha))}{\partial a_i^{l_1}} d\alpha$$
 
 Hierbei ist der Integrationspfad im Aktivierungsraum des Layers $l_1$ definiert, typischerweise von einem Baseline-Aktivierungsvektor (z.B. Nullvektor) zum tatsächlichen Aktivierungsvektor des Layers $l_1$.
 
@@ -137,7 +137,7 @@ Das Gewicht einer Kante $w(u, v)$ von einem Knoten $u = C_k^{l_1}$ zu einem Knot
 
 **Formel:** Das Gewicht der Kante vom Knoten $u$ (in Layer $l_1$) zum Knoten $v$ (in Layer $l_2$) ist:
 
-$$w(u, v) = \mathbb{E}_{x \in D}\left[\sum_{i \in u} \sum_{j \in v} \text{Attribution}(a_i^{l_1}(x), a_j^{l_2}(x))\right] \tag{7}$$
+$$w(u, v) = \mathbb{E}_{x \in D}\left[\sum_{i \in u} \sum_{j \in v} \text{Attribution}(a_i^{l_1}(x), a_j^{l_2}(x))\right]$$
 
 wobei $\mathbb{E}_{x \in D}[\cdot]$ den Erwartungswert (Durchschnitt) über alle Bilder $x$ im Datensatz $D$ bezeichnet. Ein hohes Kantengewicht bedeutet, dass das von Knoten $u$ repräsentierte niedrigstufige Merkmal ein starker kausaler Faktor für die Erkennung des von Knoten $v$ repräsentierten höherstufigen Merkmals ist.
 
@@ -155,21 +155,21 @@ DeepLIFT zerlegt die Vorhersage eines Netzwerks für eine bestimmte Eingabe, ind
 
 **Differenz-zur-Referenz ($\Delta t$):** Sei $t$ die Aktivierung eines Zielneurons für eine gegebene Eingabe und $t_0$ seine Aktivierung für die Referenz-Eingabe. Die "Differenz-zur-Referenz" $\Delta t$ ist definiert als:
 
-$$\Delta t = t - t_0 \tag{8}$$
+$$\Delta t = t - t_0$$
 
 **Beitragswerte ($C$) und die "Summation-to-Delta"-Eigenschaft:** DeepLIFT weist den Differenzen der Eingangsneuronen $\Delta x_i$ Beitragswerte $C_{\Delta x_i \Delta t}$ zu. Diese Werte quantifizieren den Anteil an der Gesamtdifferenz $\Delta t$, der auf die Differenz $\Delta x_i$ zurückzuführen ist. Diese Beitragswerte müssen eine fundamentale Eigenschaft erfüllen, die als Summation-to-Delta bezeichnet wird:
 
-$$\sum_i C_{\Delta x_i \Delta t} = \Delta t \tag{9}$$
+$$\sum_i C_{\Delta x_i \Delta t} = \Delta t$$
 
 Diese Eigenschaft stellt sicher, dass die Summe der Beiträge der Eingabedifferenzen exakt die Zieldifferenz ergibt, wodurch eine vollständige und exakte Zerlegung der Ausgabe gewährleistet wird.
 
 **Multiplikatoren ($m$):** Um die Beiträge effizient durch das Netzwerk zurückzupropagieren, führt DeepLIFT das Konzept der "Multiplikatoren" ein. Der Multiplikator $m_{\Delta x \Delta t}$ ist definiert als das Verhältnis des Beitrags zur Differenz:
 
-$$m_{\Delta x \Delta t} = \frac{C_{\Delta x \Delta t}}{\Delta x} \tag{10}$$
+$$m_{\Delta x \Delta t} = \frac{C_{\Delta x \Delta t}}{\Delta x}$$
 
 Dieser Multiplikator verhält sich analog zu einer partiellen Ableitung, operiert aber auf finiten Differenzen ($\Delta$) statt auf infinitesimalen Änderungen ($d$). Diese Multiplikatoren gehorchen einer Kettenregel, die der für Gradienten ähnelt, was die Rückpropagierung ermöglicht: Wenn $t$ von Neuronen $y_j$ abhängt, die wiederum von Neuronen $x_i$ abhängen, gilt:
 
-$$m_{\Delta x_i \Delta t} = \sum_j m_{\Delta x_i \Delta y_j} \cdot m_{\Delta y_j \Delta t} \tag{11}$$
+$$m_{\Delta x_i \Delta t} = \sum_j m_{\Delta x_i \Delta y_j} \cdot m_{\Delta y_j \Delta t}$$
 
 ### 4.2 Propagierungsregeln für Nichtlinearitäten
 
@@ -179,13 +179,13 @@ Die zentrale Herausforderung besteht darin, die Multiplikatoren für nichtlinear
 
 Für affine Transformationen (z.B. in Dense- oder Convolutional-Layern ohne die Aktivierungsfunktion), bei denen $t = \sum_i w_i x_i + b$, ist die Regel einfach. Da $\Delta t = \sum_i w_i \Delta x_i$, ist der Multiplikator einfach das Gewicht:
 
-$$m_{\Delta x_i \Delta t} = w_i \tag{12}$$
+$$m_{\Delta x_i \Delta t} = w_i$$
 
 #### Die Rescale-Regel
 
 Für nichtlineare Aktivierungsfunktionen $t = f(x)$ mit einem einzigen Input $x$ (wie ReLU, Sigmoid, Tanh) approximiert die Rescale-Regel den Multiplikator als die Steigung der Sekante zwischen dem Referenzpunkt und dem tatsächlichen Aktivierungspunkt:
 
-$$m_{\Delta x \Delta t} = \frac{\Delta t}{\Delta x} = \frac{f(x) - f(x_0)}{x - x_0} \tag{13}$$
+$$m_{\Delta x \Delta t} = \frac{\Delta t}{\Delta x} = \frac{f(x) - f(x_0)}{x - x_0}$$
 
 Diese Regel ist die Standardimplementierung und löst das Sättigungsproblem, da $\Delta t$ auch dann ungleich null sein kann, wenn der lokale Gradient $\frac{dt}{dx}$ null ist.
 
@@ -195,7 +195,7 @@ Die Rescale-Regel kann in bestimmten Szenarien irreführend sein, insbesondere w
 
 Dazu werden die Differenzen $\Delta x$ und $\Delta t$ in ihre positiven und negativen Anteile zerlegt ($\Delta x = \Delta x^+ + \Delta x^-$). Die Regel definiert dann separate Multiplikatoren für diese Anteile. Beispielsweise wird der Beitrag von $\Delta x^+$ zur positiven Differenz $\Delta t^+$ wie folgt definiert:
 
-$$\Delta t^+ = \frac{1}{2}\left((f(x_0 + \Delta x^+) - f(x_0)) + (f(x_0 + \Delta x^- + \Delta x^+) - f(x_0 + \Delta x^-))\right) \tag{14}$$
+$$\Delta t^+ = \frac{1}{2}\left((f(x_0 + \Delta x^+) - f(x_0)) + (f(x_0 + \Delta x^- + \Delta x^+) - f(x_0 + \Delta x^-))\right)$$
 
 Der Multiplikator ist dann $m_{\Delta x^+ \Delta t^+} = \frac{\Delta t^+}{\Delta x^+}$. Diese Formulierung berechnet den durchschnittlichen Effekt von $\Delta x^+$ einmal ohne und einmal mit dem Vorhandensein von $\Delta x^-$. Dies verhindert, dass sich gegenläufige Effekte gegenseitig auslöschen, und kann so verborgene Abhängigkeiten aufdecken. Während die RevealCancel-Regel theoretisch robuster ist, wird in der Praxis oft die einfachere und schnellere Rescale-Regel bevorzugt.
 
