@@ -27,7 +27,7 @@ Sei $F: \mathbb{R}^d \to \mathbb{R}$ eine Funktion, die ein neuronales Netzwerk 
 
 Eine **Attribution** ist eine Zuweisung eines Relevanzwertes $A_i(x)$ zu jedem Eingabemerkmal (Pixel) $x_i$. Das Ziel ist die Erstellung einer Attributionskarte (oder Vektor) $A(x) \in \mathbb{R}^d$. 
 
-$$A(x)$ = $(A_1(x), A_2(x), \ldots, A_d(x))$$
+$$A(x) = (A_1(x), A_2(x), \ldots, A_d(x))$$
 
 Diese Karte $A(x)$ soll die Wichtigkeit jedes Pixels $x_i$ für den finalen Output $F(x)$ quantifizieren.
 
