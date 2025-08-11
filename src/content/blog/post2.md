@@ -37,7 +37,7 @@ Der direkteste Weg, die "Sensitivität" des Outputs in Bezug auf eine kleine Än
 
 **Definition (Sensitivity Map):** Die Attribution eines Pixels $x_i$ wird als der partielle Ableitungswert der Output-Funktion $F$ nach diesem Pixel definiert.
 
-$$A_i^{\text{Sens}}(x) = \frac{\partial F(x)}{\partial x_i} \tag{2}$$
+$$A_i^{\text{Sens}}(x) = \frac{\partial F(x)}{\partial x_i}$$
 
 Die gesamte Attributionskarte ist somit der Gradient des Outputs bezüglich des Inputs:
 
