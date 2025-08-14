@@ -4,7 +4,6 @@ description: "Aleksander Ficek (NVIDIA) on synthetic generators & verifiers for 
 pubDate: "Jun 24 2025"
 heroImage: "/personal_blog/zurichNLP.webp"
 badge: "Latest"
-tags: ["zurichNLP", "LLM", "Nvidia"]
 ---
 
 # Review ZurichNLP #17
