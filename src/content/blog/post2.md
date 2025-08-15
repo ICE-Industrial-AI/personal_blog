@@ -14,6 +14,9 @@ Kurs Applied Neural Networks (ANN)
 
 Attributionsmethoden stellen ein wichtiges Instrument dar, um die Entscheidungsprozesse neuronaler Netze transparent zu machen. Sie ordnen jedem Eingabemerkmal einen Beitrag zur Vorhersage zu und ermöglichen somit eine Bewertung der Relevanz einzelner Merkmale. In diesem Beitrag werden gängige Attributionsmethoden für CNNs vorgestellt und mathematisch fundiert beschrieben. Besonderes Augenmerk liegt auf Gradienten-basierten Verfahren wie den Integrated Gradients, welche den Beitrag eines Pixels zur Vorhersage durch Integration entlang eines Pfades von einer Baseline zur Eingabe quantifizieren. Darüber hinaus werden Konzepte wie Layer-wise Relevance Propagation (LRP), DeepLIFT und neuere Visualisierungstechniken wie SUMMIT diskutiert. Ziel ist es, ein Verständnis für die methodischen Grundlagen und praktischen Herausforderungen der Erklärbarkeit tiefer Modelle zu vermitteln.
 
+[donwnload as pdf](/personal_blog/ANN08AttributionXAI.pdf)
+
+
 ## 1. Einführung in die Attribution bei CNNs
 
 Convolutional Neural Networks (CNNs) haben eine herausragende Leistungsfähigkeit in Aufgaben der Bilderkennung und -regression erzielt. Ihre komplexe, hierarchische Struktur macht sie jedoch zu "Black Boxes": Es ist oft unklar, auf welche Merkmale im Eingangsbild sich das Modell für seine Entscheidung stützt. Explainable AI (XAI) zielt darauf ab, diese Black Box zu öffnen und die Entscheidungsfindung von Modellen nachvollziehbar zu machen.
