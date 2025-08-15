@@ -6,9 +6,8 @@ heroImage: "/personal_blog/aikn.webp"
 ---
 # XAI für CNN: Attributionsmethoden zur Bildanalyse
 
-**Systemtechnik BSc, HS 2026**  
-**Aufgaben ANN im Modul ANN WUCH**
-
+**Reader, Systemtechnik BSc, HS 2026**
+Kurs Applied Neural Networks (ANN)  
 *Author: Christoph Würsch*
 
 ## Abstract
