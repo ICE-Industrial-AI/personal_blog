@@ -13,16 +13,16 @@ badge: "Latest"
 This blog provides a comprehensive overview of object-centric learning methods in machine learning. It begins by detailing the core ideas, architectures, and empirical findings of foundational models such as **Object-Oriented Prediction (OP3)** for planning, **Slot Attention** for unsupervised object discovery, **GENESIS** for generative scene decomposition, and **MONet** for joint segmentation and representation. The **CATER** dataset is presented as a diagnostic tool for evaluating compositional action recognition and temporal reasoning in models. It explores recent advancements, including **Physics Context Builders** that integrate explicit physics reasoning into vision-language models, and self-supervised approaches like **V-JEPA** and **DINO-V5** that learn spatio-temporal representations from video without explicit object decomposition. A comparative analysis evaluates these varied methods on their structure, interpretability, physical reasoning capabilities, and scalability. The appendix provides a detailed explanation of the **Hungarian algorithm**, a crucial component for solving the assignment problem in set-prediction tasks common to these model.
 
 ## Table of Contents
-- [1. Object‐Oriented Prediction (OP3)](#object-oriented-prediction-op3)
-- [2. Slot Attention](#slot-attention)
-- [3. GENESIS (and GENESIS‐V2)](#genesis-and-genesis-v2)
-- [4. MONet (Multi‐Object Network)](#monet-multi-object-network)
-- [5. CATER (Compositional Actions and TEmporal Reasoning)](#cater-compositional-actions-and-temporal-reasoning)
-- [6. Physics Context Builders](#physics-context-builders)
-- [7. V-JEPA](#v-jepa)
-- [8. DINO-V5](#dino-v5)
-- [9. Comparison with Object-Centric Methods](#comparison-with-object-centric-methods)
-- [10. Object-Centric Learning for Robotic Manipulation](#object-centric-learning-for-robotic-manipulation)
+- [1. Object‐Oriented Prediction (OP3)](#1-object-oriented-prediction-op3)
+- [2. Slot Attention](#2-slot-attention)
+- [3. GENESIS (and GENESIS‐V2)](#3-genesis-and-genesis-v2)
+- [4. MONet (Multi‐Object Network)](#4-monet-multi-object-network)
+- [5. CATER (Compositional Actions and TEmporal Reasoning)](#5-cater-compositional-actions-and-temporal-reasoning)
+- [6. Physics Context Builders](#6-physics-context-builders)
+- [7. V-JEPA](#7-v-jepa)
+- [8. DINO-V5](#8-dino-v5)
+- [9. Comparison with Object-Centric Methods](#9-comparison-with-object-centric-methods)
+- [10. Object-Centric Learning for Robotic Manipulation](#10-object-centric-learning-for-robotic-manipulation)
 - [Appendix: The Hungarian Algorithm](#appendix-the-hungarian-algorithm)
 - [Hungarian Matching for Set‐Prediction (short)](#hungarian-matching-for-set-prediction-short)
 - [References](#references)
@@ -439,7 +439,7 @@ The Hungarian Matching Algorithm, also known as the Kuhn-Munkres algorithm, prov
 
 Let $G = (U \cup V, E)$ be a weighted bipartite graph with two disjoint sets of vertices, $U = \{u_1, u_2, \dots, u_n\}$ and $V = \{v_1, v_2, \dots, v_n\}$, such that $|U| = |V| = n$ . Let $w: E \to \mathbb{R}^+$ be a weight function that assigns a non-negative cost $w(u_i, v_j)$ to each edge $(u_i, v_j) \in E$ . The assignment problem seeks to find a **perfect matching** $M \subseteq E$, which is a set of $n$ edges where no two edges share a common vertex, such that the sum of the weights of the edges in $M$ is minimized .
 
-![Figure 1: An example of a weighted bipartite graph with vertex sets $U = \{u_1, u_2, u_3\}$ and $V = \{v_1, v_2, v_3\}$. Note that edges only connect vertices from $U$ to $V$.](/personal_blog/public/bipartite.png)
+![Figure 1: An example of a weighted bipartite graph with vertex sets $U = \{u_1, u_2, u_3\}$ and $V = \{v_1, v_2, v_3\}$. Note that edges only connect vertices from $U$ to $V$.](/personal_blog/bipartite.png)
 
 
 Mathematically, we want to solve the following optimization problem:
@@ -458,7 +458,7 @@ The algorithm can be summarized in the following steps . We start with an initia
 **Algorithm: The Hungarian Matching Algorithm**
 
 
-![Algorithm 1: Hungarian Matching Algorithm](/personal_blog/public/algo1.png)
+![Algorithm 1: Hungarian Matching Algorithm](/personal_blog/algo1.png)
 
 Here's a breakdown of the matrix-based method and why it works . Given a cost matrix $C$ of size $n \times n$, we want to find a permutation $\sigma$ of $\{1, 2, \dots, n\}$ that minimizes the total cost $\sum_{i=1}^n C_{i, \sigma(i)}$ . This is equivalent to finding a perfect matching of minimum weight in a weighted bipartite graph .
 
