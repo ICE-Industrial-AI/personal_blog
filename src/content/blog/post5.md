@@ -541,7 +541,7 @@ Die Wahl des Ähnlichkeitsmasses ist entscheidend dafür, wie "Nähe" und "Ferne
 - **Kosinus-Ähnlichkeit (Cosine Similarity):** Misst den Kosinus des Winkels zwischen zwei Vektoren $\bm{u}$ und $\bm{v}$. Sie ist unempfindlich gegenüber der Magnitude der Vektoren und konzentriert sich auf die Orientierung. Werte liegen im Bereich $[-1, 1]$, wobei 1 perfekte Übereinstimmung, -1 entgegengesetzte Richtung und 0 Orthogonalität bedeutet. Oft verwendet für hochdimensionale Daten (wie Text-Embeddings oder Bild-Features) und typischerweise in Verbindung mit normalisierten Embeddings ($\|\bm{h}\|_2 = 1$).
 $$
 \begin{equation}
-  	\simfunc_{\text{cos}}(\bm{u}, \bm{v}) = \frac{\bm{u} \cdot \bm{v}}{\|\bm{u}\|_2 \|\bm{v}\|_2}
+  	\text{sim}_{\text{cos}}(\bm{u}, \bm{v}) = \frac{\bm{u} \cdot \bm{v}}{\|\bm{u}\|_2 \|\bm{v}\|_2}
 \end{equation}
 $$
 
@@ -648,7 +648,7 @@ Dies hat die Form einer Softmax-Kreuzentropie, wobei die Logits durch die skalie
 In SimCLR werden für jedes Bild $\bm{x}$ in einem Batch der Grösse $N$ zwei augmentierte Versionen erzeugt, was zu $2N$ Embeddings $(\bm{h}_1, ..., \bm{h}_{2N})$ führt. Für ein positives Paar $(\bm{h}_i, \bm{h}_j)$ (die von demselben Originalbild stammen) werden alle anderen $2(N-1)$ Embeddings im Batch als negative Beispiele betrachtet. Der Verlust für das Paar $(i, j)$ ist:
 $$
 \begin{equation}
-	\ell_{i,j} = -\log \frac{\exp(\simfunc_{\text{cos}}(\bm{h}_i, \bm{h}_j) / \tau)}{\sum_{k=1, k \neq i}^{2N} \exp(\simfunc_{\text{cos}}(\bm{h}_i, \bm{h}_k) / \tau)}
+	\ell_{i,j} = -\log \frac{\exp(\text{sim}_{\text{cos}}(\bm{h}_i, \bm{h}_j) / \tau)}{\sum_{k=1, k \neq i}^{2N} \exp(\text{sim}_{\text{cos}}(\bm{h}_i, \bm{h}_k) / \tau)}
 \end{equation}
 $$
 Der Gesamtverlust ist der Durchschnitt von $\ell_{i,j} + \ell_{j,i}$ über alle positiven Paare $(i, j)$ im Batch.
