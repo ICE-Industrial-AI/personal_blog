@@ -29,8 +29,7 @@ Dieser Artikel bietet einen umfassenden Überblick über Verlustfunktionen als z
 
 Im Rahmen des überwachten maschinellen Lernens ist das primäre Ziel, eine Funktion $f_\theta(\bm{x})$ zu lernen, die Eingabedaten $\bm{x}$ möglichst präzise auf zugehörige Zielwerte $y$ abbildet. Die Funktion $f_\theta$ wird durch einen Satz von Parametern $\theta$ (z.B. die Gewichte und Biases eines neuronalen Netzes) bestimmt. Um zu quantifizieren, wie gut das Modell mit den aktuellen Parametern $\theta$ diese Aufgabe erfüllt, wird eine **Verlustfunktion** (Loss Function) $\mathcal{L}$ verwendet. Die Verlustfunktion $\mathcal{L}(y, \hat{y})$ misst die Diskrepanz oder den "Verlust" zwischen dem wahren Zielwert $y$ und der Vorhersage $\hat{y} = f_\theta(\bm{x})$ für ein einzelnes Datenbeispiel $(\bm{x}, y)$. Das übergeordnete Ziel des Trainingsprozesses ist es, die Parameter $\theta$ des Modells so zu optimieren, dass der durchschnittliche Verlust über den gesamten Trainingsdatensatz $D = \{(\bm{x}_i, y_i)\}_{i=1}^N$ minimiert wird. Diese zu minimierende Zielfunktion (Objective Function), oft als $\mathcal{L}(\theta)$ bezeichnet, lautet typischerweise:
 $$\begin{equation}
-	\mathcal{L}(\theta) = \frac{1}{N} \sum_{i=1}^N \mathcal{L}(y_i, f_\theta(\bm{x}_i))
-	
+	\mathcal{L}(\theta) = \frac{1}{N} \sum_{i=1}^N \mathcal{L}(y_i, f_\theta(\bm{x}_i))	
 \end{equation}$$
 Hierbei bezeichnet $\mathcal{L}(\theta)$ den durchschnittlichen Gesamtverlust als Funktion der Parameter $\theta$, während $\mathcal{L}(y_i, f_\theta(\bm{x}_i))$ den Verlust für das einzelne Beispiel $i$ darstellt. Die Wahl einer geeigneten Verlustfunktion $\mathcal{L}(y, \hat{y})$ hängt maßgeblich von der Art der Lernaufgabe ab. Wie in den folgenden Abschnitten detailliert beschrieben wird, verwendet man für Klassifikationsaufgaben andere Verlustfunktionen (z.B. Kreuzentropie, Hinge-Verlust) als für Regressionsaufgaben (z.B. Mittlerer Quadratischer Fehler, Mittlerer Absoluter Fehler) oder für komplexere Szenarien wie generative Modellierung (z.B. adversariale Verluste) oder das Lernen von Repräsentationen (z.B. kontrastive Verluste). Unabhängig von der spezifischen Wahl der Verlustfunktion benötigen wir ein algorithmisches Verfahren, um die optimalen Parameter $\theta^*$ zu finden, die die Zielfunktion $\mathcal{L}(\theta)$ minimieren:
 $$\begin{equation}
@@ -46,7 +45,6 @@ Das bei weitem am häufigsten verwendete Optimierungsverfahren im maschinellen L
 Wir möchten die Parameter $\theta$ so ändern, dass der Wert der Zielfunktion $\mathcal{L}(\theta)$ sinkt. Angenommen, wir befinden uns beim Parametervektor $\theta_k$ im $k$-ten Iterationsschritt. Wir suchen eine kleine Änderung $\Delta \theta$, sodass $\mathcal{L}(\theta_k + \Delta \theta) < \mathcal{L}(\theta_k)$ gilt. Mittels einer Taylor-Entwicklung erster Ordnung können wir $\mathcal{L}(\theta_k + \Delta \theta)$ in der Nähe von $\theta_k$ approximieren:
 $$\begin{equation}
 	\mathcal{L}(\theta_k + \Delta \theta) \approx \mathcal{L}(\theta_k) + \nabla_\theta \mathcal{L}(\theta_k)^T \Delta \theta
-	
 \end{equation}$$
 Hierbei ist $\nabla_\theta \mathcal{L}(\theta_k)$ der Gradientenvektor der Zielfunktion $\mathcal{L}$ bezüglich der Parameter $\theta$, ausgewertet an der Stelle $\theta_k$. Der Gradient $\nabla_\theta \mathcal{L}(\theta_k)$ zeigt in die Richtung des steilsten Anstiegs der Funktion $\mathcal{L}$ an der Stelle $\theta_k$. Damit $\mathcal{L}(\theta_k + \Delta \theta) < \mathcal{L}(\theta_k)$ gilt, muss der zweite Term in Gl. \eqref{eq:taylor_expansion_L} negativ sein:
 $$\begin{equation}
@@ -55,7 +53,6 @@ $$\begin{equation}
 Um den Wert von $\mathcal{L}$ möglichst schnell zu reduzieren, suchen wir die Richtung $\Delta \theta$, die bei einer festen (kleinen) Schrittlänge $\|\Delta \theta\|$ den Wert des Skalarprodukts $\nabla_\theta \mathcal{L}(\theta_k)^T \Delta \theta$ minimiert. Das Skalarprodukt $\bm{a}^T \bm{b} = \|\bm{a}\| \|\bm{b}\| \cos \phi$ wird minimal (am negativsten), wenn der Winkel $\phi$ zwischen den Vektoren $\nabla_\theta \mathcal{L}(\theta_k)$ und $\Delta \theta$ gleich $180^\circ$ ist, d.h., wenn $\Delta \theta$ in die genau entgegengesetzte Richtung des Gradienten zeigt. Wir wählen daher die Aktualisierungsrichtung als den negativen Gradienten:
 $$\begin{equation}
 	\Delta \theta = - \eta \nabla_\theta \mathcal{L}(\theta_k)
-	
 \end{equation}$$
 Hier ist $\eta > 0$ ein kleiner positiver Skalar, der als **Lernrate** (Learning Rate) bezeichnet wird. Die Lernrate steuert die Schrittweite bei jedem Aktualisierungsschritt. Eine zu große Lernrate kann dazu führen, dass der Algorithmus über das Minimum hinausschießt und divergiert, während eine zu kleine Lernrate die Konvergenz stark verlangsamt.
 
@@ -63,7 +60,6 @@ Hier ist $\eta > 0$ ein kleiner positiver Skalar, der als **Lernrate** (Learning
 Kombiniert man die aktuelle Parameterschätzung $\theta_k$ mit der Änderung $\Delta \theta$, ergibt sich die iterative Update-Regel des Gradientenabstiegs:
 $$\begin{equation}
 	\theta_{k+1} = \theta_k + \Delta \theta = \theta_k - \eta \nabla_\theta \mathcal{L}(\theta_k)
-	
 \end{equation}$$
 Dieser Schritt wird wiederholt, bis ein Konvergenzkriterium erfüllt ist, z.B. wenn der Gradient sehr klein wird ($\|\nabla_\theta \mathcal{L}(\theta_k)\| \approx 0$), die Änderung der Parameter oder des Verlusts unter einen Schwellenwert fällt, oder eine maximale Anzahl von Iterationen erreicht ist.
 
@@ -90,7 +86,6 @@ Für sehr große Datensätze (z.B. Millionen von Bildern) ist die Berechnung die
 **Formel (Update):**
 $$\begin{equation}
 	\theta \leftarrow \theta - \eta \left( \frac{1}{N} \sum_{i=1}^N \nabla_\theta \mathcal{L}(y_i, f_\theta(\bm{x}_i)) \right)
-	
 \end{equation}$$
 
 **Vorteile:**
@@ -109,7 +104,6 @@ $$\begin{equation}
 **Formel (Update für Beispiel $i$):**
 $$\begin{equation}
 	\theta \leftarrow \theta - \eta \nabla_\theta \mathcal{L}(y_i, f_\theta(\bm{x}_i))
-	
 \end{equation}$$
 Innerhalb einer Trainingsepoche (ein Durchlauf durch den gesamten Datensatz) werden also $N$ Parameter-Updates durchgeführt.
 
@@ -131,7 +125,6 @@ Innerhalb einer Trainingsepoche (ein Durchlauf durch den gesamten Datensatz) wer
 **Formel (Update für Mini-Batch $\mathcal{B}$):**
 $$\begin{equation}
 	\theta \leftarrow \theta - \eta \left( \frac{1}{B} \sum_{i \in \mathcal{B}} \nabla_\theta \mathcal{L}(y_i, f_\theta(\bm{x}_i)) \right)
-	
 \end{equation}$$
 Eine Epoche besteht aus $\lceil N/B \rceil$ Updates.
 
@@ -162,7 +155,6 @@ MSE berechnet den Durchschnitt der quadrierten Differenzen zwischen den wahren u
 **Formel:**
 $$\begin{equation}
 	\mathcal{L}_{\text{MSE}} = \frac{1}{N} \sum_{i=1}^N (y_i - \hat{y}_i)^2 = \frac{1}{N} \sum_{i=1}^N \varepsilon_i^2
-	
 \end{equation}$$
 Für einen einzelnen Datenpunkt wird der Verlust oft als $(y - \hat{y})^2 = \varepsilon^2$ betrachtet.
 
@@ -190,7 +182,6 @@ MAE berechnet den Durchschnitt der absoluten Differenzen zwischen den wahren und
 **Formel:**
 $$\begin{equation}
 	\mathcal{L}_{\text{MAE}} = \frac{1}{N} \sum_{i=1}^N |y_i - \hat{y}_i| = \frac{1}{N} \sum_{i=1}^N |\varepsilon_i|
-	
 \end{equation}$$
 Für einen einzelnen Datenpunkt ist der Verlust $|y - \hat{y}| = |\varepsilon|$.
 
@@ -223,7 +214,6 @@ $$\begin{equation}
 		\frac{1}{2}\varepsilon^2 & \text{für } |\varepsilon| \le \delta \\
 		\delta (|\varepsilon| - \frac{1}{2}\delta) & \text{für } |\varepsilon| > \delta
 	\end{cases}
-	
 \end{equation}$$
 Der Gesamtverlust ist der Durchschnitt über alle Datenpunkte.
 
@@ -252,7 +242,6 @@ Er basiert auf dem Logarithmus des hyperbolischen Kosinus des Fehlers. Für klei
 **Formel:**
 $$\begin{equation}
 	\mathcal{L}_{\text{LogCosh}} = \frac{1}{N} \sum_{i=1}^N \log(\cosh(\hat{y}_i - y_i)) = \frac{1}{N} \sum_{i=1}^N \log(\cosh(\varepsilon_i))
-	
 \end{equation}$$
 (Beachte: $\cosh(-x) = \cosh(x)$)
 
@@ -285,7 +274,6 @@ $$\begin{equation}
 		\tau \varepsilon & \text{für } \varepsilon \ge 0 \quad (\text{Unterschätzung } \hat{y} < y) \\
 		(\tau - 1) \varepsilon & \text{für } \varepsilon < 0 \quad (\text{Überschätzung } \hat{y} > y)
 	\end{cases}
-	
 \end{equation}$$
 Dies kann auch kompakt als $\max(\tau \varepsilon, (\tau-1)\varepsilon)$ geschrieben werden. Der Gesamtverlust ist der Durchschnitt über alle Datenpunkte.
 
@@ -343,7 +331,6 @@ $$\begin{equation}
 Mit Score $f(\bm{x})$ für $y \in \{-1, +1\}$ (unter Annahme der Vorhersage $\hat{y} = \text{sgn}(f(\bm{x}))$):
 $$\begin{equation}
 	\mathcal{L}_{0-1}(y, f(\bm{x})) = \indicator{y \cdot f(\bm{x}) \le 0}
-	
 \end{equation}$$
 Hier ist $\indicator{\cdot}$ die Indikatorfunktion, die 1 zurückgibt, wenn die Bedingung wahr ist, und 0 sonst. Der Term $y \cdot f(\bm{x})$ ist genau dann positiv, wenn die Vorhersage das korrekte Vorzeichen hat.
 
@@ -364,7 +351,6 @@ Der Hinge-Verlust wird hauptsächlich in Verbindung mit Support-Vektor-Maschinen
 **Formel:** (für $y \in \{-1, +1\}$ und Score $f(\bm{x})$)
 $$\begin{equation}
 	\mathcal{L}_{\text{Hinge}}(y, f(\bm{x})) = \max(0, 1 - y \cdot f(\bm{x}))
-	
 \end{equation}$$
 Der Term $m = y \cdot f(\bm{x})$ wird oft als Margin-Score bezeichnet. Der Verlust ist null, wenn der Punkt korrekt mit einer Marge von mindestens 1 klassifiziert wird ($m \ge 1$). Andernfalls steigt der Verlust linear mit dem negativen Margin-Score.
 
@@ -387,7 +373,6 @@ Es gibt zwei gebräuchliche Formen, abhängig von der Label- und Ausgabedarstell
 1. Labels $y \in \{0, 1\}$, Modellausgabe $\hat{p} = P(Y=1|\bm{x}) \in [0, 1]$ (oft $\hat{p} = \sigma(f(\bm{x}))$ wobei $f(\bm{x})$ der Logit ist):
 $$\begin{equation}
 	\mathcal{L}_{\text{Log}}(y, \hat{p}) = -[y \log(\hat{p}) + (1-y) \log(1-\hat{p})]
-	
 \end{equation}$$
 
 2. Labels $y \in \{-1, +1\}$, Modellausgabe Score $f(\bm{x}) \in \R$:
@@ -419,12 +404,10 @@ Die Kategorische Kreuzentropie ist die Verallgemeinerung des Logistischen Verlus
 Erfordert wahre Labels im One-Hot-kodierten Format $\bm{y} \in \{0, 1\}^K$ (wobei $y_k=1$ für die wahre Klasse $k$ und $y_j=0$ für $j \neq k$) und Modellausgaben als Wahrscheinlichkeitsverteilung $\hat{\bm{p}} = (\hat{p}_0, \dots, \hat{p}_{K-1})$, wobei $\hat{p}_k = P(Y=k|\bm{x})$ und $\sum_k \hat{p}_k = 1$. Typischerweise ist $\hat{\bm{p}} = \text{softmax}(\bm{z})$, wobei $\bm{z}$ der Vektor der Logits ist.
 $$\begin{equation}
 	\mathcal{L}_{\text{CCE}}(\bm{y}, \hat{\bm{p}}) = - \sum_{k=0}^{K-1} y_k \log(\hat{p}_k)
-	
 \end{equation}$$
 Da $\bm{y}$ one-hot ist, überlebt nur der Term, der der wahren Klasse $c$ (wo $y_c=1$) entspricht:
 $$\begin{equation}
 	\mathcal{L}_{\text{CCE}}(\bm{y}, \hat{\bm{p}}) = - \log(\hat{p}_c)
-	
 \end{equation}$$
 Das bedeutet, der Verlust bestraft das Modell basierend auf der Wahrscheinlichkeit, die es der korrekten Klasse zuweist.
 
@@ -445,7 +428,6 @@ Dies ist eine Variante des Hinge-Verlusts, bei der die Strafe quadratisch statt 
 **Formel:** (für $y \in \{-1, +1\}$ und Score $f(\bm{x})$)
 $$\begin{equation}
 	\mathcal{L}_{\text{SqHinge}}(y, f(\bm{x})) = \left( \max(0, 1 - y \cdot f(\bm{x})) \right)^2
-	
 \end{equation}$$
 
 **Herleitung:** Eine direkte Modifikation des Standard-Hinge-Verlusts, bei der der Term, der die Margin-Verletzung darstellt, quadriert wird.
@@ -465,7 +447,6 @@ Der Exponentielle Verlust weist fehlklassifizierten Punkten eine exponentiell an
 **Formel:** (für $y \in \{-1, +1\}$ und Score $f(\bm{x})$)
 $$\begin{equation}
 	\mathcal{L}_{\text{Exp}}(y, f(\bm{x})) = e^{-y \cdot f(\bm{x})}
-	
 \end{equation}$$
 
 **Herleitung:** AdaBoost kann als ein vorwärts gerichteter stufenweiser additiver Modellierungsalgorithmus hergeleitet werden, der die exponentielle Verlustfunktion optimiert. In jeder Stufe wird ein schwacher Lerner hinzugefügt, um den exponentiellen Gesamtverlust des Ensembles zu minimieren.
@@ -512,13 +493,11 @@ Die Wahl des Ähnlichkeitsmasses ist entscheidend dafür, wie "Nähe" und "Ferne
 - **Kosinus-Ähnlichkeit (Cosine Similarity):** Misst den Kosinus des Winkels zwischen zwei Vektoren $\bm{u}$ und $\bm{v}$. Sie ist unempfindlich gegenüber der Magnitude der Vektoren und konzentriert sich auf die Orientierung. Werte liegen im Bereich $[-1, 1]$, wobei 1 perfekte Übereinstimmung, -1 entgegengesetzte Richtung und 0 Orthogonalität bedeutet. Oft verwendet für hochdimensionale Daten (wie Text-Embeddings oder Bild-Features) und typischerweise in Verbindung mit normalisierten Embeddings ($\|\bm{h}\|_2 = 1$).
   $$\begin{equation}
   	\simfunc_{\text{cos}}(\bm{u}, \bm{v}) = \frac{\bm{u} \cdot \bm{v}}{\|\bm{u}\|_2 \|\bm{v}\|_2}
-  	
   \end{equation}$$
 
 - **Euklidischer Abstand ($L_2$-Distanz):** Misst den geradlinigen Abstand zwischen zwei Punkten im Raum. Werte liegen im Bereich $[0, \infty)$. Im Gegensatz zur Kosinus-Ähnlichkeit ist er empfindlich gegenüber der Magnitude. Kontrastive Verluste, die auf Distanz basieren, zielen darauf ab, die Distanz für positive Paare zu *minimieren* und für negative Paare zu *maximieren* (oft über eine Marge hinaus). Um ihn als Ähnlichkeitsmass zu interpretieren, kann eine invertierende Transformation verwendet werden (z.B. $\exp(-d^2)$).
   $$\begin{equation}
   	d_{\text{euc}}(\bm{u}, \bm{v}) = \|\bm{u} - \bm{v}\|_2 = \sqrt{\sum_{i} (u_i - v_i)^2}
-  	
   \end{equation}$$
 
 - **Skalarprodukt (Dot Product):** Das einfache Skalarprodukt $\bm{u} \cdot \bm{v}$ kann ebenfalls als Ähnlichkeitsmass dienen. Es ist jedoch stark von den Vektormagnituden abhängig. Wenn die Vektoren auf eine Einheitskugel normiert sind ($\|\bm{u}\|_2 = \|\bm{v}\|_2 = 1$), ist das Skalarprodukt äquivalent zur Kosinus-Ähnlichkeit.
@@ -544,7 +523,6 @@ Für ein Paar von Eingaben $(\bm{x}_1, \bm{x}_2)$ und deren Embeddings $(\bm{h}_
 Der Verlust für einen Datensatz von $N$ Paaren ist:
 $$\begin{equation}
 	\mathcal{L}_{\text{Contrastive}} = \frac{1}{N} \sum_{i=1}^N \left[ y_i d_i^2 + (1-y_i) \max(0, m - d_i)^2 \right]
-	
 \end{equation}$$
 Hier ist $d_i = d_{\text{euc}}(\bm{h}_{i,1}, \bm{h}_{i,2})$ die Distanz des $i$-ten Paares, $y_i \in \{0, 1\}$ das Label des Paares, und $m > 0$ die Marge. (Manchmal wird $d_i$ statt $d_i^2$ verwendet).
 
@@ -575,7 +553,6 @@ Für jedes Triplett $(\bm{x}_a, \bm{x}_p, \bm{x}_n)$ mit Embeddings $(\bm{h}_a, 
 Der Verlust über $N$ Tripletts ist:
 $$\begin{equation}
 	\mathcal{L}_{\text{Triplet}} = \frac{1}{N} \sum_{i=1}^N \max(0, d(\bm{h}_{a,i}, \bm{h}_{p,i})^2 - d(\bm{h}_{a,i}, \bm{h}_{n,i})^2 + m)
-	
 \end{equation}$$
 Auch hier wird oft der Euklidische Abstand verwendet, und manchmal werden die Distanzen nicht quadriert. $m > 0$ ist die Marge.
 
@@ -606,7 +583,6 @@ Die Kernidee ist, das kontrastive Lernen als ein Klassifikationsproblem zu formu
 Für einen Anker $\bm{h}_i$, sein positives Beispiel $\bm{h}_{i^+}$ und $K$ negative Beispiele $\{\bm{h}_{k}^-\}_{k=1}^K$:
 $$\begin{equation}
 	\mathcal{L}_{\text{InfoNCE}} = - \mathbb{E} \left[ \log \frac{\exp(\simfunc(\bm{h}_i, \bm{h}_{i^+}) / \tau)}{\exp(\simfunc(\bm{h}_i, \bm{h}_{i^+}) / \tau) + \sum_{k=1}^K \exp(\simfunc(\bm{h}_i, \bm{h}_{k}^-) / \tau)} \right]
-	
 \end{equation}$$
 Dies hat die Form einer Softmax-Kreuzentropie, wobei die Logits durch die skalierten Ähnlichkeiten gegeben sind. $\simfunc$ ist typischerweise die Kosinus-Ähnlichkeit.
 
@@ -614,7 +590,6 @@ Dies hat die Form einer Softmax-Kreuzentropie, wobei die Logits durch die skalie
 In SimCLR werden für jedes Bild $\bm{x}$ in einem Batch der Grösse $N$ zwei augmentierte Versionen erzeugt, was zu $2N$ Embeddings $(\bm{h}_1, ..., \bm{h}_{2N})$ führt. Für ein positives Paar $(\bm{h}_i, \bm{h}_j)$ (die von demselben Originalbild stammen) werden alle anderen $2(N-1)$ Embeddings im Batch als negative Beispiele betrachtet. Der Verlust für das Paar $(i, j)$ ist:
 $$\begin{equation}
 	\ell_{i,j} = -\log \frac{\exp(\simfunc_{\text{cos}}(\bm{h}_i, \bm{h}_j) / \tau)}{\sum_{k=1, k \neq i}^{2N} \exp(\simfunc_{\text{cos}}(\bm{h}_i, \bm{h}_k) / \tau)}
-	
 \end{equation}$$
 Der Gesamtverlust ist der Durchschnitt von $\ell_{i,j} + \ell_{j,i}$ über alle positiven Paare $(i, j)$ im Batch.
 
@@ -665,7 +640,6 @@ Der ursprüngliche GAN-Verlust, vorgeschlagen von Goodfellow et al. (2014), basi
 Das Ziel ist es, das folgende Minimax-Problem zu lösen:
 $$\begin{equation}
 	\min_G \max_D V(D, G) = \mathbb{E}_{\bm{x} \sim p_{data}}[\log D(\bm{x})] + \mathbb{E}_{\bm{z} \sim p_z}[\log(1 - D(G(\bm{z})))]
-	
 \end{equation}$$
 Hier wird angenommen, dass $D(\cdot)$ die Wahrscheinlichkeit ausgibt, dass die Eingabe echt ist ($D(\cdot) \in [0, 1]$, typischerweise über eine Sigmoid-Aktivierung).
 
@@ -677,13 +651,11 @@ In der Praxis werden G und D abwechselnd trainiert, wobei separate Verlustfunkti
 - **Diskriminator-Training:** Maximiere $V(D, G)$ bezüglich $D$. Dies ist äquivalent zur Minimierung des negativen $V(D,G)$, was einer Standard-Kreuzentropie-Verlustfunktion entspricht:
   $$\begin{equation}
   	\mathcal{L}_D = - \left( \mathbb{E}_{\bm{x}}[\log D(\bm{x})] + \mathbb{E}_{\bm{z}}[\log(1 - D(G(\bm{z})))] \right)
-  	
   \end{equation}$$
 - **Generator-Training (Original):** Minimiere $V(D, G)$ bezüglich $G$. Dies entspricht der Minimierung von $\mathcal{L}_G^{\text{orig}} = \mathbb{E}_{\bm{z}}[\log(1 - D(G(\bm{z})))]$. Dieses Ziel leidet jedoch unter dem Problem der *saturierenden Gradienten*: Wenn der Diskriminator die künstlichen Proben sehr gut erkennt ($D(G(\bm{z})) \approx 0$), wird der Gradient von $\log(1 - D(G(\bm{z})))$ bezüglich der Parameter von G sehr klein, was das Lernen verlangsamt oder stoppt.
 - **Generator-Training (Non-Saturating Heuristik):** Um das Sättigungsproblem zu umgehen, wird in der Praxis oft ein alternatives Ziel für G verwendet: Maximiere $\mathbb{E}_{\bm{z}}[\log D(G(\bm{z}))]$, was äquivalent zur Minimierung von
   $$\begin{equation}
   	\mathcal{L}_G^{\text{ns}} = - \mathbb{E}_{\bm{z}}[\log D(G(\bm{z}))]
-  	
   \end{equation}$$
   ist. Dieses Ziel liefert stärkere Gradienten, besonders zu Beginn des Trainings.
 
@@ -706,7 +678,6 @@ Der Wasserstein-GAN (WGAN)-Verlust, vorgeschlagen von Arjovsky et al. (2017), zi
 Die W-1-Distanz zwischen $p_{data}$ und $p_g$ ist definiert als:
 $$\begin{equation}
 	W(p_{data}, p_g) = \sup_{\|f\|_L \le 1} \left( \mathbb{E}_{\bm{x} \sim p_{data}}[f(\bm{x})] - \mathbb{E}_{\bm{z} \sim p_z}[f(G(\bm{z}))] \right)
-	
 \end{equation}$$
 wobei das Supremum über alle 1-Lipschitz-Funktionen $f$ genommen wird. Im WGAN-Kontext wird die Funktion $f$ durch den *Kritiker* (Critic, $C$) approximiert, der an die Stelle des Diskriminators tritt. Der Kritiker gibt einen unbeschränkten Score aus, keine Wahrscheinlichkeit.
 
@@ -719,7 +690,6 @@ wobei das Supremum über alle 1-Lipschitz-Funktionen $f$ genommen wird. Im WGAN-
 - **Generator-Training:** Der Generator $G$ wird trainiert, um die W-Distanz zu minimieren. Da $\mathbb{E}_{\bm{x}}[C(\bm{x})]$ nicht von $G$ abhängt, entspricht dies der Maximierung von $\mathbb{E}_{\bm{z}}[C(G(\bm{z}))]$, oder der Minimierung von:
   $$\begin{equation}
   	\mathcal{L}_G = - \mathbb{E}_{\bm{z}}[C(G(\bm{z}))]
-  	
   \end{equation}$$
 
 **Durchsetzung der Lipschitz-Bedingung:**
@@ -728,7 +698,6 @@ Die grösste Herausforderung bei WGANs ist die Sicherstellung, dass der Kritiker
 - **WGAN-GP (Gradient Penalty):** Gulrajani et al. (2017) schlugen vor, der Kritiker-Verlustfunktion einen Strafterm hinzuzufügen, der Abweichungen des Gradientennormen von 1 bestraft:
   $$\begin{equation}
   	\mathcal{L}_{GP} = \lambda \mathbb{E}_{\hat{\bm{x}} \sim p_{\hat{x}}}[(\|\nabla_{\hat{\bm{x}}} C(\hat{\bm{x}})\|_2 - 1)^2]
-  	
   \end{equation}$$
   Hierbei ist $\hat{\bm{x}}$ eine Stichprobe, die zufällig zwischen einer echten Probe $\bm{x}$ und einer künstlichen Probe $G(\bm{z})$ interpoliert wird ($p_{\hat{x}}$ ist die Verteilung dieser interpolierten Punkte), und $\lambda$ ist ein Hyperparameter (oft $\lambda=10$). $\mathcal{L}_C^{\text{WGAN-GP}} = \mathcal{L}_C + \mathcal{L}_{GP}$. Diese Methode ist stabiler und führt oft zu besseren Ergebnissen.
 
