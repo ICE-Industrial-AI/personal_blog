@@ -28,13 +28,17 @@ Dieser Artikel bietet einen umfassenden Überblick über Verlustfunktionen als z
 # 1. Optimierung von Modellen mittels Verlustfunktionen und Gradientenabstieg
 
 Im Rahmen des überwachten maschinellen Lernens ist das primäre Ziel, eine Funktion $f_\theta(\bm{x})$ zu lernen, die Eingabedaten $\bm{x}$ möglichst präzise auf zugehörige Zielwerte $y$ abbildet. Die Funktion $f_\theta$ wird durch einen Satz von Parametern $\theta$ (z.B. die Gewichte und Biases eines neuronalen Netzes) bestimmt. Um zu quantifizieren, wie gut das Modell mit den aktuellen Parametern $\theta$ diese Aufgabe erfüllt, wird eine **Verlustfunktion** (Loss Function) $\mathcal{L}$ verwendet. Die Verlustfunktion $\mathcal{L}(y, \hat{y})$ misst die Diskrepanz oder den "Verlust" zwischen dem wahren Zielwert $y$ und der Vorhersage $\hat{y} = f_\theta(\bm{x})$ für ein einzelnes Datenbeispiel $(\bm{x}, y)$. Das übergeordnete Ziel des Trainingsprozesses ist es, die Parameter $\theta$ des Modells so zu optimieren, dass der durchschnittliche Verlust über den gesamten Trainingsdatensatz $D = \{(\bm{x}_i, y_i)\}_{i=1}^N$ minimiert wird. Diese zu minimierende Zielfunktion (Objective Function), oft als $\mathcal{L}(\theta)$ bezeichnet, lautet typischerweise:
-$$\begin{equation}
+$$
+\begin{equation}
 	\mathcal{L}(\theta) = \frac{1}{N} \sum_{i=1}^N \mathcal{L}(y_i, f_\theta(\bm{x}_i))	
-\end{equation}$$
+\end{equation}
+$$
 Hierbei bezeichnet $\mathcal{L}(\theta)$ den durchschnittlichen Gesamtverlust als Funktion der Parameter $\theta$, während $\mathcal{L}(y_i, f_\theta(\bm{x}_i))$ den Verlust für das einzelne Beispiel $i$ darstellt. Die Wahl einer geeigneten Verlustfunktion $\mathcal{L}(y, \hat{y})$ hängt maßgeblich von der Art der Lernaufgabe ab. Wie in den folgenden Abschnitten detailliert beschrieben wird, verwendet man für Klassifikationsaufgaben andere Verlustfunktionen (z.B. Kreuzentropie, Hinge-Verlust) als für Regressionsaufgaben (z.B. Mittlerer Quadratischer Fehler, Mittlerer Absoluter Fehler) oder für komplexere Szenarien wie generative Modellierung (z.B. adversariale Verluste) oder das Lernen von Repräsentationen (z.B. kontrastive Verluste). Unabhängig von der spezifischen Wahl der Verlustfunktion benötigen wir ein algorithmisches Verfahren, um die optimalen Parameter $\theta^*$ zu finden, die die Zielfunktion $\mathcal{L}(\theta)$ minimieren:
-$$\begin{equation}
+$$
+\begin{equation}
 	\theta^* = \arg \min_\theta \mathcal{L}(\theta)
-\end{equation}$$
+\end{equation}
+$$
 Für einfache Modelle wie die lineare Regression existieren analytische Lösungen, aber für komplexe Modelle wie tiefe neuronale Netze ist $\mathcal{L}(\theta)$ typischerweise eine hochdimensionale, nicht-konvexe Funktion, für die analytische Lösungen nicht praktikabel sind. Hier kommen iterative Optimierungsverfahren ins Spiel.
 
 ## 1.1. Das Gradientenabstiegsverfahren (Gradient Descent)
