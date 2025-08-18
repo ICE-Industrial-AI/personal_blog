@@ -8,7 +8,8 @@ badge: "Latest"
 
 
 # Object-Centric Methods
-*Author: Christoph Würsch, ICE*
+*Author: Christoph Würsch, Institute for Computational Engineering ICE, OST*
+
 
 This blog provides a comprehensive overview of object-centric learning methods in machine learning. It begins by detailing the core ideas, architectures, and empirical findings of foundational models such as **Object-Oriented Prediction (OP3)** for planning, **Slot Attention** for unsupervised object discovery, **GENESIS** for generative scene decomposition, and **MONet** for joint segmentation and representation. The **CATER** dataset is presented as a diagnostic tool for evaluating compositional action recognition and temporal reasoning in models. It explores recent advancements, including **Physics Context Builders** that integrate explicit physics reasoning into vision-language models, and self-supervised approaches like **V-JEPA** and **DINO-V5** that learn spatio-temporal representations from video without explicit object decomposition. A comparative analysis evaluates these varied methods on their structure, interpretability, physical reasoning capabilities, and scalability. The appendix provides a detailed explanation of the **Hungarian algorithm**, a crucial component for solving the assignment problem in set-prediction tasks common to these model.
 

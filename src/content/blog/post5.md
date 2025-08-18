@@ -6,9 +6,13 @@ heroImage: "/personal_blog/aikn.webp"
 badge: "Latest"
 ---
 
+<script>
+window.MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$']] } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 # Verlustfunktionen im Maschninellen Lernen
-*Author: Christoph Würsch, ICE*
+*Author: Christoph Würsch, Institute for Computational Engineering ICE, OST*
 
 # Verlustfunktionen im ML
 
@@ -21,9 +25,11 @@ badge: "Latest"
 6.  [References](#6-references)
 
 
+<div style="background-color: #e6f2ff; padding: 10px; border-radius: 10px;">
 Dieser Artikel bietet einen umfassenden Überblick über Verlustfunktionen als zentrale Komponente der Modelloptimierung im Maschinellen Lernen. Er analysiert zunächst Funktionen für die Regression und beleuchtet deren unterschiedliche Robustheit gegenüber Ausreissern, wie beim Vergleich von MSE und MAE. Anschliessend werden Ansätze für die Klassifikation behandelt, die von Maximum-Margin-Methoden wie dem Hinge-Verlust bis zu probabilistischen Modellen mittels Kreuzentropie reichen. Weiterhin werden kontrastive Verluste für das selbst-überwachte Lernen von Datenrepräsentationen durch den Vergleich ähnlicher und unähnlicher Datenpunkte erläutert. Zuletzt stellt der Artikel adversariale Verluste vor, die das kompetitive Training von Generative Adversarial Networks (GANs) ermöglichen. Der Text verdeutlicht, dass die Wahl der Verlustfunktion eine kritische Designentscheidung ist, die die Leistung, Robustheit und das Verhalten eines Modells massgeblich beeinflusst.
+</div>
 
-
+[donwnload as pdf](/personal_blog/Verlustfunktionen-ML-ICE-WUCH-2025.pdf)
 
 # 1. Optimierung von Modellen mittels Verlustfunktionen und Gradientenabstieg
 
@@ -162,7 +168,9 @@ Die hier vorgestellten Varianten des Gradientenabstiegs bilden die Grundlage fü
 
 # 2. Verlustfunktionen für die Regression
 
-Bei Regressionsproblemen im überwachten Lernen ist das Ziel, eine kontinuierliche Zielvariable $y \in \R$ basierend auf Eingabemerkmalen $\bm{x}$ vorherzusagen. Ein Regressionsmodell $f_\theta$ lernt eine Funktion, die eine Vorhersage $\hat{y} = f_\theta(\bm{x})$ für einen gegebenen Input $\bm{x}$ liefert. Die **Verlustfunktion** spielt hierbei die entscheidende Rolle, die Diskrepanz oder den Fehler zwischen dem wahren Wert $y$ und dem vorhergesagten Wert $\hat{y}$ zu quantifizieren. Das Ziel des Trainings ist es, die Parameter $\theta$ des Modells so anzupassen, dass der durchschnittliche Verlust über den Trainingsdatensatz minimiert wird. Die Wahl der Verlustfunktion beeinflusst nicht nur die Konvergenz des Trainingsprozesses, sondern auch die Eigenschaften der resultierenden Vorhersagen (z.B. ob das Modell tendenziell den Mittelwert oder den Median vorhersagt) und die Robustheit des Modells gegenüber Ausreissern in den Daten. Wir verwenden die folgende Notation: $y_i$ ist der wahre Wert für das $i$-te Beispiel, $\hat{y}_i$ ist der vom Modell vorhergesagte Wert, und $N$ ist die Anzahl der Beispiele im Datensatz. Der Fehler oder das Residuum für ein Beispiel ist $\varepsilon_i = y_i - \hat{y}_i$.
+> Bei Regressionsproblemen im überwachten Lernen ist das Ziel, eine kontinuierliche Zielvariable $y \in \R$ basierend auf Eingabemerkmalen $\bm{x}$ vorherzusagen. Ein Regressionsmodell $f_\theta$ lernt eine Funktion, die eine Vorhersage $\hat{y} = f_\theta(\bm{x})$ für einen gegebenen Input $\bm{x}$ liefert. Die **Verlustfunktion** spielt hierbei die entscheidende Rolle, die Diskrepanz oder den Fehler zwischen dem wahren Wert $y$ und dem vorhergesagten Wert $\hat{y}$ zu quantifizieren. Das Ziel des Trainings ist es, die Parameter $\theta$ des Modells so anzupassen, dass der durchschnittliche Verlust über den Trainingsdatensatz minimiert wird. Die Wahl der Verlustfunktion beeinflusst nicht nur die Konvergenz des Trainingsprozesses, sondern auch die Eigenschaften der resultierenden Vorhersagen (z.B. ob das Modell tendenziell den Mittelwert oder den Median vorhersagt) und die Robustheit des Modells gegenüber Ausreissern in den Daten. Wir verwenden die folgende Notation: $y_i$ ist der wahre Wert für das $i$-te Beispiel, $\hat{y}_i$ ist der vom Modell vorhergesagte Wert, und $N$ ist die Anzahl der Beispiele im Datensatz. Der Fehler oder das Residuum für ein Beispiel ist $\varepsilon_i = y_i - \hat{y}_i$.
+
+
 
 ## 2.1. Mittlerer Quadratischer Fehler (Mean Squared Error, MSE / L2-Verlust)
 
@@ -217,9 +225,9 @@ MAE entspricht der MLE, wenn angenommen wird, dass die Fehler einer Laplace-Vert
 | :--- | :--- |
 | **Grundidee** | Minimiere den Durchschnitt der absoluten Fehler. |
 | **Formel (pro Punkt)** | $|y - \hat{y}| = |\varepsilon|$. |
-| **Ableitung (nach $\hat{y}$)** | $\text{sgn}(\hat{y} - y) = -\text{sgn}(\varepsilon)$ (definiert als 0 oder $\pm 1$ bei $\varepsilon=0$). |
+| **Ableitung (nach $\hat{y}$)** | $$\text{sgn}(\hat{y} - y) = -\text{sgn}(\varepsilon)$$ (definiert als 0 oder $\pm 1$ bei $\varepsilon=0$). |
 | **Vorteile** | <ul><li>Deutlich robuster gegenüber Ausreissern als MSE.</li><li>Optimale Vorhersage ist der bedingte Median.</li><li>Intuitive Interpretation (durchschnittlicher absoluter Fehler).</li></ul> |
-| **Nachteile/ Herausforderungen** | <ul><li>Nicht differenzierbar bei Null-Fehler (erfordert Subgradienten oder Glättung).</li><li>Kann zu langsamerer Konvergenz führen, da der Gradient konstant ($\pm 1$) ist und nicht kleiner wird, wenn man sich dem Minimum nähert.</li></ul> |
+| **Nachteile/ Herausforderungen** | <ul><li>Nicht differenzierbar bei Null-Fehler (erfordert Subgradienten oder Glättung).</li><li>Kann zu langsamerer Konvergenz führen, da der Gradient konstant ($$\pm 1$$) ist und nicht kleiner wird, wenn man sich dem Minimum nähert.</li></ul> |
 | **Use Cases** | Regression bei Vorhandensein von Ausreissern, Vorhersage des Medians, Situationen, in denen grosse Fehler nicht überproportional bestraft werden sollen. |
 
 ## 2.3. Huber-Verlust
@@ -250,12 +258,14 @@ Ziel ist es, die Robustheit von MAE für grosse Fehler mit der Effizienz und Gla
 | Eigenschaft | Beschreibung |
 | :--- | :--- |
 | **Grundidee** | Quadratischer Verlust für kleine Fehler, linearer Verlust für grosse Fehler. |
-| **Formel (pro Punkt, $\varepsilon=y-\hat{y}$)** | Siehe Gl. \eqref{eq:huber_loss}. |
-| **Ableitung (nach $\hat{y}$, für $\varepsilon=y-\hat{y}$)** | $\begin{cases} - \varepsilon & \text{für } |\varepsilon| \le \delta \\ -\delta \cdot \text{sgn}(\varepsilon) & \text{für } |\varepsilon| > \delta \end{cases}$. |
+| **Formel, $\varepsilon=(y-\hat{y}$)** | Siehe Gl. (13). |
+| **Ableitung (nach $\hat{y}$, für $\varepsilon=y-\hat{y}$)** | $-\varepsilon \qquad \qquad  \text{für} \qquad \vert\varepsilon\vert \le \delta \\ -\delta \cdot \text{sgn}(\varepsilon) \quad \text{für } \vert\varepsilon\vert > \delta$. |
 | **Parameter** | $\delta > 0$ (Schwellenwert für den Übergang). |
 | **Vorteile** | <ul><li>Guter Kompromiss zwischen MSE und MAE.</li><li>Weniger empfindlich gegenüber Ausreissern als MSE.</li><li>Stetig differenzierbar (im Gegensatz zu MAE).</li></ul> |
 | **Nachteile/ Herausforderungen** | <ul><li>Erfordert die Wahl des Hyperparameters $\delta$.</li><li>Komplexere Formel als MSE oder MAE.</li></ul> |
 | **Use Cases** | Robuste Regression, wenn Ausreisser erwartet werden, aber die Glattheit von MSE wünschenswert ist. Oft in Verstärkungslernen (Reinforcement Learning) verwendet. |
+
+
 
 ## 2.4. Log-Cosh-Verlust
 
@@ -326,21 +336,22 @@ Die Wahl der Verlustfunktion in der Regression ist ein wichtiger Aspekt des Mode
 
 **Tabelle 1: Vergleich von Regressions-Verlustfunktionen**
 
-| Verlustfunktion | Formel (pro Punkt, $\varepsilon=y-\hat{y}$) | Optimalvorhersage | Robustheit ggü. Ausreissern | Differenzierbarkeit | Hauptanwendung |
+| Verlustfunktion | Formel (pro Punkt), $\varepsilon=y-\hat{y}$ | Optimal- vorhersage | Robustheit ggü. Ausreissern | Differenzierbarkeit | Hauptanwendung |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **MSE (L2)** | $\varepsilon^2$ | Bedingter Mittelwert | Gering | Ja (glatt) | Standardregression, Gauss-Rauschen |
-| **MAE (L1)** | $|\varepsilon|$ | Bedingter Median | Hoch | Nein (bei $\varepsilon=0$) | Robuste Regression, Medianvorhersage |
-| **Huber** | $\begin{cases} \frac{1}{2}\varepsilon^2 & \|\varepsilon|\le\delta \\ \delta(\|\varepsilon|-\frac{1}{2}\delta) & \|\varepsilon|>\delta \end{cases}$ | Kompromiss Mittelwert/Median | Mittel-Hoch | Ja (stetig diff.) | Robuste Regression (Kompromiss) |
+| **MSE (L2)** | $\varepsilon^2$ | Bed. Mittelwert | Gering | Ja (glatt) | Standardregression, Gauss-Rauschen |
+| **MAE (L1)** | $\vert\varepsilon \vert$ | Bed. Median | Hoch | Nein (bei $\varepsilon=0$) | Robuste Regression, Medianvorhersage |
+| **Huber** | $\frac{1}{2}\varepsilon^2 \quad \vert \varepsilon \vert \le\delta \\ \delta(\vert \varepsilon \vert -\frac{1}{2}\delta) \quad \vert \varepsilon \vert > \delta$ | Kompromiss | Mittel-Hoch | Ja (stetig diff.) | Robuste Regression (Kompromiss) |
 | **Log-Cosh** | $\log(\cosh(\varepsilon))$ | Ähnlich Median | Mittel-Hoch | Ja (glatt) | Robuste Regression (glatt) |
-| **Quantil (Pinball)** | $\max(\tau \varepsilon, (\tau-1)\varepsilon)$ | Bedingtes $\tau$-Quantil | Hoch | Nein (bei $\varepsilon=0$) | Quantilregression, Unsicherheitsschätzung |
+| **Quantil (Pinball)** | $\max(\tau \varepsilon, (\tau-1)\cdot \varepsilon)$ | Bed. $\tau$-Quantil | Hoch | Nein (bei $\varepsilon=0$) | Quantilregression, Unsicherheitsschätzung |
+
 *Hinweis: $\varepsilon = y - \hat{y}$. Robustheit ist relativ. Differenzierbarkeit bezieht sich auf die Stetigkeit der ersten Ableitung.*
 
 ---
 
 # 3. Verlustfunktionen für die Klassifikation
 
+> Beim überwachten Lernen für die Klassifikation ist das Ziel, eine Abbildung $f: \mathcal{X} \to \mathcal{Y}$ von einem Eingaberaum $\mathcal{X}$ (z.B. $\R^d$) in einen diskreten Ausgaberaum $\mathcal{Y}$, der die Klassenlabels repräsentiert, zu lernen. Für eine gegebene Eingabe $\bm{x}$ erzeugt das Modell $f$ eine Vorhersage, die ein Rohwert (Score) $f(\bm{x}) \in \R$, eine Wahrscheinlichkeitsverteilung $\hat{\bm{p}} \in [0, 1]^K$ oder ein direktes Klassenlabel $\hat{y} \in \mathcal{Y}$ sein kann. Eine **Verlustfunktion**, $\mathcal{L}(y, \hat{y})$ oder $\mathcal{L}(y, f(\bm{x}))$, quantifiziert die Kosten (den „Verlust“), die entstehen, wenn das wahre Label $y$ ist und die Vorhersage $\hat{y}$ bzw. aus $f(\bm{x})$ abgeleitet ist. Das Ziel während des Trainings ist typischerweise die Minimierung des durchschnittlichen Verlusts über den Trainingsdatensatz. Obwohl das ultimative Ziel bei der Klassifikation oft die Minimierung der Anzahl von Fehlklassifikationen ist (gemessen durch den **Null-Eins-Verlust**), ist diese Verlustfunktion nicht konvex und lässt sich nur schwer direkt mit gradientenbasierten Methoden optimieren. Daher werden verschiedene **Surrogat-Verlustfunktionen** (auch Ersatz-Verlustfunktionen genannt) verwendet, die typischerweise konvex und differenzierbar sind und als Annäherungen an den Null-Eins-Verlust dienen.
 
-Beim überwachten Lernen für die Klassifikation ist das Ziel, eine Abbildung $f: \mathcal{X} \to \mathcal{Y}$ von einem Eingaberaum $\mathcal{X}$ (z.B. $\R^d$) in einen diskreten Ausgaberaum $\mathcal{Y}$, der die Klassenlabels repräsentiert, zu lernen. Für eine gegebene Eingabe $\bm{x}$ erzeugt das Modell $f$ eine Vorhersage, die ein Rohwert (Score) $f(\bm{x}) \in \R$, eine Wahrscheinlichkeitsverteilung $\hat{\bm{p}} \in [0, 1]^K$ oder ein direktes Klassenlabel $\hat{y} \in \mathcal{Y}$ sein kann. Eine **Verlustfunktion**, $\mathcal{L}(y, \hat{y})$ oder $\mathcal{L}(y, f(\bm{x}))$, quantifiziert die Kosten (den „Verlust“), die entstehen, wenn das wahre Label $y$ ist und die Vorhersage $\hat{y}$ bzw. aus $f(\bm{x})$ abgeleitet ist. Das Ziel während des Trainings ist typischerweise die Minimierung des durchschnittlichen Verlusts über den Trainingsdatensatz. Obwohl das ultimative Ziel bei der Klassifikation oft die Minimierung der Anzahl von Fehlklassifikationen ist (gemessen durch den **Null-Eins-Verlust**), ist diese Verlustfunktion nicht konvex und lässt sich nur schwer direkt mit gradientenbasierten Methoden optimieren. Daher werden verschiedene **Surrogat-Verlustfunktionen** (auch Ersatz-Verlustfunktionen genannt) verwendet, die typischerweise konvex und differenzierbar sind und als Annäherungen an den Null-Eins-Verlust dienen.
 
 Wir betrachten hauptsächlich zwei gängige Konventionen für Labels:
 1. **Binäre Klassifikation mit $y \in \{-1, +1\}$**: Hier gibt das Modell oft einen reellwertigen Score $f(\bm{x})$ aus. Das Vorzeichen von $f(\bm{x})$ bestimmt typischerweise die vorhergesagte Klasse $\hat{y} = \text{sgn}(f(\bm{x}))$, und der Betrag $|f(\bm{x})|$ kann als Konfidenz interpretiert werden.
@@ -356,16 +367,16 @@ Der Null-Eins-Verlust misst direkt den Klassifikationsfehler. Er weist einer Feh
 Mit vorhergesagtem Label $\hat{y}$:
 $$
 \begin{equation}
-	\mathcal{L}_{0-1}(y, \hat{y}) = \indicator{y \neq \hat{y}}
+	\mathcal{L}_{0-1}(y, \hat{y}) = \mathbb{I}\left[y \neq \hat{y}\right]
 \end{equation}
 $$
 Mit Score $f(\bm{x})$ für $y \in \{-1, +1\}$ (unter Annahme der Vorhersage $\hat{y} = \text{sgn}(f(\bm{x}))$):
 $$
 \begin{equation}
-	\mathcal{L}_{0-1}(y, f(\bm{x})) = \indicator{y \cdot f(\bm{x}) \le 0}
+	\mathcal{L}_{0-1}(y, f(\bm{x})) = \mathbb{I}\left[y \cdot f(\bm{x}) \le 0\right]
 \end{equation}
 $$
-Hier ist $\indicator{\cdot}$ die Indikatorfunktion, die 1 zurückgibt, wenn die Bedingung wahr ist, und 0 sonst. Der Term $y \cdot f(\bm{x})$ ist genau dann positiv, wenn die Vorhersage das korrekte Vorzeichen hat.
+Hier ist $\mathbb{I}\left[\cdot\right]$ die Indikatorfunktion, die 1 zurückgibt, wenn die Bedingung wahr ist, und 0 sonst. Der Term $y \cdot f(\bm{x})$ ist genau dann positiv, wenn die Vorhersage das korrekte Vorzeichen hat.
 
 **Herleitung:** Diese Verlustfunktion ist definitorisch und spiegelt direkt das Ziel der Minimierung von Fehlklassifikationen wider.
 
@@ -373,7 +384,7 @@ Hier ist $\indicator{\cdot}$ die Indikatorfunktion, die 1 zurückgibt, wenn die 
 
 | Eigenschaft | Beschreibung |
 | :--- | :--- |
-| **Vorteile** | <ul><li>Entspricht direkt der Klassifikationsgenauigkeit (Accuracy = $1 - \text{Durchschnittlicher } \mathcal{L}_{0-1}$).</li><li>Einfache Interpretation.</li></ul> |
+| **Vorteile** | <ul><li>Entspricht direkt der Klassifikationsgenauigkeit (Accuracy = $1 - \text{avg} (\mathcal{L}_{0-1}$).</li><li>Einfache Interpretation.</li></ul> |
 | **Nachteile** | <ul><li>Nicht konvex.</li><li>Nicht differenzierbar (oder Gradient ist fast überall null), was sie für gradientenbasierte Optimierung ungeeignet macht.</li></ul> |
 | **Use Cases** | Hauptsächlich zur Evaluierung der finalen Modellleistung, nicht zur direkten Optimierung während des Trainings. Andere Verlustfunktionen dienen als Surrogat. |
 
@@ -513,10 +524,10 @@ Die Wahl der richtigen Verlustfunktion hängt vom spezifischen Algorithmus, der 
 
 **Tabelle 2: Vergleich von Klassifikations-Verlustfunktionen**
 
-| Verlustfunktion | Formel (Gängige Form) | Konvex? | Differenzierbar? | Empfindlichkeit ggü. Ausreissern | Use Cases |
+| Verlustfunktion | Formel (Gängige Form) | Konvex? | diff'bar? | Empfindlichkeit ggü. Ausreissern | Use Cases |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Null-Eins** | $\indicator{y \cdot f(\bm{x}) \le 0}$ <br> ($y \in \{-1, 1\}$) | Nein | Nein (f.ü.) | Gering | Evaluationsmetrik |
-| **Hinge** | $\max(0, 1 - y \cdot f(\bm{x}))$ <br> ($y \in \{-1, 1\}$) | Ja | Nein (bei $y f(\bm{x})=1$) | Mittel | SVMs |
+| **Null-Eins** | $\mathbb{I}\left[y \cdot f(\bm{x}) \le 0 \right]$ <br> ($y \in \{-1, 1\}$) | Nein | Nein (f.ü.) | Gering | Evaluationsmetrik |
+| **Hinge** | $\max(0, 1 - y \cdot f(\bm{x}))$ <br> ($y \in \{-1, 1\}$) | Ja | Nein ($y f(\bm{x})=1$)| Mittel | SVMs |
 | **Logistisch (BCE)** | $\log(1 + e^{-y \cdot f(\bm{x})})$ <br> ($y \in \{-1, 1\}$) <br> ODER <br> $-[y \log \hat{p} + (1-y) \log(1-\hat{p})]$ <br> ($y \in \{0, 1\}, \hat{p} \in [0,1]$) | Ja | Ja | Mittel-Hoch | Logistische Regression, Neuronale Netze (Binär) |
 | **Kategorische Kreuzentropie** | $- \log(\hat{p}_c)$ <br> ($\bm{y}$ one-hot, $\hat{\bm{p}}$ W'keitsvektor, $c$=wahre Klasse) | Ja | Ja | Mittel-Hoch | Neuronale Netze (Multiklasse) |
 | **Quadrat. Hinge** | $(\max(0, 1 - y \cdot f(\bm{x})))^2$ <br> ($y \in \{-1, 1\}$) | Ja | Ja | Hoch | L2-SVMs, Alternative zu Hinge |
@@ -528,11 +539,13 @@ Die Wahl der richtigen Verlustfunktion hängt vom spezifischen Algorithmus, der 
 
 # 4. Kontrastive Verlustfunktionen (Contrastive Losses)
 
-Kontrastive Verlustfunktionen sind eine zentrale Komponente des **kontrastiven Lernens**, einer Methodik, die darauf abzielt, nützliche Repräsentationen von Daten zu lernen, oft ohne explizite Labels (im Rahmen des selbst-überwachten Lernens, Self-Supervised Learning, SSL) oder zur Verbesserung überwachter Modelle (Metric Learning). Die Grundidee besteht darin, eine Einbettungsfunktion (Encoder) $f_\theta$ zu trainieren, die Datenpunkte $\bm{x}$ in einen niedrigdimensionalen Repräsentationsraum (Embedding Space) abbildet ($\bm{h} = f_\theta(\bm{x})$), sodass ähnliche Datenpunkte nahe beieinander und unähnliche Datenpunkte weit voneinander entfernt liegen. Dies wird erreicht, indem man für einen gegebenen **Ankerpunkt** (anchor) $\bm{h}$:
+> Kontrastive Verlustfunktionen sind eine zentrale Komponente des **kontrastiven Lernens**, einer Methodik, die darauf abzielt, nützliche Repräsentationen von Daten zu lernen, oft ohne explizite Labels (im Rahmen des selbst-überwachten Lernens, Self-Supervised Learning, SSL) oder zur Verbesserung überwachter Modelle (Metric Learning). Die Grundidee besteht darin, eine Einbettungsfunktion (Encoder) $f_\theta$ zu trainieren, die Datenpunkte $\bm{x}$ in einen niedrigdimensionalen Repräsentationsraum (Embedding Space) abbildet ($\bm{h} = f_\theta(\bm{x})$), sodass ähnliche Datenpunkte nahe beieinander und unähnliche Datenpunkte weit voneinander entfernt liegen. Dies wird erreicht, indem man für einen gegebenen **Ankerpunkt** (anchor) $\bm{h}$:
 - **Positive Beispiele** $\bm{h}^+$ (z.B. andere Transformationen/Augmentationen desselben Datenpunkts, Punkte derselben Klasse) im Repräsentationsraum näher an den Anker heranzieht.
 - **Negative Beispiele** $\bm{h}^-$ (z.B. Datenpunkte aus anderen Bildern/Klassen) vom Anker wegstösst.
 
 Der "Kontrast" entsteht durch den Vergleich der Ähnlichkeit zwischen dem Anker und positiven Beispielen gegenüber der Ähnlichkeit zwischen dem Anker und negativen Beispielen. Die Formulierung des Verlusts hängt entscheidend vom gewählten **Ähnlichkeitsmass** (Similarity Measure) und der spezifischen Struktur der positiven/negativen Paare oder Tripletts ab. Kontrastives Lernen findet breite Anwendung im selbst-überwachten Lernen für Computer Vision und NLP, im Metric Learning, in Empfehlungssystemen und bei der Gesichtserkennung.
+
+
 
 ## 4.1. Ähnlichkeitsmasse (Similarity Measures)
 
@@ -639,10 +652,10 @@ Die Kernidee ist, das kontrastive Lernen als ein Klassifikationsproblem zu formu
 Für einen Anker $\bm{h}_i$, sein positives Beispiel $\bm{h}_{i^+}$ und $K$ negative Beispiele $\{\bm{h}_{k}^-\}_{k=1}^K$:
 $$
 \begin{equation}
-	\mathcal{L}_{\text{InfoNCE}} = - \mathbb{E} \left[ \log \frac{\exp(\simfunc(\bm{h}_i, \bm{h}_{i^+}) / \tau)}{\exp(\simfunc(\bm{h}_i, \bm{h}_{i^+}) / \tau) + \sum_{k=1}^K \exp(\simfunc(\bm{h}_i, \bm{h}_{k}^-) / \tau)} \right]
+	\mathcal{L}_{\text{InfoNCE}} = - \mathbb{E} \left[ \log \frac{\exp(\text{sim}(\bm{h}_i, \bm{h}_{i^+}) / \tau)}{\exp(\text{sim}(\bm{h}_i, \bm{h}_{i^+}) / \tau) + \sum_{k=1}^K \exp(\text{sim}(\bm{h}_i, \bm{h}_{k}^-) / \tau)} \right]
 \end{equation}
 $$
-Dies hat die Form einer Softmax-Kreuzentropie, wobei die Logits durch die skalierten Ähnlichkeiten gegeben sind. $\simfunc$ ist typischerweise die Kosinus-Ähnlichkeit.
+Dies hat die Form einer Softmax-Kreuzentropie, wobei die Logits durch die skalierten Ähnlichkeiten gegeben sind. $\text{sim}$ ist typischerweise die Kosinus-Ähnlichkeit.
 
 **Formel (NT-Xent - SimCLR Variante):**
 In SimCLR werden für jedes Bild $\bm{x}$ in einem Batch der Grösse $N$ zwei augmentierte Versionen erzeugt, was zu $2N$ Embeddings $(\bm{h}_1, ..., \bm{h}_{2N})$ führt. Für ein positives Paar $(\bm{h}_i, \bm{h}_j)$ (die von demselben Originalbild stammen) werden alle anderen $2(N-1)$ Embeddings im Batch als negative Beispiele betrachtet. Der Verlust für das Paar $(i, j)$ ist:
@@ -685,7 +698,7 @@ Kontrastive Verlustfunktionen bieten flexible Werkzeuge zum Lernen von Repräsen
 
 # 5. Adversariale Verlustfunktionen (Adversarial Losses)
 
-Adversariale Verlustfunktionen sind das Herzstück von Generative Adversarial Networks (GANs), einem populären Ansatz im Bereich der generativen Modellierung. GANs bestehen typischerweise aus zwei Komponenten, die in einem Minimax-Spiel gegeneinander antreten:
+> Adversariale Verlustfunktionen sind das Herzstück von Generative Adversarial Networks (GANs), einem populären Ansatz im Bereich der generativen Modellierung. GANs bestehen typischerweise aus zwei Komponenten, die in einem Minimax-Spiel gegeneinander antreten:
 
 - **Generator (G):** Versucht, Daten zu erzeugen (z.B. Bilder, Texte), die von echten Daten nicht zu unterscheiden sind. Er nimmt einen Zufallsvektor $\bm{z}$ aus einem Prior-Raum (z.B. einer Normalverteilung $p_z$) als Eingabe und erzeugt eine synthetische Probe $G(\bm{z})$. Das Ziel ist es, die Verteilung $p_g$ der generierten Daten so zu formen, dass sie der Verteilung $p_{data}$ der echten Daten $\bm{x}$ möglichst ähnlich ist.
 - **Diskriminator (D):** Versucht zu entscheiden, ob eine gegebene Datenprobe echt (aus $p_{data}$) oder künstlich (aus $p_g$, also von G erzeugt) ist. Er gibt typischerweise einen Wert aus, der die Wahrscheinlichkeit (oder einen Score) repräsentiert, dass die Eingabe echt ist.
@@ -835,8 +848,8 @@ Hierbei versucht der Diskriminator, echte Proben auf einen Score von $\ge 1$ und
 | Eigenschaft | Beschreibung |
 | :--- | :--- |
 | **Ziel** | Maximierung der Marge zwischen den Scores für echte und künstliche Daten. |
-| **Diskriminator-Verlust $\mathcal{L}_D$** | Summe zweier Hinge-Terme für echte ($\ge 1$) und künstliche ($\le -1$) Samples. Siehe Gl. \eqref{eq:hingegan_loss_d}. |
-| **Generator-Verlust $\mathcal{L}_G$** | Maximierung des Diskriminator-Scores für künstliche Samples. Siehe Gl. \eqref{eq:hingegan_loss_g}. |
+| **Diskriminator-Verlust $\mathcal{L}_D$** | Summe zweier Hinge-Terme für echte ($\ge 1$) und künstliche ($\le -1$) Samples. |
+| **Generator-Verlust $\mathcal{L}_G$** | Maximierung des Diskriminator-Scores für künstliche Samples. Siehe Gl. |
 | **Vorteile** | <ul><li>Empirisch sehr gute Leistung und Trainingsstabilität.</li><li>Weniger empfindlich gegenüber Ausreissern als quadratische Verluste.</li><li>Einfache Implementierung.</li></ul> |
 | **Probleme/ Herausforderungen** | <ul><li>Weniger direkte theoretische Interpretation der optimierten Divergenz im Vergleich zu original GAN oder WGAN.</li><li>Kann, wie andere GANs, immer noch Moden vernachlässigen.</li></ul> |
 | **Use Cases** | Standardwahl in vielen modernen, hochleistungsfähigen GAN-Architekturen (z.B. SAGAN, BigGAN) für Bildsynthese. |

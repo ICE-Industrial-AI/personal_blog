@@ -8,7 +8,8 @@ heroImage: "/personal_blog/aikn.webp"
 
 **Reader, Systemtechnik BSc, HS 2026**
 Kurs Applied Neural Networks (ANN)  
-*Author: Christoph Würsch*
+*Author: Christoph Würsch, Institute for Computational Engineering ICE, OST*
+
 
 ## Abstract
 
