@@ -450,16 +450,16 @@ Der Null-Eins-Verlust misst direkt den Klassifikationsfehler. Er weist einer Feh
 Mit vorhergesagtem Label $\hat{y}$:
 $$
 \begin{equation}
-	\mathcal{L}_{0-1}(y, \hat{y}) = \indicator{y \neq \hat{y}}
+	\mathcal{L}_{0-1}(y, \hat{y}) = \mathbb{I}\left[{y \neq \hat{y}}\right]
 \end{equation}
 $$
 Mit Score $f(\bm{x})$ für $y \in \{-1, +1\}$ (unter Annahme der Vorhersage $\hat{y} = \text{sgn}(f(\bm{x}))$):
 $$
 \begin{equation}
-	\mathcal{L}_{0-1}(y, f(\bm{x})) = \indicator{y \cdot f(\bm{x}) \le 0}
+	\mathcal{L}_{0-1}(y, f(\bm{x})) = \mathbb{I}\left[{y \cdot f(\bm{x}) \le 0}\right]
 \end{equation}
 $$
-Hier ist $\indicator{\cdot}$ die Indikatorfunktion, die 1 zurückgibt, wenn die Bedingung wahr ist, und 0 sonst. Der Term $y \cdot f(\bm{x})$ ist genau dann positiv, wenn die Vorhersage das korrekte Vorzeichen hat.
+Hier ist $\mathbb{I}\left[{\cdot}\right]$ die Indikatorfunktion, die 1 zurückgibt, wenn die Bedingung wahr ist, und 0 sonst. Der Term $y \cdot f(\bm{x})$ ist genau dann positiv, wenn die Vorhersage das korrekte Vorzeichen hat.
 
 **Herleitung:** Diese Verlustfunktion ist definitorisch und spiegelt direkt das Ziel der Minimierung von Fehlklassifikationen wider.
 
@@ -609,7 +609,7 @@ Die Wahl der richtigen Verlustfunktion hängt vom spezifischen Algorithmus, der 
 
 | Verlustfunktion | Formel (Gängige Form) | Konvex? | Differenzierbar? | Empfindlichkeit ggü. Ausreissern | Use Cases |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Null-Eins** | $\indicator{y \cdot f(\bm{x}) \le 0}$ <br> ($y \in \{-1, 1\}$) | Nein | Nein (f.ü.) | Gering | Evaluationsmetrik |
+| **Null-Eins** | $\mathbb{1}{y \cdot f(\bm{x}) \le 0}$ <br> ($y \in \{-1, 1\}$) | Nein | Nein (f.ü.) | Gering | Evaluationsmetrik |
 | **Hinge** | $\max(0, 1 - y \cdot f(\bm{x}))$ <br> ($y \in \{-1, 1\}$) | Ja | Nein (bei $y f(\bm{x})=1$) | Mittel | SVMs |
 | **Logistisch (BCE)** | $\log(1 + e^{-y \cdot f(\bm{x})})$ <br> ($y \in \{-1, 1\}$) <br> ODER <br> $-[y \log \hat{p} + (1-y) \log(1-\hat{p})]$ <br> ($y \in \{0, 1\}, \hat{p} \in [0,1]$) | Ja | Ja | Mittel-Hoch | Logistische Regression, Neuronale Netze (Binär) |
 | **Kategorische Kreuzentropie** | $- \log(\hat{p}_c)$ <br> ($\bm{y}$ one-hot, $\hat{\bm{p}}$ W'keitsvektor, $c$=wahre Klasse) | Ja | Ja | Mittel-Hoch | Neuronale Netze (Multiklasse) |
@@ -733,10 +733,10 @@ Die Kernidee ist, das kontrastive Lernen als ein Klassifikationsproblem zu formu
 Für einen Anker $\bm{h}_i$, sein positives Beispiel $\bm{h}_{i^+}$ und $K$ negative Beispiele $\{\bm{h}_{k}^-\}_{k=1}^K$:
 $$
 \begin{equation}
-	\mathcal{L}_{\text{InfoNCE}} = - \mathbb{E} \left[ \log \frac{\exp(\simfunc(\bm{h}_i, \bm{h}_{i^+}) / \tau)}{\exp(\simfunc(\bm{h}_i, \bm{h}_{i^+}) / \tau) + \sum_{k=1}^K \exp(\simfunc(\bm{h}_i, \bm{h}_{k}^-) / \tau)} \right]
+	\mathcal{L}_{\text{InfoNCE}} = - \mathbb{E} \left[ \log \frac{\exp(\text{sim}(\bm{h}_i, \bm{h}_{i^+}) / \tau)}{\exp(\text{sim}(\bm{h}_i, \bm{h}_{i^+}) / \tau) + \sum_{k=1}^K \exp(\text{sim}(\bm{h}_i, \bm{h}_{k}^-) / \tau)} \right]
 \end{equation}
 $$
-Dies hat die Form einer Softmax-Kreuzentropie, wobei die Logits durch die skalierten Ähnlichkeiten gegeben sind. $\simfunc$ ist typischerweise die Kosinus-Ähnlichkeit.
+Dies hat die Form einer Softmax-Kreuzentropie, wobei die Logits durch die skalierten Ähnlichkeiten gegeben sind. $\text{sim}$ ist typischerweise die Kosinus-Ähnlichkeit.
 
 **Formel (NT-Xent - SimCLR Variante):**
 In SimCLR werden für jedes Bild $\bm{x}$ in einem Batch der Grösse $N$ zwei augmentierte Versionen erzeugt, was zu $2N$ Embeddings $(\bm{h}_1, ..., \bm{h}_{2N})$ führt. Für ein positives Paar $(\bm{h}_i, \bm{h}_j)$ (die von demselben Originalbild stammen) werden alle anderen $2(N-1)$ Embeddings im Batch als negative Beispiele betrachtet. Der Verlust für das Paar $(i, j)$ ist:
