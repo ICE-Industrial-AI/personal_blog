@@ -1,3 +1,7 @@
+Visit this blog at:
+
+https://ice-industrial-ai.github.io/personal_blog/ 
+
 # About ICE Industrial-AI
 
 This page provides an overview of the ICE Industrial-AI team, their mission, expertise, and key areas of focus. It is structured to highlight the team's core competences, research areas, technologies, tools, and industry partnerships.
