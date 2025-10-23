@@ -18,7 +18,7 @@ Girolamo Cardano (1501–1576) published the general solution of the cubic in *A
 The story of the cubic formula isn't one of quiet contemplation in a university library; it's a tale of secrets, ambition, betrayal, and a dramatic intellectual duel fought in the public squares of 16th-century Italy.
 
 <div align="center">
-    <img src="/personal_blog/Girolamo-Cardano.jpeg" width="50%">
+    <img src="/personal_blog/Girolamo-Cardano.jpeg" width="100%">
     <figcaption>Girolamo Cardano (1501-1576)</figcaption>
 </div>
 
