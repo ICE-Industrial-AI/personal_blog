@@ -1,6 +1,6 @@
 ---
 title: "A Renaissance Drama: The Race to Solve the Cubic"
-description: "We present a clear and self-contained derivation of the solution formulas for cubic equations in two stages: first the depressed cubic $x^3+px+q=0$, and then the general monic cubic $x^3+ax^2+bx+c=0$ via a Tschirnhaus shift. Along the way we justify each algebraic step, derive the resolvent quadratic, discuss how to choose cube-root branches consistently, and analyze the structure of real and complex roots via the discriminant. Brief historical notes situate the method in the work of Cardano, with connections to del Ferro and Tartaglia."
+description: "We present a clear and self-contained derivation of the solution formulas for cubic equations in two stages: first the depressed cubic x^3+px+q=0, and then the general monic cubic x^3+ax^2+bx+c=0 via a Tschirnhaus shift. Along the way we justify each algebraic step, derive the resolvent quadratic, discuss how to choose cube-root branches consistently, and analyze the structure of real and complex roots via the discriminant. Brief historical notes situate the method in the work of Cardano, with connections to del Ferro and Tartaglia."
 pubDate: "Oct 23 2025"
 heroImage: "/personal_blog/aikn.webp"
 badge: "Latest"
@@ -18,7 +18,7 @@ Girolamo Cardano (1501–1576) published the general solution of the cubic in *A
 The story of the cubic formula isn't one of quiet contemplation in a university library; it's a tale of secrets, ambition, betrayal, and a dramatic intellectual duel fought in the public squares of 16th-century Italy.
 
 <div align="center">
-    <img src="/personal_blog/Girolamo_Cardano.jpeg" width="50%">
+    <img src="/personal_blog/Girolamo-Cardano.jpeg" width="50%">
     <figcaption>Girolamo Cardano (1501-1576)</figcaption>
 </div>
 
