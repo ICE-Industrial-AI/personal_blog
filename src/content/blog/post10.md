@@ -42,7 +42,7 @@ The 10 regions evaluated in ASPECTS include the following:
 - Subcortical regions: caudate, lentiform nucleus, and internal capsule.
 - Cortical regions: insular ribbon, M1 through M6 regions (divisions of the MCA cortex from superior to inferior).
 
-![ASPECTS Regions](/personal_blog/illustration_aspects.png)
+![ASPECTS Regions](//personal_blog/illustration_aspects.png)
 
 ### 1.2 Clinical Relevance
 The ASPECTS score serves as an invaluable instrument in assessing the severity of stroke and consequently in forming treatment decisions. A score of ≤ 7 is linked to an elevated risk of adverse outcomes and hemorrhagic transformation subsequent to reperfusion therapies, such as intravenous thrombolysis or mechanical thrombectomy, as indicated by [1]. By offering a quantitative assessment of early ischemic alterations, ASPECTS enhances communication between healthcare professionals, assists in the identification of suitable candidates for further advanced imaging or therapeutic interventions, and plays a predictive role in determining the patient’s prognosis.
@@ -51,16 +51,16 @@ The ASPECTS score serves as an invaluable instrument in assessing the severity o
 The primary objective of this phase of the project was to develop a comprehensive and broadly applicable segmentation pipeline for ASPECTS regions. The dataset available for
 this endeavor was comprised of DICOMDIR files from the KSSG, which included imaging data for approximately 2000 patients. However, it is important to note that a significant proportion of these scans did not include any ASPECTS region annotations. Specifically, out of the more than 50k CT scans in the repository, only about 1.67k scans were accompanied by ASPECTS region data, presented as a binary point cloud overlay.
 
-![Axial brain CT slices with ASPECTS contour point cloud overlay](personal_blog/implot_scan_with_aspects_overlay.png)
+![Axial brain CT slices with ASPECTS contour point cloud overlay](/personal_blog/implot_scan_with_aspects_overlay.png)
 
 The baseline established by the existing point-cloud overlays was instrumental for deriving segmentation masks. However, initial methods employing morphological operations coupled with connected component analysis did not yield robust segmentation masks from the point cloud data. The primary difficulty stemmed from the fact that many current overlays exhibited substantial gaps or were entirely devoid of sections of the region outlines, as depicted below, where gaps and noisy borders are clearly visible. Although it was feasible to develop morphological operations tailored to function on certain overlays, a universally reliable and effective implementation of this technique proved unattainable.
 
-![Plot of sagittal, coronal and axial slices of the ASPECTS overlay](personal_blog/implot_aspects_overlay.png)
+![Plot of sagittal, coronal and axial slices of the ASPECTS overlay](/personal_blog/implot_aspects_overlay.png)
 
 ### 2.1 Atlas-based Segmentation Mask Generation
 The definitive method adopted to ensure a consistent and universally reliable translation of overlay point clouds into filled segmentation masks specific to the ASPECTS region involved employing a sophisticated approach characterized by atlas-based registration using an aggressive variant of Symmetric Diffeomorphic Normalization (SyN) as described in the next section. In essence, the principal objective was to utilize a publicly available standardized brain template, referred to as an atlas, to systematically register all computed tomography (CT) scans containing point cloud overlays with said atlas. This registration process was followed by applying the resultant transformations to the overlays themselves in order to align them within a similar spatial domain, achieving maximum consistency across subjects. The registered and transformed overlays were subsequently integrated to construct a unified volumetric data set. All registered overlays were then used to generate a single volume, where each overlay was aggregated into a single mean overlay template.
 
-![Slice Comparison](personal_blog/illustration_segmentation_slice.png)
+![Slice Comparison](/personal_blog/illustration_segmentation_slice.png)
 
 Despite the aggregation of all overlays it was still not trivial to get a proper segmentation mask for the aggregated overlay using morphological operations. Therefore a 3D segmentation tool was used to manually annotate such a segmentation mask for the aggregated overlays, which resulted in a single, manually annotated, segmentation mask, that could be used as an atlas as well. Ultimately the process to get robust segmentation masks for each individual scan, containing ASPECTS region overlays (point clouds) was as following:
 
@@ -71,7 +71,7 @@ Despite the aggregation of all overlays it was still not trivial to get a proper
 
 ## 3. Symmetric Diffeomorphic Normalization (SyN)
 
-![SyN Visualization](personal_blog/illustration_syn.png)
+![SyN Visualization](/personal_blog/illustration_syn.png)
 
 Diffeomorphic registration seeks a smooth, invertible deformation that aligns a moving image $I: \Omega \to R$ to a fixed image $J: \Omega \to R$ without tearing or folding anatomy. “Diffeomorphic” means the map is bijective and both it and its inverse are smooth; this preserves topology and enables meaningful inverse warps for region-of-interest (ROI) transfer or voxelwise analysis. SyN avoids bias toward either image by pushing both images into a halfway space. Intuitively, rather than warping only I to J, SyN finds two deformations that meet in the middle, so anatomical structures share the alignment burden. For NCCT brain scans—where intensity statistics are relatively consistent across subjects compared to multimodal settings—SyN paired with (localized) cross-correlation is well-suited: it is robust to global intensity offsets, emphasizes local structure, and keeps deformations smooth and invertible [3, 4].
 
@@ -149,7 +149,7 @@ In the previous project phase (Specialization Module 1), a library of 3D convolu
 - **CNNDecoder3D** - Uses 3D convolutional layers (*ResBlock3D* layers) to construct a volume from a latent representation. Can optionally use skip-connections from the encoder.
 - **UNet3D** - A wrapper, implementing a *UNet3D* model, internally using *UNetEncoder3D* and *CNNDecoder3D*.
 
-![Model Architecture](personal_blog/illustration_model_parameters.png)
+![Model Architecture](/personal_blog/illustration_model_parameters.png)
 
 ### 4.1 Loss and Metrics
 
@@ -162,7 +162,7 @@ For training the UNet3D model, a composite loss function, \texttt{DiceCELoss}, f
 
 It is particularly robust to class imbalance: even if a class occupies only a small fraction of the image, its contribution to the loss is not overwhelmed by large background regions.
 
-![Dice Similarity Coefficient](personal_blog/illustration_dice_similarity_coefficient.png)
+![Dice Similarity Coefficient](/personal_blog/illustration_dice_similarity_coefficient.png)
 
 Mathematically, the Dice loss for $K$ classes is:
 
@@ -203,21 +203,21 @@ The final model was trained on the DGX-2 cluster on 8 Nvidia V100 GPUs, with ear
 | Skip Validation    | True   |
 | Use Augments       | True   |
 
-![Train and Validation Loss](personal_blog/lineplot_model_loss.png)
+![Train and Validation Loss](/personal_blog/lineplot_model_loss.png)
 
 As depicted above, both training and evaluation losses were consistently going down and no sign of overfitting (based on loss) was visually present.
 
-![Per Class Dice Score](personal_blog/lineplot_dice_score_per_class.png)
+![Per Class Dice Score](/personal_blog/lineplot_dice_score_per_class.png)
 
-![Medium Dice Score](personal_blog/lineplot_dice_score.png)
+![Medium Dice Score](/personal_blog/lineplot_dice_score.png)
 
 From the *per-class dice score* visualization it is evident that the model had the easiest time to label the background correctly, which is an expected behaviour since it is arguably the easiest (everything that is not brain tissue) and also it is the largest region by a big margin. Over time however the smaller region predictions became more and more accurate with the smallest of them (C, IC, I and L) expectedly having the latest rises in the dice score, due to their small and complicated nature.
 
 Below, the predicted ASPECTS regions of a validation sample on a single slice and the entire predicted volume is visualized.
 
-![Prediction Visualization](personal_blog/result_visualization.png)
+![Prediction Visualization](/personal_blog/result_visualization.png)
 
-![Prediction GIF](personal_blog/stitched.gif)
+![Prediction GIF](/personal_blog/stitched.gif)
 
 The final model performance was as follows:
 
