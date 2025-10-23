@@ -42,7 +42,7 @@ The 10 regions evaluated in ASPECTS include the following:
 - Subcortical regions: caudate, lentiform nucleus, and internal capsule.
 - Cortical regions: insular ribbon, M1 through M6 regions (divisions of the MCA cortex from superior to inferior).
 
-![ASPECTS Regions](//personal_blog/illustration_aspects.png)
+![ASPECTS Regions](/personal_blog/illustration_aspects.png)
 
 ### 1.2 Clinical Relevance
 The ASPECTS score serves as an invaluable instrument in assessing the severity of stroke and consequently in forming treatment decisions. A score of ≤ 7 is linked to an elevated risk of adverse outcomes and hemorrhagic transformation subsequent to reperfusion therapies, such as intravenous thrombolysis or mechanical thrombectomy, as indicated by [1]. By offering a quantitative assessment of early ischemic alterations, ASPECTS enhances communication between healthcare professionals, assists in the identification of suitable candidates for further advanced imaging or therapeutic interventions, and plays a predictive role in determining the patient’s prognosis.
