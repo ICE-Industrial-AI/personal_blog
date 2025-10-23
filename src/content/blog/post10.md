@@ -89,33 +89,41 @@ The associated Euler–Lagrange equations yield momentum fields $m_t = Av_t$ tha
 ### 3.2 Symmetric Objective and Halfway Space
 SyN introduces symmetry by optimizing *two* flows that meet at a midpoint. One convenient formulation seeks maps $\phi, \psi$ such that $I\circ\phi^{-1}$ and $J\circ\psi^{-1}$ are similar in the *halfway space*, with a shared regularization:
 
-$$\min_{\phi,\psi}\;
+$$
+\min_{\phi,\psi}\;
     \frac{1}{2}\!\int_0^1 \big(\lVert v_t\rVert_V^2 + \lVert w_t\rVert_V^2\big)\,dt
     \;+\; \lambda \,\mathcal{D}\!\left(I\!\circ\!\phi^{-1},\, J\!\circ\!\psi^{-1}\right),
-    \quad \dot{\phi}_t = v_t\!\circ\!\phi_t,\ \dot{\psi}_t = w_t\!\circ\!\psi_t,$$
+    \quad \dot{\phi}_t = v_t\!\circ\!\phi_t,\ \dot{\psi}_t = w_t\!\circ\!\psi_t,
+$$
 
 with $\phi_0=\psi_0=\mathrm{id}$. At the optimum (under symmetry assumptions) one obtains a pair of inverse-consistent maps meeting at $t=\tfrac{1}{2}$. Practical SyN solves this via *greedy* updates that alternately (i) compute similarity gradients in the halfway space, (ii) smooth them by $K=A^{-1}$, and (iii) compose small diffeomorphic updates in both directions [3].
 
 ### 3.3 Similarity Term for NCCT: Localized (Normalized) Cross-Correlation
 For same-modality NCCT, cross-correlation (CC) or localized normalized CC (LNCC) are standard and effective \cite{Avants.2008, Avants.2011}. Denote Gaussian smoothing by $G_\sigma * (\cdot)$. Define local means $\mu_I = G_\sigma * I$, $\mu_J = G_\sigma * J$, and local second moments $S_{II} = G_\sigma * (I^2)$, $S_{JJ} = G_\sigma * (J^2)$, $S_{IJ} = G_\sigma * (IJ)$. The LNCC at voxel $x$ is:
 
-$$\mathrm{LNCC}_\sigma(I,J)(x) = \frac{\big(S_{IJ}(x) - \mu_I(x)\mu_J(x)\big)^2}{\big(S_{II}(x) - \mu_I^2(x)\big)\,\big(S_{JJ}(x) - \mu_J^2(x)\big) + \epsilon},$$
+$$
+\mathrm{LNCC}_\sigma(I,J)(x) = \frac{\big(S_{IJ}(x) - \mu_I(x)\mu_J(x)\big)^2}{\big(S_{II}(x) - \mu_I^2(x)\big)\,\big(S_{JJ}(x) - \mu_J^2(x)\big) + \epsilon},
+$$
 
 and the image dissimilarity is $\mathcal{D}(I,J) = -\sum_x \mathrm{LNCC}_\sigma(I,J)(x)$. The gradient $\partial \mathcal{D}/\partial I$ can be derived by quotient rule and chain rule through the local statistics; SyN’s implementation uses closed-form voxelwise expressions followed by convolutional smoothing to yield stable updates [3, 4].
 
 ### 3.4 Variational Derivatives and Updates (Sketch)
 Let $X = I\circ\phi^{-1}$, $Y = J\circ\psi^{-1}$ be the halfway-space images. Differentiating $\mathcal{D}(X,Y)$ w.r.t.\ $\phi$ uses $\partial X/\partial \phi = -(\nabla I\circ\phi^{-1})\, D\phi^{-1}$, yielding a force term in halfway space that is then *pulled back* to the domain of $\phi$ via the inverse deformation and Jacobian:
 
-$$\frac{\delta \mathcal{D}}{\delta \phi}(x)
+$$
+\frac{\delta \mathcal{D}}{\delta \phi}(x)
     \;\propto\; 
     \left(D\phi^{-1}(x)\right)^\top
     \left(\frac{\partial \mathcal{D}}{\partial X}\bigg|_{x}\right)
     \cdot \big(\nabla I\circ\phi^{-1}(x)\big)\;
-    \left|\det D\phi^{-1}(x)\right|.$$
+    \left|\det D\phi^{-1}(x)\right|.
+$$
 
 The velocity update applies the inverse of the regularizer $A$ (i.e., smoothing with $K=A^{-1}$):
 
-$$v^{(k+1)} \;=\; v^{(k)} - \eta\, A^{-1}\!\left(\frac{\delta \mathcal{D}}{\delta \phi}\right), \qquad w^{(k+1)} \;=\; w^{(k)} - \eta\, A^{-1}\!\left(\frac{\delta \mathcal{D}}{\delta \psi}\right),$$
+$$
+v^{(k+1)} \;=\; v^{(k)} - \eta\, A^{-1}\!\left(\frac{\delta \mathcal{D}}{\delta \phi}\right), \qquad w^{(k+1)} \;=\; w^{(k)} - \eta\, A^{-1}\!\left(\frac{\delta \mathcal{D}}{\delta \psi}\right),
+$$
 
 followed by composition of small diffeomorphic steps to keep invertibility: $\phi \leftarrow \exp(\Delta v)\circ \phi$, $\psi \leftarrow \exp(\Delta w)\circ \psi$. Here, $\exp$ denotes integration of the stationary substep (often via scaling-and-squaring). Writing $m = Av$ (the momentum), EPDiff transport relates $m_t$ across time, which SyN approximates through its symmetric greedy scheme [3, 4].
 
