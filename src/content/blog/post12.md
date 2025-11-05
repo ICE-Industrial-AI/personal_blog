@@ -2,7 +2,7 @@
 title: "The Digital Fitness Trainer for Your Pocket"
 description: "FitAI Pro ist eine kamera-basierte digitale Trainingshilfe, die mit BlazePose-basierter Pose‑Estimation und spezialisierten Klassifikationsmodellen in Echtzeit Übungsart, Wiederholungen und Bewegungsphasen erkennt. Die App liefert trainingswissenschaftlich fundiertes Feedback zu Technikfehlern (z. B. Hüfte-vor-Schultern, Armschwung) und extrahiert Metadaten wie Reps und Phasen, um personalisierte Hinweise ohne zusätzliche Sensoren bereitzustellen."
 pubDate: "Nov 5 2025"
-heroImage: "/personal_blog/fitai.png"
+heroImage: "/personal_blog/fit_ai.png"
 badge: "Latest"
 ---
 
