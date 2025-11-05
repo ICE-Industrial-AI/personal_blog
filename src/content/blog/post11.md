@@ -1,12 +1,10 @@
 ---
-title: "Methoden der Versuchsplanung: Optimal Design und Sobol-Sequenzen"
-description: "Die Erstellung von Surrogatmodellen zielt darauf ab, rechenintensive Simulationen durch schnelle Näherungsmodelle zu ersetzen. Der Erfolg dieses Ansatzes hängt fundamental von der Qualität und Effizienz der verwendeten Trainingsdaten ab, die durch Methoden der Versuchsplanung (Design of Experiments, DoE) generiert werden. Raumfüllende Pläne (wie Latin Hypercube und Sobol-Sequenzen) sind essenziell, wenn das Surrogatmodell (z.B. ein Neuronales Netz oder ein Gauss-Prozess) eine "Black-Box"-Funktion ohne a-priori-Modellstruktur approximieren soll. Die Sobol-Sequenz sticht hierbei durch ihre überlegene Gleichmässigkeit (geringe Diskrepanz) und ihre Erweiterbarkeit hervor, was oft zu genaueren Modellen bei gleicher Anzahl von Simulationspunkten führt. Optimale Pläne (wie D- oder I-Optimalität) werden eingesetzt, wenn das Surrogatmodell selbst ein spezifisches statistisches Modell ist (z.B. eine Polynom-Antwortfläche). Diese Methoden optimieren die Position der Stützpunkte gezielt, um die Parameter dieses Modells mit minimaler Unsicherheit zu schätzen. Die korrekte Wahl der Sampling-Strategie ist somit ein fundamentaler Schritt, der die Effizienz und die Vorhersagegüte des finalen Surrogatmodells direkt bestimmt."
-pubDate: "Nov 4 2025"
+title: "DeepStroke - ASPECTS Regions Segmentation"
+description: "This blog provides a comprehensive overview of the MSE Specialization Module **DeepStroke - ASPECTS Regions Segmentation**. Stroke is a leading cause of mortality and long-term disability globally, necessitating rapid and accurate diagnostic methods. The DeepStroke project aims to develop an end-to-end pipeline for preprocessing non-contrast computed tomography (NCCT) brain scans, segmenting critical regions, and predicting the Alberta Stroke Program Early CT Score (ASPECTS) and the location of the occlusions."
+pubDate: "Oct 23 2025"
 heroImage: "/personal_blog/aikn.webp"
 badge: "Latest"
 ---
-
-
 
 # Methoden der Versuchsplanung: Optimal Design und Sobol-Sequenzen
 *Author: Christoph Würsch, ICE, Eastern Switzerland University of Applied Sciences, OST*
