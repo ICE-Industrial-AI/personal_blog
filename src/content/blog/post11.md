@@ -39,8 +39,7 @@ Dieser Blog behandelt fundamentale Methoden der Versuchsplanung (Design of Exper
 
 
 
-<br>
-<br>
+
 
 
 # 1 Optimale Versuchsplanung (Optimal Design)
@@ -110,8 +109,6 @@ Dieser Ansatz ist sehr robust, da er darauf abzielt, den ''Worst-Case'' (den Pun
 
 * **Raumfüllende Pläne (LHS, Sobol):** Werden verwendet, wenn *kein* Modell a priori angenommen wird. Sie sind ideal für die allgemeine Exploration, die Erstellung von Surrogatmodellen (z.B. Gauss-Prozesse, Neuronale Netze) oder für Sensitivitätsanalysen.
 
-<br>
-<br>
 
 
 # 2. Sampling-Methoden für die Versuchsplanung (DoE)
@@ -204,8 +201,7 @@ Diese Konvergenz ist *deutlich* schneller als $O(N^{-1/2})$ von MC, solange die 
 | **Ideal für** | Robuste Tests, sehr hohe Dimensionen ($s \gg 50$) | Standard-DoE, wenn $N$ feststeht, UQ | Surrogatmodell-Training, Sensitivitätsanalyse (Sobol-Ind.) |
 
 
-<br>
-<br>
+
 
 
 # 3. Sobol-Sequenzen ''from scratch''
