@@ -2,7 +2,7 @@
 title: "DeepStroke - ASPECTS Regions Segmentation"
 description: "This blog provides a comprehensive overview of the MSE Specialization Module **DeepStroke - ASPECTS Regions Segmentation**. Stroke is a leading cause of mortality and long-term disability globally, necessitating rapid and accurate diagnostic methods. The DeepStroke project aims to develop an end-to-end pipeline for preprocessing non-contrast computed tomography (NCCT) brain scans, segmenting critical regions, and predicting the Alberta Stroke Program Early CT Score (ASPECTS) and the location of the occlusions."
 pubDate: "Oct 23 2025"
-heroImage: "/personal_blog/aikn.webp"
+heroImage: "/personal_blog/DeepStroke.png"
 badge: "Latest"
 ---
 
