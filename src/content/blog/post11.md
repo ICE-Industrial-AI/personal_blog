@@ -230,7 +230,7 @@ Aus jedem primitiven Polynom wird ein Satz von **Richtungszahlen** $V_{j,i}$ abg
 
 Die Richtungszahlen werden über eine Rekurrenzrelation generiert, die direkt vom Polynom $P(x)$ abhängt:
 
-1.  **Initialwerte:** Die ersten $d$ Richtungszahlen $m_1, \dots, m_d$ werden als ungerade ganze Zahlen $< 2^i$ gewählt. Diese sind die Konstanten, die im Python-Code als $\texttt{SOBOL\_INIT\_M}$ gespeichert sind.
+1.  **Initialwerte:** Die ersten $d$ Richtungszahlen $m_1, \dots, m_d$ werden als ungerade ganze Zahlen $< 2^i$ gewählt. Diese sind die Konstanten, die im Python-Code als `SOBOL_INIT_M` gespeichert sind.
     
 2.  **Rekurrenzrelation:** Für $i > d$ wird $m_i$ über eine XOR-basierte Rekurrenz berechnet, die die Koeffizienten $a_k$ des Polynoms nutzt:
     $$
@@ -254,7 +254,7 @@ $$V[j][i] \equiv V_{j,i}$$
 Dies ist die $i$-te $L$-Bit-Richtungszahl für die $j$-te Dimension.
 
 1.  **Initialwerte ($i < d$):**
-    Die ersten $d$ Werte (aus $\texttt{SOBOL\_INIT\_M}$) werden geladen und an die korrekte Bit-Position (ganz links) verschoben.
+    Die ersten $d$ Werte (aus `SOBOL_INIT_M`) werden geladen und an die korrekte Bit-Position (ganz links) verschoben.
     $$
     V_{j,i} = m_i \ll (L - 1 - i) \quad \text{for } i = 0, \dots, d-1
     $$
@@ -264,7 +264,7 @@ Dies ist die $i$-te $L$-Bit-Richtungszahl für die $j$-te Dimension.
     
     $$V_{j,i} = (V_{j,i-d}) \oplus (V_{j,i-d} \gg d) \oplus \bigoplus_{k=1}^{d-1} (a_k \cdot V_{j,i-d+k})$$
     
-    (Wobei $a_k \cdot V$ bedeutet: $V$, falls $a_k=1$, und $0$, falls $a_k=0$. Dies wird im Code durch die Bit-Maskierung von \texttt{temp\_a} erreicht.)
+    (Wobei $a_k \cdot V$ bedeutet: $V$, falls $a_k=1$, und $0$, falls $a_k=0$. Dies wird im Code durch die Bit-Maskierung von `temp_a` erreicht.)
 
 
 ![Stufe 1: Vorkalkulation der Richtungszahlen](/personal_blog/algo1_richtungszahlen.png)
