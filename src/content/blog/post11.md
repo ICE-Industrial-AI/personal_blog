@@ -11,6 +11,7 @@ badge: "Latest"
 # Methoden der Versuchsplanung: Optimal Design und Sobol-Sequenzen
 *Author: Christoph Würsch, ICE, Eastern Switzerland University of Applied Sciences, OST*
 
+
 Dieser Blog behandelt fundamentale Methoden der Versuchsplanung (Design of Experiments, DoE) und stellt zwei primäre Ansätze gegenüber: die modellbasierte optimale Versuchsplanung und modellunabhängige, raumfüllende Sampling-Strategien.
 - Der erste Teil des Dokuments führt in die **optimale Versuchsplanung** ein, die darauf abzielt, einen Versuchsplan $\mathbf{X}$ für ein spezifisches statistisches Modell (z.B. Polynomregression) zu optimieren. Der Fokus liegt auf der **Informationsmatrix** $\mathbf{M} = \mathbf{X}^T \mathbf{X}$ und den davon abgeleiteten Optimalitätskriterien (D-, A-, I- und G-Optimalität), die jeweils unterschiedliche Aspekte der Modellgüte, wie die Parametervarianz oder die Vorhersagevarianz, optimieren.
 - Der zweite Teil vergleicht drei zentrale **raumfüllende Sampling-Methoden** für die Erstellung von Surrogatmodellen, wenn *kein* a-priori-Modell angenommen wird. Es werden das einfache **Monte-Carlo-Sampling (MC)**, das **Latin Hypercube Sampling (LHS)** und **Quasi-Monte-Carlo-Methoden (QMC)** am Beispiel der **Sobol-Sequenz** detailliert. Der Vergleich hebt die Unterschiede in Uniformität, Konvergenzrate ($O(N^{-1/2})$ für MC vs. $O(N^{-1}(\log N)^s)$ für QMC) und Erweiterbarkeit hervor, wobei die Sobol-Sequenz die beste mehrdimensionale Raumabdeckung und Flexibilität bietet.
