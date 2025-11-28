@@ -3,7 +3,7 @@
 title: "From Vectors to Graphs: The Evolution of Retrieval-Augmented Generation"
 description: Standard Retrieval-Augmented Generation (RAG) systems rely heavily on vector embeddings to retrieve relevant context. While effective for local semantic queries, these systems often fail to capture global structural information and multi-hop relationships across large corpora. This article introduces Graph RAG, a paradigm shift that integrates Knowledge Graphs (KGs) into the retrieval pipeline. We explore the architectural differences, the mathematical formulation of graph-based retrieval, and the Community Summary approach for global reasoning.
 pubDate: "Nov 28 2025"
-heroImage: "/personal_blog/aikn.webp"
+heroImage: "/personal_blog/GraphRAG_icon.png"
 badge: "Latest"
 ---
 
