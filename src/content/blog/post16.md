@@ -16,7 +16,7 @@ badge: "Latest"
 **Date:** 30.11.2025
 
 
-[Download the Presentation:](/personal_blog/AI4Cybersecurity (AI4Cyber)_WUCH.pdf) 
+[Download the Presentation](/personal_blog/AI4Cybersecurity_(AI4Cyber)_WUCH.pdf) 
 
 >The integration of Artificial Intelligence into cybersecurity has created a "dual-use" dynamic. It is a tool of immense power for defenders (Blue Teams) seeking to automate threat detection, yet it simultaneously empowers attackers (Red Teams) to generate sophisticated, polymorphic threats. This article explores the spectrum of machine learning techniques—from standard supervised learning to cutting-edge Generative AI—and how they are applied on both sides of the digital battlefield.
 
