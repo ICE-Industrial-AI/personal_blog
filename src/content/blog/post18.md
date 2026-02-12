@@ -13,11 +13,6 @@ badge: "Latest"
 *Eastern Switzerland University of Applied Sciences OST* <br>
 **Date:** 12.02.2026<br>
 
-
-
-# Optimization on Graphs
-
-
 > In this article, we will explore five fundamental graph combinatorial optimization problems. While they are NP-hard, the combination of exact algorithms, approximations, and continuous relaxations provides a robust toolkit for the practitioner. Then we will show how such combinatorial optimization problems (CO) can be solved using Graph Neural Networks (GNN).
 
 
