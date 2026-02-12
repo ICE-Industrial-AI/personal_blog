@@ -305,7 +305,8 @@ A set $K\subseteq V$ is a clique if every pair is connected:
 $$\forall i\neq j\in K:\ (i,j)\in E.$$
 The maximum clique problem maximizes $|K|$, denoted $\omega(G)$.
 
-A useful viewpoint is via the complement graph $\overline{G}=(V,\overline{E})$, where $(i,j)\in\overline{E}$ iff $(i,j)\notin E. A clique in $G$ corresponds exactly to an independent set in $\overline{G}$. Thus:
+A useful viewpoint is via the complement graph $\overline{G}=(V,\overline{E})$, where $(i,j)\in\overline{E}$ iff $(i,j)\notin E$. A clique in $G$ corresponds exactly to an independent set in $\overline{G}$. Thus:
+
 $$\omega(G) = \alpha(\overline{G}).$$
 
 ### 7.2 Motzkin--Straus and Continuous Characterization
