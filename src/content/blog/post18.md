@@ -96,7 +96,10 @@ Binary decision variables appear in two common encodings in the literature. It i
 2.  **Spin variables:** $s_i \in \{-1,+1\}$. These are typical in physics (Ising models) and spectral methods.
 
 They are linearly related by the transformations:
-	$$x_i = \frac{1+s_i}{2}, \qquad s_i = 2x_i-1.$$
+
+$$
+x_i = \frac{1+s_i}{2}, \qquad s_i = 2x_i-1.
+$$
 
 ### 2.2 Unified Quadratic Views
 
@@ -113,11 +116,16 @@ $$
 $$
 
 These forms are important not just for mathematical elegance but because they represent the interface for new hardware accelerators (such as quantum annealers) and are standard in statistical physics for energy minimization and Gibbs distributions. To illustrate the concepts in this chapter, we will use a small running example graph $G$ with $V=\{1,2,3,4,5\}$ and unit edge weights ($w_{ij}=1$). The edges are:
-$$E=\{(1,2),(1,3),(2,3),(2,4),(3,5),(4,5)\}.$$
+
+$$
+E=\{(1,2),(1,3),(2,3),(2,4),(3,5),(4,5)\}.
+$$
+
 Structurally, this graph contains a triangle on vertices $\{1,2,3\}$ and a "bridge-like" structure connecting the triangle to $\{4,5\}$.
 
 **Example 1 (Adjacency Matrix of the Running Graph)**
 With node order $(1,2,3,4,5)$, the adjacency matrix is:
+
 $$
 A=
 \begin{pmatrix}
@@ -141,12 +149,23 @@ We define the problem for the simplest case: balanced 2-way partitioning.
 
 **Definition 2 (Graph Partitioning (Balanced 2-Way))**
 Given $G=(V,E,w)$ with $n$ even, find a partition $V=S\cup \overline{S}$ with $|S|=|\overline{S}|=n/2$ that minimizes the cut weight:
-$$\mathrm{cut}(S,\overline{S}) = \sum_{i\in S,\,j\in \overline{S}} w_{ij}.$$
+
+$$
+\mathrm{cut}(S,\overline{S}) = \sum_{i\in S,\,j\in \overline{S}} w_{ij}.
+$$
 
 Let us formulate this using spin variables $s_i \in \{-1, 1\}$. We assign $s_i = +1$ if $i \in S$ and $s_i = -1$ if $i \in \overline{S}$. The indicator function for an edge being cut (endpoints having different signs) is $\frac{1-s_is_j}{2}$. Thus, the cut size is:
-$$\mathrm{cut}(S,\overline{S}) = \frac12\sum_{(i,j)\in E} w_{ij}\frac{1-s_is_j}{2} = \frac14\sum_{(i,j)\in E} w_{ij}(1-s_is_j).$$
+
+$$
+\mathrm{cut}(S,\overline{S}) = \frac12\sum_{(i,j)\in E} w_{ij}\frac{1-s_is_j}{2} = \frac14\sum_{(i,j)\in E} w_{ij}(1-s_is_j).
+$$
+
 The balance constraint $|S|=|\overline{S}|$ translates to $\sum_{i=1}^n s_i = 0$. We can rewrite the sum over edges using the Laplacian quadratic form:
-$$\sum_{(i,j)\in E} w_{ij}(s_i-s_j)^2 = 2 s^\top L s.$$
+
+$$
+\sum_{(i,j)\in E} w_{ij}(s_i-s_j)^2 = 2 s^\top L s.
+$$
+
 Minimizing the cut is therefore equivalent to minimizing $s^\top L s$ subject to the constraints.
 
 ### 3.2 Spectral Relaxation
@@ -179,12 +198,22 @@ In contrast to graph partitioning, the Maximum Cut (Max-Cut) problem seeks to pa
 
 **Definition 3 (Maximum Cut)**
 Find a bipartition $V=S\cup \overline{S}$ maximizing:
-$$\mathrm{cut}(S,\overline{S})=\sum_{i\in S,\,j\in \overline{S}} w_{ij}.$$
+
+$$
+\mathrm{cut}(S,\overline{S})=\sum_{i\in S,\,j\in \overline{S}} w_{ij}.
+$$
 
 Using spin variables, we have:
-$$\mathrm{cut}(S,\overline{S})=\frac14 \sum_{(i,j)\in E} w_{ij}(1-s_is_j).$$
+
+$$
+\mathrm{cut}(S,\overline{S})=\frac14 \sum_{(i,j)\in E} w_{ij}(1-s_is_j).
+$$
+
 Maximizing this quantity is equivalent to minimizing the sum of the spin products:
-$$\min_{s\in\{-1,1\}^n}\ \sum_{(i,j)\in E} w_{ij}s_is_j.$$
+
+$$
+\min_{s\in\{-1,1\}^n}\ \sum_{(i,j)\in E} w_{ij}s_is_j.
+$$
 
 ### 4.2 SDP Relaxation (Goemans--Williamson)
 
@@ -218,11 +247,18 @@ The Minimum Vertex Cover problem addresses coverage. Imagine a network of router
 
 **Definition 4 (Vertex Cover)**
 A set $C\subseteq V$ is a vertex cover if every edge has at least one endpoint in $C$:
-$$\forall (i,j)\in E:\quad i\in C\ \text{or}\ j\in C.$$
+
+$$
+\forall (i,j)\in E:\quad i\in C\ \text{or}\ j\in C.
+$$
+
 The minimum vertex cover problem is to minimize $|C|$.
 
 Let $x_i=1$ if $i\in C$, else $0$. This leads to a canonical Integer Linear Program (ILP):
-$$\min_{x\in\{0,1\}^n}\ \sum_{i=1}^n x_i \quad\text{s.t.}\quad x_i+x_j\ge 1\ \ \forall (i,j)\in E.$$
+
+$$
+\min_{x\in\{0,1\}^n}\ \sum_{i=1}^n x_i \quad\text{s.t.}\quad x_i+x_j\ge 1\ \ \forall (i,j)\in E.
+$$
 
 ### 5.2 Relaxations and Approximations
 
@@ -261,11 +297,18 @@ In wireless networks, an edge represents interference between two transmitters. 
 
 **Definition 5 (Independent Set)**
 A set $S\subseteq V$ is independent if no edge is contained inside $S$:
-$$\forall (i,j)\in E:\quad \text{not both } i,j\in S.$$
+
+$$
+\forall (i,j)\in E:\quad \text{not both } i,j\in S.
+$$
+
 The maximum independent set problem maximizes $|S|$, denoted by $\alpha(G)$.
 
 The ILP formulation is:
-$$\max_{x\in\{0,1\}^n}\ \sum_i x_i \quad\text{s.t.}\quad x_i+x_j\le 1\ \ \forall (i,j)\in E.$$
+
+$$
+\max_{x\in\{0,1\}^n}\ \sum_i x_i \quad\text{s.t.}\quad x_i+x_j\le 1\ \ \forall (i,j)\in E.
+$$
 
 ### 6.2 Relationship to Vertex Cover
 
@@ -273,7 +316,11 @@ There is a fundamental complementarity between MIS and Vertex Cover.
 
 **Proposition 1**
 A set $C$ is a vertex cover if and only if $V\setminus C$ is an independent set. Consequently,
-$$\alpha(G) + \tau(G) = n,$$
+
+$$
+\alpha(G) + \tau(G) = n,
+$$
+
 where $\alpha(G)$ is the maximum independent set size and $\tau(G)$ is the minimum vertex cover size.
 
 This relationship allows us to translate algorithms and bounds from one problem to the other.
@@ -302,20 +349,29 @@ A clique is a subset of vertices where every pair is connected. In protein-prote
 
 **Definition 6 (Clique)**
 A set $K\subseteq V$ is a clique if every pair is connected:
-$$\forall i\neq j\in K:\ (i,j)\in E.$$
+
+$$
+\forall i\neq j\in K:\ (i,j)\in E.
+$$
+
 The maximum clique problem maximizes $|K|$, denoted $\omega(G)$.
 
 A useful viewpoint is via the complement graph $\overline{G}=(V,\overline{E})$, where $(i,j)\in\overline{E}$ iff $(i,j)\notin E$. A clique in $G$ corresponds exactly to an independent set in $\overline{G}$. Thus:
 
-$$\omega(G) = \alpha(\overline{G}).$$
+$$
+\omega(G) = \alpha(\overline{G}).
+$$
 
-### 7.2 Motzkin--Straus and Continuous Characterization
+### 7.2 Motzkin-Straus and Continuous Characterization
 
-The Motzkin--Straus theorem provides a classic continuous characterization of the clique number, linking it to optimization over the probability simplex $\Delta_n$.
+The Motzkin-Straus theorem provides a classic continuous characterization of the clique number, linking it to optimization over the probability simplex $\Delta_n$.
 
 **Theorem 2 (Motzkin--Straus)**
 For an unweighted graph with adjacency matrix $A$:
-$$\max_{x\in\Delta_n} x^\top A x \;=\; 1 - \frac{1}{\omega(G)}.$$
+
+$$
+\max_{x\in\Delta_n} x^\top A x \;=\; 1 - \frac{1}{\omega(G)}.
+$$
 
 ### 7.3 Exact Search: Bron--Kerbosch
 
@@ -345,11 +401,18 @@ A central concept connecting these problems is *SDP lifting*. We replace the pro
 
 **Definition 7 (SDP Lifting)**
 For $s\in\{-1,1\}^n$, define $X=ss^\top$. Then $X$ satisfies:
-$$X\succeq 0,\quad \mathrm{rank}(X)=1,\quad X_{ii}=1.$$
+
+$$
+X\succeq 0,\quad \mathrm{rank}(X)=1,\quad X_{ii}=1.
+$$
+
 Dropping the non-convex rank constraint yields a tractable SDP relaxation.
 
 This template captures many binary quadratic problems:
-$$\min_{s\in\{-1,1\}^n}\ s^\top Q s \quad \Longrightarrow \quad \min_{X \succeq 0} \text{Tr}(QX)\ \ \text{s.t.}\ X_{ii}=1.$$
+
+$$
+\min_{s\in\{-1,1\}^n}\ s^\top Q s \quad \Longrightarrow \quad \min_{X \succeq 0} \text{Tr}(QX)\ \ \text{s.t.}\ X_{ii}=1.
+$$
 
 ### 8.2 Randomized Rounding
 
@@ -426,7 +489,9 @@ A powerful recent development is the Physics-Inspired approach. Instead of mimic
 **The QUBO Hamiltonian**
 Recall that many graph problems can be written as minimizing a quadratic cost function of binary variables $x_i \in \{0, 1\}$:
 
-$$H_{\text{QUBO}}(x) = \sum_{i,j} x_i Q_{ij} x_j$$
+$$
+H_{\text{QUBO}}(x) = \sum_{i,j} x_i Q_{ij} x_j
+$$
 
 where $Q$ is a matrix defining the problem instance. For example, in the Maximum Cut (Max-Cut) problem, we want to maximize the number of edges between two sets. This is equivalent to minimizing the energy of an antiferromagnetic Ising model. The Hamiltonian is:
 
@@ -439,10 +504,15 @@ where $A_{ij}$ is the adjacency matrix. If nodes $i$ and $j$ have different valu
 2.  GNN Parameterization: A GNN accepts the graph structure (and random node initialization) and outputs a continuous value $p_i(\theta)$ for every node, where $\theta$ represents the network weights. A Sigmoid activation at the final layer ensures the output is in $[0, 1]$.
 3.  Differentiable Loss: We substitute these probabilities directly into the QUBO Hamiltonian to define the loss function:
 
-$$\mathcal{L}(\theta) = \sum_{i,j} p_i(\theta) Q_{ij} p_j(\theta)$$
+$$
+\mathcal{L}(\theta) = \sum_{i,j} p_i(\theta) Q_{ij} p_j(\theta)
+$$
 
 This loss function measures the "expected energy" of the system. By minimizing $\mathcal{L}(\theta)$ via gradient descent (e.g., using Adam), the GNN learns node embeddings that push the system toward a low-energy state (a good solution). After training, the GNN outputs continuous values (e.g., $p_i = 0.9$ or $p_j = 0.1$). To get a valid discrete solution, we apply a simple projection:
-$$x_i = \begin{cases} 1 & \text{if } p_i \ge 0.5 \\ 0 & \text{if } p_i < 0.5 \end{cases}$$
+
+$$
+x_i = \begin{cases} 1 & \text{if } p_i \ge 0.5 \\ 0 & \text{if } p_i < 0.5 \end{cases}
+$$
 
 Crucially, this method is unsupervised. It requires no labeled training data. The GNN essentially acts as a "neural annealer," settling the system into a low-energy configuration.
 
@@ -458,7 +528,9 @@ This approach scales linearly with the number of edges, allowing it to solve mil
 
 For problems with hard constraints, like the Maximum Independent Set (MIS) (no two selected nodes can be connected), we use penalty terms. The Hamiltonian combines a maximization term (size of the set) and a penalty term (independence violation):
 
-$$H_{\text{MIS}} = - \sum_{i} x_i + P \sum_{(i,j) \in \mathcal{E}} x_i x_j$$
+$$
+H_{\text{MIS}} = - \sum_{i} x_i + P \sum_{(i,j) \in \mathcal{E}} x_i x_j
+$$
 
 Here, the first term encourages $x_i=1$ (selecting nodes), while the second term adds a large penalty $P$ if two connected nodes are both selected ($x_i x_j = 1$). The GNN minimizes this combined objective, learning to balance the desire to pick nodes with the necessity of avoiding conflicts.
 
