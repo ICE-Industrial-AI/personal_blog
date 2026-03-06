@@ -1,5 +1,5 @@
 ---
-title: "Combinatorial Optimization on Graphs"
+title: "Parallele & hochdimensionale Bayes-Optimierung"
 description: "Dieser Artikel bietet einen detaillierten Überblick über einen fortschrittliche Bereich der Bayes'schen Optimierung (BO): die parallele (Batch-)Optimierung, die sich auf die q-Expected Improvement (q-EI) Akquisitionsfunktion konzentriert. Der Artikel stellt die fundamentalen Referenzen für jedes Thema bereit, analysiert die Entwicklung des Fachgebiets und präsentiert einen umfassenden Überblick über den aktuellen Stand der Technik."
 pubDate: "March 6 2026"
 heroImage: "/personal_blog/aikn.webp"
