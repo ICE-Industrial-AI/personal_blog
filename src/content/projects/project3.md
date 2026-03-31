@@ -1,8 +1,8 @@
 ---
 title: "KG melding with LLMs"
-description: "Every year, around 100 people die in avalanche accidents in Europe alone. Together with industry partner ANAVIA from Näfels GL, a system is being developed to localise avalanche victims as quickly as possible. The project idea was selected as the winner of the 5th Innovation Boosters Robotics call alongside five other projects."
+description: "The project develops a graph-based representation of the physical world, mapping real objects to nodes with relevant functional attributes. This enables precise task planning and graph-based reasoning about object relationships, supporting exact predictions beyond the capabilities of conventional LLMs. Knowledge graphs are well suited for modeling and querying complex relationships, and this approach extends them by encoding functional properties in node and edge attributes. The method is illustrated in two key domains: robotics, where graphs are already central to task planning, and engineering design, which has recently gained attention through LLMs and generative AI. Despite this potential, challenges remain in how systems are described and represented."
 pubDate: "Mar 31 2026"
-heroImage: "/personal_blog/spark/HotCupOverBook.png"
+heroImage: "/personal_blog/spark/SparkPoster.png"
 badge: "Starting"
 tags: ["AI", "Signal Processing"]
 category: "AI Solution"
@@ -12,7 +12,7 @@ featured: true
 # K-GraphLink: Knowledge-Graphs Linking physical world and code for task planning
 
 # Abstract
-The project envisions the development of a graph representation that abstracts the physical world but maps it to a graph with relevant and functional attributes. This representation allows to create precise task planning based on this graph model, with the connections between the real objects, represented as graph nodes, allowing exact predictions to be made based on graph reasoning, which is not possible with conventional Large Language Models (LLMs). Indeed, knowledge graphs are among the most effective methods for mapping and querying complex relationships, and this method is also employed in this con-text, with the representation of functional properties in node and edge attributes representing a novel innovation. The method is utilized as an illustration in two pertinent domains. The former pertains to robotics, where graphs already play a signiﬁcant role in task planning; the latter focuses on engineering design, an area that has recently gained signiﬁcant relevance due to LLMs (large language models) and generative AI. However, it should be noted that the ﬁeld still faces challenges in terms of description and representation of systems.
+The project envisions the development of a graph representation that abstracts the physical world but maps it to a graph with relevant and functional attributes. This representation allows to create precise task planning based on this graph model, with the connections between the real objects, represented as graph nodes, allowing exact predictions to be made based on graph reasoning, which is not possible with conventional Large Language Models (LLMs). Indeed, knowledge graphs are among the most effective methods for mapping and querying complex relationships, and this method is also employed in this context, with the representation of functional properties in node and edge attributes representing a novel innovation. The method is utilized as an illustration in two pertinent domains. The former pertains to robotics, where graphs already play a signiﬁcant role in task planning; the latter focuses on engineering design, an area that has recently gained signiﬁcant relevance due to LLMs (large language models) and generative AI. However, it should be noted that the ﬁeld still faces challenges in terms of description and representation of systems.
 
 
 # Aim of the Project
