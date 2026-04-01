@@ -4,8 +4,8 @@ description: "The project develops a graph-based representation of the physical 
 pubDate: "Mar 31 2026"
 heroImage: "/personal_blog/spark/SparkPoster.png"
 badge: "Starting"
-tags: ["AI", "Signal Processing"]
-category: "AI Solution"
+tags: ["AI", "LLMs", "Knowledge Graphs", "Feedback"]
+category: "AI Research"
 featured: true
 ---
 
