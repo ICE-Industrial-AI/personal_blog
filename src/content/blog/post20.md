@@ -16,6 +16,8 @@ badge: "Latest"
 
 > Eine tiefgreifende und verblüffende Erkenntnis ist, dass die **Magnetkraft im Wesentlichen die elektrische Kraft ist, betrachtet aus einem anderen Bezugssystem**. Der „magnetische“ Teil der Lorentzkraft ist eine relativistische Manifestation des elektrischen Feldes. Das Versagen der Flussregel bei der unipolaren Induktion unterstreicht die Notwendigkeit, $\vec{E}$ und $\vec{B}$ als Komponenten eines einzigen relativistischen Objekts zu behandeln: des Faraday-Tensors. Selbst bei den „niedrigen“ Geschwindigkeiten einer Kupferscheibe ist Magnetismus im Grunde ein relativistisches Phänomen.
 
+[Download:](/personal_blog/LorentzForce.pdf)
+
 ---
 
 ### Inhaltsverzeichnis
@@ -52,7 +54,7 @@ Betrachten wir eine leitende Kupferscheibe (Faraday-Rad), die in einem gleichmä
 Das folgende Diagramm veranschaulicht den Aufbau. Beachten Sie, dass während die Scheibe rotiert, das Magnetfeld und der externe Stromkreis (Schleifkontakte) im Labor-Bezugssystem stationär bleiben.
 
 
-![Unipolarinduktion bei einer rotierenden Kupferscheibe](/personal_blog/Unipolarinduttion.png)
+![Unipolarinduktion bei einer rotierenden Kupferscheibe](/personal_blog/Unipolarinduktion.png)
 
 > **Abbildung 1:** Draufsicht auf die Faradaysche Scheibe. Die blauen kreisförmigen Pfeile um die Kreuze stellen das Magnetfeld $\vec{B}$ dar, das in die Seite hinein gerichtet ist. Die Lorentzkraft $\vec{F}_L = q(\vec{v} \times \vec{B})$ treibt die Ladungen radial zum Rand.
 
