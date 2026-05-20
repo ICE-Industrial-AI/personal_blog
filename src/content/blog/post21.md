@@ -10,33 +10,94 @@ heroImage: "/personal_blog/FS2M.jpg"
 
 AI was supposed to reason like a logician. Instead, it learned to navigate meaning like a reader moving through a library — finding related ideas not by following rules, but by sensing proximity. This article traces that journey, explains what large language models actually do to words, and honestly confronts the question: are they just very eloquent parrots?
  
-**Table of Contents**
- 
-1. The expectation: AI as a reasoning machine
-   - 1.1 Symbolic AI and the knowledge-engineering dream
-   - 1.2 Why the dream collapsed
-   - 1.3 Connectionism and the first neural-network winter
-2. The statistical turn: meaning as location
-   - 2.1 N-grams: language as statistics
-   - 2.2 Word embeddings: words as coordinates
-3. Attention: meaning that moves
-   - 3.1 The bottleneck problem
-   - 3.2 Attention as semantic navigation
-   - 3.3 What attention actually does in a transformer
-4. Emergence: when scale becomes something else
-   - 4.1 GPT-3 and few-shot learning
-   - 4.2 Phase transitions in capability
-5. Thinking tokens: teaching models to slow down
-6. RAG: connecting memory to the world
-7. Debunking the stochastic parrot
-   - 7.1 Where the parrot critique lands hardest
-   - 7.2 The parrot thesis, fairly stated
-   - 7.3 The evidence against pure parroting
-   - 7.4 Prediction, planning, and the bounded role of randomness
-   - 7.5 When the parrot does appear: hallucination reconsidered
-   - 7.6 The middle ground
-8. Implications for educators and practitioners
-9. References
+<div class="not-prose my-8 rounded-xl border border-base-300 bg-base-100 p-6 shadow-sm">
+  <div class="flex items-baseline justify-between mb-5 pb-3 border-b border-base-300/60">
+    <h3 class="text-xs font-bold uppercase tracking-[0.2em] text-base-content/60 m-0">Table of contents</h3>
+    <span class="text-xs text-base-content/40">9 sections</span>
+  </div>
+  <ol class="grid gap-x-6 gap-y-4 sm:grid-cols-2 list-none p-0 m-0">
+    <li class="flex gap-3 m-0">
+      <span class="font-mono text-2xl font-light text-primary/70 leading-none mt-0.5 select-none">1</span>
+      <div class="flex-1 min-w-0">
+        <div class="font-semibold text-sm leading-snug">The expectation: AI as a reasoning machine</div>
+        <ul class="mt-1.5 space-y-0.5 text-xs text-base-content/65 list-none p-0 m-0">
+          <li class="m-0">1.1 Symbolic AI and the knowledge-engineering dream</li>
+          <li class="m-0">1.2 Why the dream collapsed</li>
+          <li class="m-0">1.3 Connectionism and the first neural-network winter</li>
+        </ul>
+      </div>
+    </li>
+    <li class="flex gap-3 m-0">
+      <span class="font-mono text-2xl font-light text-primary/70 leading-none mt-0.5 select-none">2</span>
+      <div class="flex-1 min-w-0">
+        <div class="font-semibold text-sm leading-snug">The statistical turn: meaning as location</div>
+        <ul class="mt-1.5 space-y-0.5 text-xs text-base-content/65 list-none p-0 m-0">
+          <li class="m-0">2.1 N-grams: language as statistics</li>
+          <li class="m-0">2.2 Word embeddings: words as coordinates</li>
+        </ul>
+      </div>
+    </li>
+    <li class="flex gap-3 m-0">
+      <span class="font-mono text-2xl font-light text-primary/70 leading-none mt-0.5 select-none">3</span>
+      <div class="flex-1 min-w-0">
+        <div class="font-semibold text-sm leading-snug">Attention: meaning that moves</div>
+        <ul class="mt-1.5 space-y-0.5 text-xs text-base-content/65 list-none p-0 m-0">
+          <li class="m-0">3.1 The bottleneck problem</li>
+          <li class="m-0">3.2 Attention as semantic navigation</li>
+          <li class="m-0">3.3 What attention actually does in a transformer</li>
+        </ul>
+      </div>
+    </li>
+    <li class="flex gap-3 m-0">
+      <span class="font-mono text-2xl font-light text-primary/70 leading-none mt-0.5 select-none">4</span>
+      <div class="flex-1 min-w-0">
+        <div class="font-semibold text-sm leading-snug">Emergence: when scale becomes something else</div>
+        <ul class="mt-1.5 space-y-0.5 text-xs text-base-content/65 list-none p-0 m-0">
+          <li class="m-0">4.1 GPT-3 and few-shot learning</li>
+          <li class="m-0">4.2 Phase transitions in capability</li>
+        </ul>
+      </div>
+    </li>
+    <li class="flex gap-3 m-0">
+      <span class="font-mono text-2xl font-light text-primary/70 leading-none mt-0.5 select-none">5</span>
+      <div class="flex-1 min-w-0">
+        <div class="font-semibold text-sm leading-snug">Thinking tokens: teaching models to slow down</div>
+      </div>
+    </li>
+    <li class="flex gap-3 m-0">
+      <span class="font-mono text-2xl font-light text-primary/70 leading-none mt-0.5 select-none">6</span>
+      <div class="flex-1 min-w-0">
+        <div class="font-semibold text-sm leading-snug">RAG: connecting memory to the world</div>
+      </div>
+    </li>
+    <li class="flex gap-3 m-0">
+      <span class="font-mono text-2xl font-light text-primary/70 leading-none mt-0.5 select-none">7</span>
+      <div class="flex-1 min-w-0">
+        <div class="font-semibold text-sm leading-snug">Debunking the stochastic parrot</div>
+        <ul class="mt-1.5 space-y-0.5 text-xs text-base-content/65 list-none p-0 m-0">
+          <li class="m-0">7.1 Where the parrot critique lands hardest</li>
+          <li class="m-0">7.2 The parrot thesis, fairly stated</li>
+          <li class="m-0">7.3 The evidence against pure parroting</li>
+          <li class="m-0">7.4 Prediction, planning, and the bounded role of randomness</li>
+          <li class="m-0">7.5 When the parrot does appear: hallucination reconsidered</li>
+          <li class="m-0">7.6 The middle ground</li>
+        </ul>
+      </div>
+    </li>
+    <li class="flex gap-3 m-0">
+      <span class="font-mono text-2xl font-light text-primary/70 leading-none mt-0.5 select-none">8</span>
+      <div class="flex-1 min-w-0">
+        <div class="font-semibold text-sm leading-snug">Implications for educators and practitioners</div>
+      </div>
+    </li>
+    <li class="flex gap-3 m-0">
+      <span class="font-mono text-2xl font-light text-primary/70 leading-none mt-0.5 select-none">9</span>
+      <div class="flex-1 min-w-0">
+        <div class="font-semibold text-sm leading-snug">References</div>
+      </div>
+    </li>
+  </ol>
+</div>
 ## 1  The expectation: AI as a reasoning machine
  
 ### 1.1 Symbolic AI and the knowledge-engineering dream
@@ -62,25 +123,40 @@ The symbolic-AI history is only half the story. Running in parallel — and at t
  
 The hype outran the technology. By the mid-1960s, neural-network research was already slowing — limited by the computers of the era, by the lack of any training algorithm for networks with more than one layer of weights, and by the rising influence of the symbolic school. In 1969, Marvin Minsky and Seymour Papert published *Perceptrons* [21], a mathematically rigorous critique of single-layer networks. Their central result was that single-layer perceptrons could not learn even simple non-linearly-separable functions — the XOR function being the canonical example. They conjectured, on the basis of intuition rather than proof, that multi-layer extensions would face similar limits.
  
-> **The XOR problem — what blocked early neural networks** Imagine plotting four points: (0,0), (0,1),
-> (1,0), (1,1). The OR function returns 1 unless both inputs are 0 — you can draw a straight line
-> separating the "0" point from the three "1" points. AND is similar. But XOR returns 1 only when
-> exactly one input is 1 — and there is no straight line that separates the two "1" points from the
-> two "0" points; they lie on opposite diagonals. A single-layer perceptron, which can only carve up
-> the input space with straight lines, simply cannot represent this. Multi-layer networks with non-
-> linear activation functions can — but no one had a workable algorithm to train them in 1969.
+<details class="collapse collapse-arrow bg-base-200 border border-base-300 my-6">
+<summary class="collapse-title font-semibold">🔍 <span class="text-xs uppercase tracking-wider opacity-60">Deep dive</span> — The XOR problem: what blocked early neural networks</summary>
+<div class="collapse-content">
+
+Imagine plotting four points: (0,0), (0,1), (1,0), (1,1). The OR function returns 1 unless both inputs are 0 — you can draw a straight line separating the "0" point from the three "1" points. AND is similar. But XOR returns 1 only when exactly one input is 1 — and there is no straight line that separates the two "1" points from the two "0" points; they lie on opposite diagonals. A single-layer perceptron, which can only carve up the input space with straight lines, simply cannot represent this. Multi-layer networks with non-linear activation functions can — but no one had a workable algorithm to train them in 1969.
+
+</div>
+</details>
  
 The book did not single-handedly kill neural-network research, but it crystallised a perception that connectionism was a dead end and helped redirect funding decisively toward symbolic AI. What followed was a *first neural-network winter* in mainstream visibility — but the work itself did not stop. It went underground.
  
+<details class="collapse collapse-arrow bg-base-200 border border-base-300 my-6">
+<summary class="collapse-title font-semibold">📚 <span class="text-xs uppercase tracking-wider opacity-60">Historical context</span> — The underground decade: Linnainmaa, Werbos, Grossberg, Fukushima</summary>
+<div class="collapse-content">
+
 Through the 1970s and early 1980s, a scattered community continued building. In 1970, the Finnish mathematician Seppo Linnainmaa published, in his master's thesis, the modern form of reverse-mode automatic differentiation — the mathematical machinery that backpropagation requires — though without reference to neural networks at all [23]. In 1974, Paul Werbos's Harvard PhD thesis applied this technique specifically to training multi-layer networks [24]. He could not publish it on neural-network grounds for years; symbolic AI was in vogue, and his work on the topic only reached print around 1982. Stephen Grossberg, working largely outside the AI mainstream, developed adaptive resonance theory from 1976 onward, addressing how networks could learn continuously without catastrophically forgetting prior knowledge — the "stability-plasticity dilemma" — culminating in the 1987 ART1 architecture with Gail Carpenter [25]. Teuvo Kohonen developed self-organizing maps in the early 1980s — networks that learn topology-preserving representations of high-dimensional data without supervision. In Japan, Kunihiko Fukushima's 1980 Neocognitron [26] introduced a multilayer convolutional architecture for visual pattern recognition; it is the direct ancestor of every convolutional neural network in use today.
+
+</div>
+</details>
  
 The thaw arrived in two stages. In 1982, the theoretical physicist John Hopfield published a short paper showing that a simple recurrent network of binary neurons could serve as a content-addressable associative memory, with stored patterns acting as energy minima [27]. The Hopfield network was elegant, easy to analyse, and — crucially — published by someone with the scientific credibility to be heard outside the AI community. It revived interest in connectionist methods within physics and cognitive science. Then in 1986, Rumelhart, Hinton and Williams published the paper [22] that brought backpropagation into the mainstream of AI: a clear, accessible demonstration that multi-layer networks could learn complex tasks, including XOR. The Parallel Distributed Processing volumes that accompanied this work made the case to a broad audience that connectionism was alive, productive, and serious.
  
 Minsky and Papert's intuition about the limits of multi-layer networks turned out to be wrong, but the field had already lost the better part of a generation. The connectionist programme would only fully recover with the deep-learning revolution of the 2010s, when GPU hardware finally made it possible to train the kinds of large networks that the underground work of the 1970s and 80s had foreshadowed.
  
+<details class="collapse collapse-arrow bg-base-200 border border-base-300 my-6">
+<summary class="collapse-title font-semibold">🔍 <span class="text-xs uppercase tracking-wider opacity-60">Deep dive</span> — The Universal Approximation Theorem: Minsky's conjecture, mathematically refuted</summary>
+<div class="collapse-content">
+
 The formal refutation of the Minsky–Papert conjecture arrived in 1989 as well, in the form of the **Universal Approximation Theorem**. Cybenko proved that any continuous function on a compact subset of ℝ^n can be approximated to arbitrary precision by a feedforward network with a single hidden layer of finite width, given a sigmoid activation function [28]. Hornik, Stinchcombe and White independently proved a more general version the same year [29]; Hornik (1991) extended the result further, showing that the multilayer architecture itself — not the specific choice of activation function — is what gives neural networks their universal approximation capacity [30].
- 
+
 The practical implication is decisive: the limits Minsky and Papert had proved for single-layer perceptrons did not generalise to multi-layer networks, and their conjecture that they would was mathematically false. A neural network of sufficient size can represent *any* continuous function. The theorem does not say such a network is easy to train, or that it will generalise well from limited data, or that it is the most efficient representation — those are separate problems, and remain hard. But the question of whether the architecture is fundamentally limited in what it can express was settled. The answer is no.
+
+</div>
+</details>
  
 > **Why this matters for the rest of the story** The two AI traditions — symbolic and connectionist —
 > had radically different bets about what mattered for intelligence. The symbolic school bet on
@@ -91,26 +167,95 @@ The practical implication is decisive: the limits Minsky and Papert had proved f
 > story of modern AI is not just the rise of deep learning; it is the slow, fifty-year vindication of
 > a tradition that had been largely written off.
  
-| Year | Event |
-|------|-------|
-| 1950 | Turing — "Computing Machinery and Intelligence" [1] |
-| 1958 | Rosenblatt's perceptron — first connectionist learning system |
-| 1956–1969 | Symbolic AI ascendant: McCarthy, Newell & Simon; LISP, GPS |
-| 1969 | Minsky & Papert, *Perceptrons* — neural-network winter begins [21] |
-| 1970–1974 | Backprop developed underground: Linnainmaa [23], Werbos [24] |
-| 1974–1980 | First (symbolic) AI winter — Lighthill Report; funding cuts [18] |
-| 1976 | Grossberg begins adaptive resonance theory [25] |
-| 1976–1986 | Expert systems boom: MYCIN, DENDRAL [2] |
-| 1980 | Fukushima's Neocognitron — ancestor of all CNNs [26] |
-| 1982 | Hopfield network — connectionism regains scientific credibility [27] |
-| 1986 | Backpropagation popularised by Rumelhart, Hinton & Williams [22] |
-| 1989–1991 | Universal Approximation Theorem — Minsky-Papert intuition formally refuted [28][29][30] |
-| 1987–1993 | Second AI winter — expert-systems market and LISP-machine collapse |
-| 1993–2012 | Statistical methods dominate: n-grams, SVMs, shallow neural nets |
-| 2013–2017 | Word2Vec, LSTMs — deep learning for language; meaning as geometry [4][19] |
-| 2017 | "Attention Is All You Need" — the Transformer; meaning becomes dynamic [5] |
-| 2020 | GPT-3 (175B parameters) — emergent few-shot learning at scale [7] |
-| 2022–present | Chain-of-thought, RAG, reasoning models — LLMs as infrastructure |
+<div id="sem-timeline-widget" style="background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:20px 22px;margin:1.8em 0;font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;overflow:hidden;">
+  <div style="color:#f0883e;font-size:10px;letter-spacing:2.5px;margin-bottom:14px;">INTERACTIVE — TIMELINE: SYMBOLIC vs CONNECTIONIST AI</div>
+  <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px;font-size:11px;">
+    <span style="color:#7ab0f0;">● connectionist</span>
+    <span style="color:#f0883e;">● symbolic / GOFAI</span>
+    <span style="color:#8b949e;">● AI winters</span>
+    <span style="color:#5dba8f;">● modern (statistical → LLM)</span>
+  </div>
+  <svg id="tl-svg" viewBox="0 0 760 200" style="width:100%;display:block;"></svg>
+  <div id="tl-detail" style="background:#161b22;border:1px solid #30363d;border-radius:4px;padding:12px 14px;margin-top:12px;min-height:56px;font-size:12px;color:#c9d1d9;line-height:1.55;font-family:inherit;">
+    <span style="color:#6e7681;">Hover an event to see details. Click to pin.</span>
+  </div>
+</div>
+<script>
+(function(){
+var TLD=[
+  {y:1950,cat:'sym',label:'Turing test',detail:'Turing, "Computing Machinery and Intelligence" — sets the implicit logician model of intelligence [1].'},
+  {y:1958,cat:'con',label:'Perceptron',detail:'Rosenblatt — the first practical connectionist learning algorithm; press promises a machine that will "walk, talk, see, write, reproduce itself".'},
+  {y0:1956,y1:1969,cat:'sym',label:'Symbolic AI ascendant',detail:'McCarthy, Newell & Simon; LISP, the General Problem Solver — symbolic AI dominates the field.'},
+  {y:1969,cat:'win',label:'Perceptrons critique',detail:'Minsky & Papert — single-layer perceptrons cannot learn XOR; mistakenly extrapolated to multi-layer networks [21].'},
+  {y0:1970,y1:1974,cat:'con',label:'Backprop, underground',detail:'Linnainmaa formalises reverse-mode autodiff [23]; Werbos applies it to neural nets in his Harvard PhD [24].'},
+  {y0:1974,y1:1980,cat:'win',label:'First AI winter',detail:'Lighthill Report; Mansfield Amendment — funding for general AI research collapses [18].'},
+  {y:1976,cat:'con',label:'Adaptive resonance theory',detail:'Grossberg — stability-plasticity dilemma; foundations of ART [25].'},
+  {y0:1976,y1:1986,cat:'sym',label:'Expert systems boom',detail:'MYCIN, DENDRAL — narrow-domain symbolic systems briefly commercialised [2].'},
+  {y:1980,cat:'con',label:'Neocognitron',detail:'Fukushima — convolutional architecture for vision; direct ancestor of every modern CNN [26].'},
+  {y:1982,cat:'con',label:'Hopfield network',detail:'A physicist publishes neural-network research in PNAS; connectionism regains scientific credibility [27].'},
+  {y:1986,cat:'con',label:'Backprop, mainstream',detail:'Rumelhart, Hinton & Williams — multi-layer networks shown to learn XOR and complex tasks [22]; PDP volumes follow.'},
+  {y0:1989,y1:1991,cat:'con',label:'Universal Approximation Theorem',detail:'Cybenko, Hornik et al. — Minsky-Papert intuition formally refuted [28][29][30].'},
+  {y0:1987,y1:1993,cat:'win',label:'Second AI winter',detail:'Expert-systems market collapses; LISP-machine companies fail.'},
+  {y0:1993,y1:2012,cat:'mod',label:'Statistical methods era',detail:'n-grams, SVMs, shallow neural nets dominate machine learning.'},
+  {y0:2013,y1:2017,cat:'mod',label:'Word2Vec, LSTMs',detail:'Mikolov et al. — meaning as geometry; LSTMs handle sequences; deep learning takes language [4][19].'},
+  {y:2017,cat:'mod',label:'Transformer',detail:'Vaswani et al., "Attention Is All You Need" — meaning becomes context-sensitive [5].'},
+  {y:2020,cat:'mod',label:'GPT-3',detail:'175B parameters — few-shot prompting and emergent abilities appear at scale [7].'},
+  {y0:2022,y1:2026,cat:'mod',label:'Chain-of-thought, RAG, reasoning',detail:'LLMs as infrastructure; test-time compute (thinking tokens) emerges as a new scaling axis.'}
+];
+var CAT={
+  con:{color:'#7ab0f0',fill:'#1c3a5a',lane:40,name:'connectionist'},
+  sym:{color:'#f0883e',fill:'#5a3215',lane:70,name:'symbolic'},
+  win:{color:'#8b949e',fill:'#2a2e32',lane:100,name:'winter'},
+  mod:{color:'#5dba8f',fill:'#163a2e',lane:130,name:'modern'}
+};
+var Y0=1950,Y1=2026,X0=80,X1=730;
+function px(yr){return X0+(yr-Y0)*(X1-X0)/(Y1-Y0);}
+var pinned=null;
+function setDetail(d){
+  var p=document.getElementById('tl-detail');if(!p)return;
+  if(!d){p.innerHTML='<span style="color:#6e7681;">Hover an event to see details. Click to pin.</span>';return;}
+  var year=d.y!=null?d.y:d.y0+'–'+d.y1;
+  var c=CAT[d.cat].color;
+  p.innerHTML='<span style="color:'+c+';font-weight:bold;font-size:13px;">'+year+'</span> <span style="color:#6e7681;">·</span> <span style="color:#c9d1d9;font-weight:bold;">'+d.label+'</span><br><span style="color:#8b949e;">'+d.detail+'</span>';
+}
+function render(){
+  var svg=document.getElementById('tl-svg'),ns='http://www.w3.org/2000/svg';
+  if(!svg)return;svg.innerHTML='';
+  function el(tag,attrs){var e=document.createElementNS(ns,tag);for(var k in attrs)e.setAttribute(k,attrs[k]);return e;}
+  Object.keys(CAT).forEach(function(k){
+    var c=CAT[k];
+    var lbl=el('text',{x:X0-6,y:c.lane+3,'text-anchor':'end',fill:c.color,'font-size':'8','font-family':'monospace',opacity:'0.6'});
+    lbl.textContent=c.name;svg.appendChild(lbl);
+    svg.appendChild(el('line',{x1:X0,y1:c.lane,x2:X1,y2:c.lane,stroke:c.color,'stroke-width':'0.5',opacity:'0.12','stroke-dasharray':'2,3'}));
+  });
+  svg.appendChild(el('line',{x1:X0,y1:165,x2:X1,y2:165,stroke:'#30363d','stroke-width':'1'}));
+  for(var yr=1950;yr<=2020;yr+=10){
+    var x=px(yr);
+    svg.appendChild(el('line',{x1:x,y1:162,x2:x,y2:168,stroke:'#484f58','stroke-width':'1'}));
+    var t=el('text',{x:x,y:183,'text-anchor':'middle',fill:'#8b949e','font-size':'10','font-family':'monospace'});
+    t.textContent=yr;svg.appendChild(t);
+  }
+  TLD.forEach(function(d){
+    var c=CAT[d.cat];
+    var g=el('g',{style:'cursor:pointer;'});
+    if(d.y0!=null){
+      var xa=px(d.y0),xb=px(d.y1);
+      g.appendChild(el('rect',{x:xa,y:c.lane-7,width:xb-xa,height:14,rx:'3',ry:'3',fill:c.fill,stroke:c.color,'stroke-width':'1.2'}));
+    } else {
+      var x=px(d.y);
+      g.appendChild(el('circle',{cx:x,cy:c.lane,r:'5.5',fill:c.color,stroke:'#0d1117','stroke-width':'1.8'}));
+    }
+    g.addEventListener('mouseenter',function(){setDetail(d);});
+    g.addEventListener('mouseleave',function(){setDetail(pinned);});
+    g.addEventListener('click',function(e){e.stopPropagation();pinned=(pinned===d?null:d);setDetail(pinned||d);});
+    svg.appendChild(g);
+  });
+  svg.addEventListener('click',function(){if(pinned){pinned=null;setDetail(null);}});
+}
+function init(){render();}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}else{setTimeout(init,0);}
+})();
+</script>
  
 ## 2  The statistical turn: meaning as location
  
@@ -118,7 +263,7 @@ The practical implication is decisive: the limits Minsky and Papert had proved f
  
 The statistical alternative asked a fundamentally different question: instead of encoding what language *means*, can we learn what language *does* by observing enormous amounts of it? A language model assigns a probability to every possible sequence of words. The simplest version, the **n-gram model**, estimates the probability of each word given the preceding few words, and requires nothing beyond counting.
  
-This worked surprisingly well for tasks like speech recognition — Frederick Jelinek at IBM famously quipped, "Every time I fire a linguist, the performance of the speech recogniser improves." But n-gram models had hard limits: they could not capture dependencies across more than a few words, and they treated every word as an atom with no internal relationship to any other word.
+This worked surprisingly well for tasks like speech recognition — in turn, the cliff between nlp-experts with a math/physics/ML background and pure linguists increases, culminating in an attribution to Frederick Jelinek of the sentence, "Every time I fire a linguist, the performance of the speech recogniser improves." But n-gram models had hard limits: they could not capture dependencies across more than a few words, and they treated every word as an atom with no internal relationship to any other word, as would any linguist point out. Furthermore, they were used in conjunction with the bag of words model: each word is independent of each other, usually being modelled by a dimension in a high-dimensional space, thus words like father and son are orthogonal and do not have any relation.
  
 ### 2.2 Word embeddings: words as coordinates
  
@@ -143,7 +288,7 @@ This was a conceptual departure from symbolic AI. Meaning was no longer stored i
   </div>
   <div id="so-analogy-panel">
     <div style="color:#8b949e;font-size:11px;margin-bottom:10px;">Each pair shares the same offset vector. The model learned these geometric relationships from text alone.</div>
-    <svg id="so-ana-svg" viewBox="0 0 760 300" style="width:100%;display:block;max-height:300px;"></svg>
+    <svg id="so-ana-svg" viewBox="0 0 760 320" style="width:100%;display:block;max-height:340px;"></svg>
     <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px;">
       <span style="color:#c9d1d9;font-size:13px;">Complete the analogy:</span>
       <select id="so-ana-sel" style="background:#161b22;color:#c9d1d9;border:1px solid #30363d;border-radius:4px;padding:5px 8px;font-family:inherit;font-size:12px;cursor:pointer;" onchange="soAnaRender()">
@@ -219,27 +364,28 @@ function dot(svg,x,y,r,fill,stroke,label,lside){
 }
 /* ── ANALOGY ── */
 var ANA=[
-  {src:'king',tgt:'queen', sx:405,sy:100, tx:405,ty:205, mx:130,my:205, wx:130,wy:310, ans:'queen'},
-  {src:'uncle',tgt:'aunt', sx:310,sy:130, tx:310,ty:235, mx:130,my:205, wx:130,wy:310, ans:'aunt'},
-  {src:'actor',tgt:'actress',sx:355,sy:115,tx:355,ty:220,mx:130,my:205, wx:130,wy:310,ans:'actress'},
-  {src:'son',tgt:'daughter',sx:370,sy:108,tx:370,ty:213,mx:130,my:205, wx:130,wy:310,ans:'daughter'}
+  {src:'king',tgt:'queen',ans:'queen'},
+  {src:'uncle',tgt:'aunt',ans:'aunt'},
+  {src:'actor',tgt:'actress',ans:'actress'},
+  {src:'son',tgt:'daughter',ans:'daughter'}
 ];
 window.soAnaRender=function(){
   var svg=document.getElementById('so-ana-svg');if(!svg)return;svg.innerHTML='';
   var idx=parseInt(document.getElementById('so-ana-sel').value)||0;
   var a=ANA[idx];
-  var mx=a.mx,my=a.my,wx=a.wx,wy=a.wy,sx=a.sx,sy=a.sy,tx=a.tx,ty=a.ty;
+  // fixed coords: woman/tgt on top, man/src on bottom — gender axis vertical, royalty axis horizontal
+  var mx=160,my=240,wx=160,wy=80,sx=560,sy=240,tx=560,ty=80;
   // axis labels
-  var axY=el('text',{x:38,y:155,'text-anchor':'middle',fill:'#484f58','font-size':'9','font-family':'monospace',transform:'rotate(-90,38,155)'});
-  axY.textContent='royalty';svg.appendChild(axY);
-  var axX=el('text',{x:380,y:288,'text-anchor':'middle',fill:'#484f58','font-size':'9','font-family':'monospace'});
-  axX.textContent='gender (male → female)';svg.appendChild(axX);
-  // gender arrows (horizontal): man→woman, src→tgt
-  arrow(svg,mx+14,my,wx-14,wy,'#bc8cff','gender');
-  arrow(svg,sx+14,sy,tx-14,ty,'#bc8cff',null);
-  // royalty arrows (diagonal): man→src, woman→tgt
-  arrow(svg,mx+8,my-8,sx-8,sy+8,'#58a6ff','royalty');
-  arrow(svg,wx+8,wy-8,tx-8,ty+8,'#58a6ff',null);
+  var axY=el('text',{x:22,y:160,'text-anchor':'middle',fill:'#484f58','font-size':'9','font-family':'monospace',transform:'rotate(-90,22,160)'});
+  axY.textContent='gender (male → female)';svg.appendChild(axY);
+  var axX=el('text',{x:380,y:305,'text-anchor':'middle',fill:'#484f58','font-size':'9','font-family':'monospace'});
+  axX.textContent='royalty (commoner → royal)';svg.appendChild(axX);
+  // gender arrows (vertical, going UP from male to female)
+  arrow(svg,mx,my-14,wx,wy+14,'#bc8cff',null);
+  arrow(svg,sx,sy-14,tx,ty+14,'#bc8cff',null);
+  // royalty arrows (horizontal, going RIGHT from commoner to royal); label on top arrow for clarity
+  arrow(svg,wx+14,wy,tx-14,ty,'#58a6ff','royalty');
+  arrow(svg,mx+14,my,sx-14,sy,'#58a6ff',null);
   // dots
   dot(svg,mx,my,9,'#1f6feb','#58a6ff','man','left');
   dot(svg,wx,wy,9,'#6e2fb0','#bc8cff','woman','left');
@@ -350,7 +496,7 @@ This is why attention was such a fundamental step beyond static embeddings. Embe
 
 <div id="sem-da-widget" style="background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:20px 22px;margin:1.8em 0;font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;overflow:hidden;">
   <div style="color:#f0883e;font-size:10px;letter-spacing:2.5px;margin-bottom:14px;">INTERACTIVE — ATTENTION AS SEMANTIC SHIFTING</div>
-  <svg id="da-svg" viewBox="0 0 760 390" style="width:100%;display:block;background:transparent;"></svg>
+  <svg id="da-svg" viewBox="0 0 760 430" style="width:100%;display:block;background:transparent;"></svg>
   <div id="da-echo" style="color:#8b949e;font-size:12px;font-style:italic;min-height:18px;margin:4px 0 12px;padding-left:2px;"></div>
   <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
     <span style="color:#c9d1d9;font-size:13px;">Choose a word:</span>
@@ -507,6 +653,15 @@ The transformer uses **multi-head attention**: running many parallel attention o
 > sentences designed specifically to test this kind of reasoning — were considered very hard for AI;
 > transformers handle most of them with high accuracy.
  
+<details class="collapse collapse-arrow bg-base-200 border border-base-300 my-6">
+<summary class="collapse-title font-semibold">🎥 <span class="text-xs uppercase tracking-wider opacity-60">Watch</span> — 3Blue1Brown visualises attention beautifully</summary>
+<div class="collapse-content">
+
+If you want to see this geometry move, Grant Sanderson (3Blue1Brown) animates every step of the transformer in his Neural Networks series. The chapter ["But what is a GPT? Visual intro to transformers"](https://www.youtube.com/watch?v=eMlx5fFNoYc) builds attention from first principles — query, key, and value as literal vectors moving through space — and pairs unusually well with the semantic-navigation framing above.
+
+</div>
+</details>
+
 ## 4  Emergence: when scale becomes something else
  
 ### 4.1 GPT-3 and few-shot learning
@@ -530,11 +685,14 @@ The discontinuity is philosophically significant. A model that cannot solve thre
  
 Seen through the semantic-space lens: at sufficient scale, the model's high-dimensional space becomes rich enough to contain implicit representations of concepts like "arithmetic" or "logical inference" — not as explicit rules, but as geometric regularities that the model can exploit when prompted in the right way. This is not the same as a symbolic reasoning engine, but it is not mere pattern-matching either.
  
-> **Note on the emergence debate** Schaeffer et al. (2023) argued that apparent discontinuities can be
-> artefacts of the metrics used — with nonlinear metrics, smooth underlying capability curves look
-> discontinuous. This debate is ongoing and pedagogically important: emergence suggests qualitative
-> novelty; smooth extrapolation suggests continuity with earlier systems. The truth is likely mixed:
-> some capabilities are genuinely threshold-dependent; others are metric artefacts.
+<details class="collapse collapse-arrow bg-base-200 border border-base-300 my-6">
+<summary class="collapse-title font-semibold">🔍 <span class="text-xs uppercase tracking-wider opacity-60">Deep dive</span> — Is emergence real, or a metric artefact? The Schaeffer critique</summary>
+<div class="collapse-content">
+
+Schaeffer et al. (2023) argued that apparent discontinuities can be artefacts of the metrics used — with nonlinear metrics, smooth underlying capability curves look discontinuous. This debate is ongoing and pedagogically important: emergence suggests qualitative novelty; smooth extrapolation suggests continuity with earlier systems. The truth is likely mixed: some capabilities are genuinely threshold-dependent; others are metric artefacts.
+
+</div>
+</details>
  
 ## 5  Thinking tokens: teaching models to slow down
  
@@ -672,7 +830,14 @@ Connecting this to the previous subsection: hallucination is what happens when t
 > appears specifically in the gap between what the model was trained on and what it is being asked to
 > retrieve.
  
+<details class="collapse collapse-arrow bg-base-200 border border-base-300 my-6">
+<summary class="collapse-title font-semibold">🔍 <span class="text-xs uppercase tracking-wider opacity-60">Deep dive</span> — Three types of hallucination, three different fixes</summary>
+<div class="collapse-content">
+
 Three types of hallucination correspond to three distinct failure modes [17]. *Fact-conflicting* hallucinations arise when generated claims contradict world knowledge — the closest to pure parrot behaviour. *Context-conflicting* hallucinations occur when the model loses consistency within a long conversation. *Input-conflicting* hallucinations arise when the model's output deviates from what the query explicitly specified. Each has a different cause and a different mitigation.
+
+</div>
+</details>
  
 ### 7.6 The middle ground
  
