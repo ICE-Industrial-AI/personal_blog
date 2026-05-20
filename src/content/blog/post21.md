@@ -2,7 +2,7 @@
 title: "From Symbols to Meaning: How Language AI Really Works"
 description: "A history of AI from symbolic systems to transformers, with a debunking of the stochastic parrot critique"
 pubDate: "May 20 2026"
-heroImage: "/personal_blog/pics/FS2M.jpg"
+heroImage: "/personal_blog/FS2M.jpg"
 ---
  
 # From Symbols to Meaning: How Language AI Really Works
