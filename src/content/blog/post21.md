@@ -133,7 +133,195 @@ Mikolov et al. (2013) [19] made this tractable at scale and produced the result 
 > the pattern of which words tend to appear in the same neighbourhood as which others.
  
 This was a conceptual departure from symbolic AI. Meaning was no longer stored in a database of propositions — it was implicit in the geometry of a high-dimensional space, learned from data. A word's location in that space encoded something about what it meant, without anyone ever defining it.
- 
+
+<div id="sem-ops-widget" style="background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:20px 22px;margin:1.8em 0;font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;overflow:hidden;">
+  <div style="color:#f0883e;font-size:10px;letter-spacing:2.5px;margin-bottom:14px;">INTERACTIVE — SEMANTIC OPERATIONS IN EMBEDDING SPACE</div>
+  <div style="display:flex;gap:0;margin-bottom:14px;border-bottom:1px solid #30363d;">
+    <button id="so-tab-analogy" onclick="soTab('analogy')" style="background:transparent;border:none;border-bottom:2px solid #58a6ff;color:#58a6ff;padding:6px 16px;font-family:inherit;font-size:12px;cursor:pointer;margin-bottom:-1px;">Word Analogy</button>
+    <button id="so-tab-capitals" onclick="soTab('capitals')" style="background:transparent;border:none;border-bottom:2px solid transparent;color:#8b949e;padding:6px 16px;font-family:inherit;font-size:12px;cursor:pointer;margin-bottom:-1px;">Capitals</button>
+    <button id="so-tab-size" onclick="soTab('size')" style="background:transparent;border:none;border-bottom:2px solid transparent;color:#8b949e;padding:6px 16px;font-family:inherit;font-size:12px;cursor:pointer;margin-bottom:-1px;">Comparative</button>
+  </div>
+  <div id="so-analogy-panel">
+    <div style="color:#8b949e;font-size:11px;margin-bottom:10px;">Each pair shares the same offset vector. The model learned these geometric relationships from text alone.</div>
+    <svg id="so-ana-svg" viewBox="0 0 760 300" style="width:100%;display:block;max-height:300px;"></svg>
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px;">
+      <span style="color:#c9d1d9;font-size:13px;">Complete the analogy:</span>
+      <select id="so-ana-sel" style="background:#161b22;color:#c9d1d9;border:1px solid #30363d;border-radius:4px;padding:5px 8px;font-family:inherit;font-size:12px;cursor:pointer;" onchange="soAnaRender()">
+        <option value="0">king − man + woman = ?</option>
+        <option value="1">uncle − man + woman = ?</option>
+        <option value="2">actor − man + woman = ?</option>
+        <option value="3">son − man + woman = ?</option>
+      </select>
+      <span id="so-ana-ans" style="color:#39d353;font-size:13px;font-weight:bold;min-width:60px;"></span>
+    </div>
+  </div>
+  <div id="so-capitals-panel" style="display:none;">
+    <div style="color:#8b949e;font-size:11px;margin-bottom:10px;">All country→capital pairs share the same direction and magnitude in embedding space — a learnt geometric rule.</div>
+    <svg id="so-cap-svg" viewBox="0 0 760 290" style="width:100%;display:block;max-height:290px;"></svg>
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px;">
+      <span style="color:#c9d1d9;font-size:13px;">Capital of:</span>
+      <select id="so-cap-sel" style="background:#161b22;color:#c9d1d9;border:1px solid #30363d;border-radius:4px;padding:5px 8px;font-family:inherit;font-size:12px;cursor:pointer;" onchange="soCapRender()">
+        <option value="0">France</option>
+        <option value="1">Germany</option>
+        <option value="2">Italy</option>
+        <option value="3">Spain</option>
+        <option value="4">Japan</option>
+      </select>
+      <span style="color:#8b949e;font-size:13px;">→</span>
+      <span id="so-cap-ans" style="color:#39d353;font-size:13px;font-weight:bold;min-width:80px;"></span>
+    </div>
+  </div>
+  <div id="so-size-panel" style="display:none;">
+    <div style="color:#8b949e;font-size:11px;margin-bottom:10px;">Physical size is encoded geometrically. The model can answer comparative questions by measuring distances along the size axis.</div>
+    <svg id="so-size-svg" viewBox="0 0 760 160" style="width:100%;display:block;max-height:160px;"></svg>
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px;">
+      <span style="color:#c9d1d9;font-size:13px;">A</span>
+      <select id="so-sz-a" style="background:#161b22;color:#c9d1d9;border:1px solid #30363d;border-radius:4px;padding:5px 8px;font-family:inherit;font-size:12px;cursor:pointer;" onchange="soSizeRender()">
+        <option value="0">mouse</option><option value="1">rat</option><option value="2">cat</option>
+        <option value="3">dog</option><option value="4">horse</option><option value="5">elephant</option>
+      </select>
+      <span style="color:#c9d1d9;font-size:13px;">is</span>
+      <span id="so-sz-ans" style="color:#f0883e;font-size:13px;font-weight:bold;min-width:80px;">?</span>
+      <span style="color:#c9d1d9;font-size:13px;">than a</span>
+      <select id="so-sz-b" style="background:#161b22;color:#c9d1d9;border:1px solid #30363d;border-radius:4px;padding:5px 8px;font-family:inherit;font-size:12px;cursor:pointer;" onchange="soSizeRender()">
+        <option value="0">mouse</option><option value="1">rat</option><option value="2">cat</option>
+        <option value="3">dog</option><option value="4" selected>horse</option><option value="5">elephant</option>
+      </select>
+    </div>
+  </div>
+  <div style="color:#6e7681;font-size:11px;line-height:1.6;margin-top:14px;">These operations emerge from the geometry of the embedding space — the model was never explicitly taught them.</div>
+</div>
+<script>
+(function(){
+var ns='http://www.w3.org/2000/svg';
+function el(tag,attrs){var e=document.createElementNS(ns,tag);for(var k in attrs)e.setAttribute(k,attrs[k]);return e;}
+function arrow(svg,x1,y1,x2,y2,color,label){
+  var id='arr-'+Math.random().toString(36).slice(2);
+  var mk=el('marker',{id:id,markerWidth:'8',markerHeight:'8',refX:'6',refY:'3',orient:'auto'});
+  var path=el('path',{d:'M0,0 L0,6 L8,3 z',fill:color});mk.appendChild(path);
+  var defs=svg.querySelector('defs')||svg.insertBefore(el('defs',{}),svg.firstChild);
+  defs.appendChild(mk);
+  var line=el('line',{x1:x1,y1:y1,x2:x2,y2:y2,stroke:color,'stroke-width':'1.6','marker-end':'url(#'+id+')'});
+  svg.appendChild(line);
+  if(label){
+    var mx=(x1+x2)/2,my=(y1+y2)/2;
+    var t=el('text',{x:mx,y:my-6,'text-anchor':'middle',fill:color,'font-size':'9','font-family':'monospace',opacity:'0.85'});
+    t.textContent=label;svg.appendChild(t);
+  }
+}
+function dot(svg,x,y,r,fill,stroke,label,lside){
+  svg.appendChild(el('circle',{cx:x,cy:y,r:r,fill:fill,stroke:stroke,'stroke-width':'1.8'}));
+  if(label){
+    var t=el('text',{x:lside==='left'?x-r-5:x+r+5,y:y+4,
+      'text-anchor':lside==='left'?'end':'start',fill:'#c9d1d9','font-size':'11','font-family':'monospace'});
+    t.textContent=label;svg.appendChild(t);
+  }
+}
+/* ── ANALOGY ── */
+var ANA=[
+  {src:'king',tgt:'queen', sx:405,sy:100, tx:405,ty:205, mx:130,my:205, wx:130,wy:310, ans:'queen'},
+  {src:'uncle',tgt:'aunt', sx:310,sy:130, tx:310,ty:235, mx:130,my:205, wx:130,wy:310, ans:'aunt'},
+  {src:'actor',tgt:'actress',sx:355,sy:115,tx:355,ty:220,mx:130,my:205, wx:130,wy:310,ans:'actress'},
+  {src:'son',tgt:'daughter',sx:370,sy:108,tx:370,ty:213,mx:130,my:205, wx:130,wy:310,ans:'daughter'}
+];
+window.soAnaRender=function(){
+  var svg=document.getElementById('so-ana-svg');if(!svg)return;svg.innerHTML='';
+  var idx=parseInt(document.getElementById('so-ana-sel').value)||0;
+  var a=ANA[idx];
+  var mx=a.mx,my=a.my,wx=a.wx,wy=a.wy,sx=a.sx,sy=a.sy,tx=a.tx,ty=a.ty;
+  // axis labels
+  var axY=el('text',{x:38,y:155,'text-anchor':'middle',fill:'#484f58','font-size':'9','font-family':'monospace',transform:'rotate(-90,38,155)'});
+  axY.textContent='royalty';svg.appendChild(axY);
+  var axX=el('text',{x:380,y:288,'text-anchor':'middle',fill:'#484f58','font-size':'9','font-family':'monospace'});
+  axX.textContent='gender (male → female)';svg.appendChild(axX);
+  // gender arrows (horizontal): man→woman, src→tgt
+  arrow(svg,mx+14,my,wx-14,wy,'#bc8cff','gender');
+  arrow(svg,sx+14,sy,tx-14,ty,'#bc8cff',null);
+  // royalty arrows (diagonal): man→src, woman→tgt
+  arrow(svg,mx+8,my-8,sx-8,sy+8,'#58a6ff','royalty');
+  arrow(svg,wx+8,wy-8,tx-8,ty+8,'#58a6ff',null);
+  // dots
+  dot(svg,mx,my,9,'#1f6feb','#58a6ff','man','left');
+  dot(svg,wx,wy,9,'#6e2fb0','#bc8cff','woman','left');
+  dot(svg,sx,sy,9,'#1f6feb','#58a6ff',a.src,'right');
+  // answer dot with pulsing ring
+  dot(svg,tx,ty,9,'#0d5c2e','#39d353',a.tgt,'right');
+  var pulse=el('circle',{cx:tx,cy:ty,r:'14',fill:'none',stroke:'#39d353','stroke-width':'1',opacity:'0.5'});
+  svg.appendChild(pulse);
+  // ? label shown before answer
+  document.getElementById('so-ana-ans').textContent='→ '+a.ans;
+};
+/* ── CAPITALS ── */
+var CAPS=[
+  {country:'France',capital:'Paris',   cx:110,cy:110,px:370,py:108},
+  {country:'Germany',capital:'Berlin', cx:90, cy:185,px:350,py:182},
+  {country:'Italy',capital:'Rome',     cx:165,cy:230,px:425,py:228},
+  {country:'Spain',capital:'Madrid',   cx:145,cy:152,px:405,py:150},
+  {country:'Japan',capital:'Tokyo',    cx:200,cy:75, px:460,py:73}
+];
+window.soCapRender=function(){
+  var svg=document.getElementById('so-cap-svg');if(!svg)return;svg.innerHTML='';
+  var sel=parseInt(document.getElementById('so-cap-sel').value)||0;
+  // draw all pairs dimmed
+  CAPS.forEach(function(c,i){
+    var active=i===sel;
+    var color=active?'#f0883e':'#30363d';
+    var tcol=active?'#c9d1d9':'#484f58';
+    arrow(svg,c.cx+14,c.cy,c.px-14,c.py,color,'');
+    dot(svg,c.cx,c.cy,active?9:6,active?'#2a1800':'#161b22',color,c.country,'left');
+    dot(svg,c.px,c.py,active?9:6,active?'#0d2200':'#161b22',active?'#39d353':color,c.capital,'right');
+  });
+  document.getElementById('so-cap-ans').textContent=CAPS[sel].capital;
+};
+/* ── SIZE ── */
+var ANIMALS=['mouse','rat','cat','dog','horse','elephant'];
+var APOS=[80,155,237,325,455,640];
+window.soSizeRender=function(){
+  var svg=document.getElementById('so-size-svg');if(!svg)return;svg.innerHTML='';
+  var ai=parseInt(document.getElementById('so-sz-a').value)||0;
+  var bi=parseInt(document.getElementById('so-sz-b').value)||4;
+  // axis line
+  svg.appendChild(el('line',{x1:60,y1:80,x2:700,y2:80,stroke:'#30363d','stroke-width':'1.5'}));
+  var axLbl=el('text',{x:380,y:145,'text-anchor':'middle',fill:'#484f58','font-size':'9','font-family':'monospace'});
+  axLbl.textContent='← smaller                physical size axis                larger →';svg.appendChild(axLbl);
+  ANIMALS.forEach(function(a,i){
+    var active=i===ai||i===bi;
+    var col=i===ai?'#58a6ff':i===bi?'#f0883e':'#30363d';
+    svg.appendChild(el('circle',{cx:APOS[i],cy:80,r:active?9:5,fill:active?col:'#161b22',stroke:col,'stroke-width':'1.5'}));
+    var t=el('text',{x:APOS[i],y:active?62:65,'text-anchor':'middle',fill:col,
+      'font-size':active?'11':'9','font-family':'monospace','font-weight':active?'bold':'normal'});
+    t.textContent=a;svg.appendChild(t);
+  });
+  // arrow between selected pair
+  if(ai!==bi){
+    var x1=APOS[Math.min(ai,bi)],x2=APOS[Math.max(ai,bi)];
+    arrow(svg,x1+12,80,x2-12,80,ai<bi?'#58a6ff':'#f0883e',null);
+  }
+  var ans=ai<bi?'smaller':(ai>bi?'bigger':'the same size as');
+  document.getElementById('so-sz-ans').textContent=ans;
+};
+/* ── TABS ── */
+window.soTab=function(t){
+  ['analogy','capitals','size'].forEach(function(x){
+    var panel=document.getElementById('so-'+x+'-panel');
+    var tab=document.getElementById('so-tab-'+x);
+    var active=x===t;
+    if(panel)panel.style.display=active?'block':'none';
+    if(tab){tab.style.borderBottomColor=active?'#58a6ff':'transparent';tab.style.color=active?'#58a6ff':'#8b949e';}
+  });
+  if(t==='analogy')soAnaRender();
+  else if(t==='capitals')soCapRender();
+  else if(t==='size')soSizeRender();
+};
+function init(){
+  soAnaRender();
+  document.getElementById('so-sz-b').value=5;
+  soSizeRender();
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}else{setTimeout(init,0);}
+})();
+</script>
+
 But static embeddings had one critical flaw: every word had exactly one location. "Bank" — financial institution? — always mapped to the same point in space, regardless of whether the surrounding sentence talked about loans or rivers. Meaning, in the real world, depends on context. Fixing this required something more dynamic.
  
 ## 3  Attention: meaning that moves
@@ -159,7 +347,148 @@ Each layer of a transformer performs this contextual repositioning. A word does 
 > given everything else that surrounds it.
  
 This is why attention was such a fundamental step beyond static embeddings. Embeddings gave words locations. Attention gave those locations the ability to respond to their neighbourhood.
- 
+
+<div id="sem-da-widget" style="background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:20px 22px;margin:1.8em 0;font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;overflow:hidden;">
+  <div style="color:#f0883e;font-size:10px;letter-spacing:2.5px;margin-bottom:14px;">INTERACTIVE — ATTENTION AS SEMANTIC SHIFTING</div>
+  <svg id="da-svg" viewBox="0 0 760 390" style="width:100%;display:block;background:transparent;"></svg>
+  <div id="da-echo" style="color:#8b949e;font-size:12px;font-style:italic;min-height:18px;margin:4px 0 12px;padding-left:2px;"></div>
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+    <span style="color:#c9d1d9;font-size:13px;">Choose a word:</span>
+    <button id="da-btn-bank" onclick="daSetWord('bank')" style="background:#1f6feb;color:#fff;border:1px solid #1f6feb;border-radius:4px;padding:4px 13px;font-family:inherit;font-size:12px;cursor:pointer;transition:all .15s;">bank</button>
+    <button id="da-btn-bright" onclick="daSetWord('bright')" style="background:#161b22;color:#c9d1d9;border:1px solid #30363d;border-radius:4px;padding:4px 13px;font-family:inherit;font-size:12px;cursor:pointer;transition:all .15s;">bright</button>
+    <button id="da-btn-head" onclick="daSetWord('head')" style="background:#161b22;color:#c9d1d9;border:1px solid #30363d;border-radius:4px;padding:4px 13px;font-family:inherit;font-size:12px;cursor:pointer;transition:all .15s;">head</button>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:14px;">
+    <span style="color:#c9d1d9;font-size:13px;">Context:</span>
+    <select id="da-ctx-sel" style="background:#161b22;color:#c9d1d9;border:1px solid #30363d;border-radius:4px;padding:5px 8px;font-family:inherit;font-size:12px;min-width:290px;cursor:pointer;"></select>
+  </div>
+  <div style="color:#6e7681;font-size:11px;line-height:1.6;">Dots represent words from the model's semantic space. <span style="color:#8b949e;">The highlighted word's position shifts toward the cluster matching its contextual meaning — this is what attention does.</span></div>
+</div>
+<script>
+(function(){
+var DA={
+  bank:{
+    clusters:[
+      {id:'finance',name:'finance',color:'#7ea8c4',fill:'rgba(58,100,155,0.14)',cx:185,cy:188,r:92,
+       words:['equity','ledger','asset','bond','credit','deposit','loan','interest']},
+      {id:'water',name:'water',color:'#5dba8f',fill:'rgba(50,170,130,0.14)',cx:550,cy:200,r:92,
+       words:['canal','tide','current','mud','river','flood','stream','shore']},
+      {id:'memory',name:'memory',color:'#c4a84a',fill:'rgba(170,150,50,0.14)',cx:358,cy:325,r:78,
+       words:['stack','cache','register','buffer','memory','data','storage']}
+    ],
+    ctxs:[
+      {t:'the river bank was flooded',cl:'water'},
+      {t:'deposit money at the bank',cl:'finance'},
+      {t:'memory bank in the CPU',cl:'memory'},
+      {t:'the bank holds all my savings',cl:'finance'}
+    ]
+  },
+  bright:{
+    clusters:[
+      {id:'light',name:'light',color:'#d4b545',fill:'rgba(200,175,50,0.14)',cx:185,cy:188,r:92,
+       words:['luminous','radiant','glowing','shining','sunny','gleaming','dazzling','lit']},
+      {id:'smart',name:'intelligence',color:'#7ab0f0',fill:'rgba(60,130,220,0.14)',cx:550,cy:200,r:92,
+       words:['clever','smart','sharp','gifted','quick','astute','able','talented']},
+      {id:'color',name:'color',color:'#d07090',fill:'rgba(200,80,120,0.14)',cx:358,cy:325,r:78,
+       words:['vivid','vibrant','intense','bold','colorful','rich','saturated']}
+    ],
+    ctxs:[
+      {t:'the bright sunlight hurt his eyes',cl:'light'},
+      {t:'she is the brightest student in class',cl:'smart'},
+      {t:'bright colors filled the canvas',cl:'color'},
+      {t:'a bright flash lit up the sky',cl:'light'}
+    ]
+  },
+  head:{
+    clusters:[
+      {id:'anatomy',name:'anatomy',color:'#b87ad0',fill:'rgba(160,80,200,0.14)',cx:185,cy:188,r:92,
+       words:['skull','neck','face','crown','scalp','temple','chin','forehead']},
+      {id:'leadership',name:'leadership',color:'#e09050',fill:'rgba(200,130,50,0.14)',cx:550,cy:200,r:92,
+       words:['boss','chief','director','lead','manager','president','officer','exec']},
+      {id:'position',name:'position',color:'#50c090',fill:'rgba(50,175,130,0.14)',cx:358,cy:325,r:78,
+       words:['front','top','forefront','apex','tip','start','first','lead']}
+    ],
+    ctxs:[
+      {t:'she hit her head on the doorframe',cl:'anatomy'},
+      {t:'he is the head of the department',cl:'leadership'},
+      {t:'at the head of the queue',cl:'position'},
+      {t:'head of state addressed the nation',cl:'leadership'}
+    ]
+  }
+};
+var daW='bank',dX=363,dY=236,tX=363,tY=236;
+function layout(cx,cy,r,ws){
+  var p=[],n=ws.length,inn=Math.min(4,n),out=n-inn;
+  for(var i=0;i<inn;i++){var a=(i/inn)*2*Math.PI+0.6;p.push({x:cx+r*0.42*Math.cos(a),y:cy+r*0.42*Math.sin(a)+2,w:ws[i]});}
+  for(var i=0;i<out;i++){var a=(i/out)*2*Math.PI-0.25;p.push({x:cx+r*0.73*Math.cos(a),y:cy+r*0.73*Math.sin(a),w:ws[inn+i]});}
+  return p;
+}
+function render(){
+  var d=DA[daW],svg=document.getElementById('da-svg'),ns='http://www.w3.org/2000/svg';
+  if(!svg)return;svg.innerHTML='';
+  d.clusters.forEach(function(cl){
+    var g=document.createElementNS(ns,'circle');
+    g.setAttribute('cx',cl.cx);g.setAttribute('cy',cl.cy);g.setAttribute('r',cl.r+16);
+    g.setAttribute('fill',cl.fill.replace('0.14','0.04'));g.setAttribute('stroke','none');svg.appendChild(g);
+    var c=document.createElementNS(ns,'circle');
+    c.setAttribute('cx',cl.cx);c.setAttribute('cy',cl.cy);c.setAttribute('r',cl.r);
+    c.setAttribute('fill',cl.fill);c.setAttribute('stroke',cl.color);c.setAttribute('stroke-width','1.2');svg.appendChild(c);
+    var nm=document.createElementNS(ns,'text');
+    nm.setAttribute('x',cl.cx);nm.setAttribute('y',cl.cy-cl.r-10);nm.setAttribute('text-anchor','middle');
+    nm.setAttribute('fill',cl.color);nm.setAttribute('font-size','11.5');nm.setAttribute('font-family','monospace');
+    nm.setAttribute('letter-spacing','1');nm.textContent=cl.name;svg.appendChild(nm);
+    layout(cl.cx,cl.cy,cl.r,cl.words).forEach(function(pt){
+      var t=document.createElementNS(ns,'text');
+      t.setAttribute('x',pt.x);t.setAttribute('y',pt.y);t.setAttribute('text-anchor','middle');
+      t.setAttribute('fill',cl.color);t.setAttribute('font-size','9.5');t.setAttribute('font-family','monospace');
+      t.setAttribute('opacity','0.72');t.textContent=pt.w;svg.appendChild(t);
+    });
+  });
+  var dot=document.createElementNS(ns,'circle');
+  dot.setAttribute('id','da-dot');dot.setAttribute('cx',dX);dot.setAttribute('cy',dY);
+  dot.setAttribute('r','11');dot.setAttribute('fill','#152744');
+  dot.setAttribute('stroke','#4090e0');dot.setAttribute('stroke-width','2');svg.appendChild(dot);
+  var lbl=document.createElementNS(ns,'text');
+  lbl.setAttribute('id','da-lbl');lbl.setAttribute('x',dX);lbl.setAttribute('y',dY+26);
+  lbl.setAttribute('text-anchor','middle');lbl.setAttribute('fill','#58a6ff');
+  lbl.setAttribute('font-size','12');lbl.setAttribute('font-family','monospace');
+  lbl.setAttribute('font-weight','bold');lbl.textContent=daW;svg.appendChild(lbl);
+}
+function tick(){
+  dX+=(tX-dX)*0.09;dY+=(tY-dY)*0.09;
+  var dot=document.getElementById('da-dot'),lbl=document.getElementById('da-lbl');
+  if(dot){dot.setAttribute('cx',dX);dot.setAttribute('cy',dY);}
+  if(lbl){lbl.setAttribute('x',dX);lbl.setAttribute('y',dY+26);}
+  requestAnimationFrame(tick);
+}
+function updCtx(){
+  var d=DA[daW],idx=parseInt(document.getElementById('da-ctx-sel').value)||0;
+  var ctx=d.ctxs[idx],cl=d.clusters.find(function(c){return c.id===ctx.cl;});
+  var echo=document.getElementById('da-echo');
+  if(echo)echo.textContent='"'+ctx.t+'"';
+  if(cl){tX=cl.cx;tY=cl.cy;}
+}
+window.daSetWord=function(w){
+  daW=w;dX=363;dY=236;tX=363;tY=236;
+  ['bank','bright','head'].forEach(function(x){
+    var b=document.getElementById('da-btn-'+x);if(!b)return;
+    b.style.background=x===w?'#1f6feb':'#161b22';
+    b.style.borderColor=x===w?'#1f6feb':'#30363d';
+    b.style.color=x===w?'#fff':'#c9d1d9';
+  });
+  var sel=document.getElementById('da-ctx-sel'),d=DA[w];
+  if(sel)sel.innerHTML=d.ctxs.map(function(c,i){return '<option value="'+i+'">'+c.t+'</option>';}).join('');
+  render();setTimeout(updCtx,60);
+};
+function init(){
+  window.daSetWord('bank');tick();
+  var sel=document.getElementById('da-ctx-sel');
+  if(sel)sel.addEventListener('change',updCtx);
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}else{setTimeout(init,0);}
+})();
+</script>
+
 ### 3.3 What attention actually does in a transformer
  
 Vaswani et al. (2017) — the "Attention Is All You Need" paper [5] — removed recurrence entirely. Every layer is an attention operation. The architecture processes all words simultaneously, and every word attends to every other word in the same step. This has two consequences.
