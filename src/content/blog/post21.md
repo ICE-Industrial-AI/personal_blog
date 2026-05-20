@@ -1,15 +1,14 @@
 Ai evolution blog v3 · MD
 ---
 title: "From Symbols to Meaning: How Language AI Really Works"
-subtitle: "A history of AI from symbolic systems to transformers, with a debunking of the stochastic parrot critique"
-author: "Fernando Benites"
+description: "A history of AI from symbolic systems to transformers, with a debunking of the stochastic parrot critique"
 pubDate: "2026-05-20"
-tags: [Transformers, NLP, LLMs, RAG, Education, Hallucination, Emergence]
 heroImage: "/personal_blog/pics/FS2M.jpg"
 ---
  
 # From Symbols to Meaning: How Language AI Really Works
- 
+*Author: Fernando Benites*
+
 AI was supposed to reason like a logician. Instead, it learned to navigate meaning like a reader moving through a library — finding related ideas not by following rules, but by sensing proximity. This article traces that journey, explains what large language models actually do to words, and honestly confronts the question: are they just very eloquent parrots?
  
 **Table of Contents**
