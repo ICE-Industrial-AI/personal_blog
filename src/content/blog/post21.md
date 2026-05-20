@@ -1,4 +1,3 @@
-Ai evolution blog v3 · MD
 ---
 title: "From Symbols to Meaning: How Language AI Really Works"
 description: "A history of AI from symbolic systems to transformers, with a debunking of the stochastic parrot critique"
