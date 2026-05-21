@@ -9,7 +9,7 @@ heroImage: "/personal_blog/FS2M.jpg"
 
 AI was supposed to reason like a logician. Instead, it learned to navigate meaning like a reader moving through a library — finding related ideas not by following rules, but by sensing proximity. This article traces that journey, explains what large language models actually do to words, and honestly confronts the question: are they just very eloquent parrots?
 
-*Intended for educators, advanced students, and practitioners with some ML background. Technical sections include collapsible deep-dives — reading without them still preserves the spine of the argument. If you want to skip the historical setup, the mechanism story begins in §3 (Attention) and lands at §7 (Debunking the stochastic parrot).*
+*Intended for educators, advanced students, and practitioners with some ML background. Technical sections include collapsible deep-dives — reading without them still preserves the spine of the argument. If you want to skip the historical setup, the mechanism story begins in §3 (Attention) and lands at §7 (Debunking the stochastic parrot); the practical, pedagogy-oriented summary is §8.*
  
 <div class="not-prose my-8 rounded-xl border border-base-300 bg-base-100 p-6 shadow-sm">
   <div class="flex items-baseline justify-between mb-5 pb-3 border-b border-base-300/60">
@@ -100,6 +100,22 @@ AI was supposed to reason like a logician. Instead, it learned to navigate meani
     </li>
   </ol>
 </div>
+
+<details class="collapse collapse-arrow bg-base-200 border border-base-300 my-6">
+<summary class="collapse-title font-semibold">📖 <span class="text-xs uppercase tracking-wider opacity-60">Glossary</span> — one-line definitions of key terms</summary>
+<div class="collapse-content">
+
+- **Token** — the unit a transformer actually operates on; sub-word pieces produced by a learned tokenizer (BPE, SentencePiece). What looks like "words" to a reader is tokens to the model.
+- **Embedding** — a learned vector representation of a token. Tokens used in similar contexts end up at nearby points in embedding space.
+- **Attention head** — one of many parallel attention operations in a transformer layer. Each head can learn to track a different kind of relationship (grammatical, semantic, positional, etc.).
+- **Parametric vs non-parametric memory** — *parametric*: knowledge baked into the model's weights at training time. *Non-parametric*: knowledge looked up at inference time (RAG, external tools, search).
+- **In-context learning** — the model picking up a task pattern from examples shown in the prompt itself, with no weight updates.
+- **RLHF** — reinforcement learning from human feedback. The alignment technique that turned base completion models into instruction-following assistants.
+- **Test-time compute** — work the model does *per query* (thinking tokens, chain-of-thought, search), separate from training cost. The new scaling axis.
+
+</div>
+</details>
+
 ## 1  The expectation: AI as a reasoning machine
  
 ### 1.1 Symbolic AI and the knowledge-engineering dream
@@ -117,7 +133,7 @@ From the mid-1950s through the 1980s, **symbolic AI** — sometimes called Good 
  
 The limits appeared as soon as the domains grew larger. Knowledge engineering — the laborious process of extracting and encoding expert knowledge — did not scale. The world contains too many exceptions, too much context-dependence, and too much tacit knowledge that experts cannot articulate. Philosopher Michael Polanyi captured the core problem: "we know more than we can tell" [3].
  
-Ask a symbolic system about a fever in a child who has just returned from the tropics, and it fails — unless someone thought to add that rule. The first AI winter (1974–1980), triggered by the Lighthill Report's critical assessment of the field [18] and the Mansfield Amendment in the United States, saw funding for general AI research collapse. A modest revival followed with the expert-systems boom of the 1980s, but the second AI winter arrived around 1987–1993, when commercial expert-systems companies failed to deliver on their promises and the LISP-machine market collapsed. The question after both winters was no longer whether machines could reason in the symbolic sense, but whether that was even the right target.
+Ask a symbolic system about a fever in a child who has just returned from the tropics, and it fails — unless someone thought to add that rule. The first AI winter (1974–1980), triggered in the UK by the 1973 Lighthill Report's critical assessment of the field [18] and in the US by internal DARPA reassessments (the broader Mansfield Amendment's restrictions on basic research played a contributing rather than a decisive role), saw funding for general AI research collapse. A modest revival followed with the expert-systems boom of the 1980s, but the second AI winter arrived around 1987–1993, when commercial expert-systems companies failed to deliver on their promises and the LISP-machine market collapsed. The question after both winters was no longer whether machines could reason in the symbolic sense, but whether that was even the right target.
  
 ### 1.3 The parallel story: connectionism and the first neural-network winter
  
@@ -455,6 +471,17 @@ function init(){
 if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}else{setTimeout(init,0);}
 })();
 </script>
+
+<details class="collapse collapse-arrow bg-base-200 border border-base-300 my-6">
+<summary class="collapse-title font-semibold">📖 <span class="text-xs uppercase tracking-wider opacity-60">Side note</span> — tokens are not words</summary>
+<div class="collapse-content">
+
+A real transformer operates not on words but on **tokens** — sub-word pieces produced by a learned tokenizer (BPE, SentencePiece). A common word like *the* is one token; a rare word may be split into byte-pairs; numbers and code take unusual splits. Many of the model's quirks — poor arithmetic on awkwardly-split numerals, the famous "SolidGoldMagikarp" anomalous tokens, systematically uneven quality across languages — trace directly to the tokenizer rather than to the network. The vectors moved through semantic space are *token*-vectors, not word-vectors. The picture in this article is faithful at the level of meaning; the alignment between tokens and the words we read is where the picture is loosest.
+
+</div>
+</details>
+
+*A pre-transformer note.* ELMo (Peters et al. 2018) [52] had already produced *contextualised* word representations using bidirectional LSTMs — so context-sensitivity itself did not require attention. What transformers added, beyond ELMo, was *parallelism*: every position attending to every other position in one step, instead of sequentially through an RNN. That parallelism, more than context-sensitivity per se, is what made training-at-scale possible.
 
 But static embeddings had one critical flaw: every word had exactly one location. "Bank" — financial institution? — always mapped to the same point in space, regardless of whether the surrounding sentence talked about loans or rivers. Meaning, in the real world, depends on context. Fixing this required something more dynamic.
  
@@ -810,6 +837,8 @@ Instead of fine-tuning the model with labelled examples, a user could simply wri
 > This film was a revelation:" — and the model responds "Positive." No training, no weight updates, no
 > labelled data. The model infers the task from the examples in the prompt.
  
+Behind the qualitative jump was a quantitative pattern. Kaplan et al. (2020) [53] showed that LLM loss decreases as a clean power law in parameters, data, and compute — within the ranges they tested, scaling was predictable. Hoffmann et al. (2022) [54] sharpened this with Chinchilla, demonstrating that models published before 2022 (including GPT-3) were *undertrained* for their size: a given compute budget produces a better model at smaller-and-trained-longer than at larger-and-trained-shorter. By 2024–2026 the field had reorganised around these scaling laws, and the operative recipe shifted from "just make it bigger" to "optimise the data-to-parameter ratio, then add test-time compute."
+
 ### 4.2 Phase transitions in capability
  
 Wei et al. (2022) documented this systematically under the concept of **emergent abilities** [8]: capabilities that are absent in smaller models and appear sharply as model scale increases past a threshold. The paper documented over 100 such abilities: multi-step arithmetic, chain-of-thought reasoning, analogical reasoning — tasks that earlier models could not perform at any level, regardless of fine-tuning.
@@ -1002,7 +1031,7 @@ This is a coherent philosophical position and should be taken seriously. But as 
  
 ### 7.3 The evidence against pure parroting
  
-**Generalisation beyond training distribution.** A pure parrot can only reproduce patterns it has observed. But large language models demonstrably generalise to inputs that are, by construction, outside their training data. Take the Uniform Bar Examination. GPT-4 reportedly scored at the 90th percentile on first release [14]; Martínez (2024) [45] showed this was an artefact of comparing the model against a pool heavily weighted toward repeat test-takers, and the corrected estimate against first-time takers is closer to the 63rd percentile (around the 48th against actual passers, lower still on the essay sections). Even at the 63rd — far below the original headline — the result remains striking: the exam contains questions the model could not have seen verbatim in training, and pure pattern repetition has no obvious mechanism to produce coherent novel essays on legal hypotheticals. The contested headline number is less important than the underlying fact that the model generalises beyond its training distribution at all. On the MATH benchmark of high-school olympiad problems [31], GPT-4 itself scored 42.2% [14] — already a substantial leap above the era's baselines — and frontier reasoning models with extended test-time compute (OpenAI's o1 [10], Anthropic's extended-thinking modes, DeepSeek-R1) now exceed 90%. The specific questions had not been seen in training. Handling novel instances of these tasks requires some form of structural generalisation — not just retrieval.
+**Generalisation beyond training distribution.** A pure parrot can only reproduce patterns it has observed. But large language models demonstrably generalise to inputs that are, by construction, outside their training data. Take the Uniform Bar Examination. GPT-4 reportedly scored at the 90th percentile on first release [14]; Martínez (2024) [45] showed this was an artefact of comparing the model against a pool heavily weighted toward repeat test-takers, and the corrected estimate against first-time takers is closer to the 63rd percentile (around the 48th against actual passers, lower still on the essay sections). Even at the 63rd — far below the original headline — the result remains striking: the exam contains questions the model could not have seen verbatim in training, and pure pattern repetition has no obvious mechanism to produce coherent novel essays on legal hypotheticals. The contested headline number is less important than the underlying fact that the model generalises beyond its training distribution at all. On the MATH benchmark — competition mathematics drawn from AMC, AIME, HMMT, and Putnam (not, despite the common shorthand, IMO-level olympiad) [31] — GPT-4 itself scored 42.2% [14] — already a substantial leap above the era's baselines — and frontier reasoning models with extended test-time compute (OpenAI's o1 [10], Anthropic's extended-thinking modes, DeepSeek-R1) now exceed 90%. The specific questions had not been seen in training. Handling novel instances of these tasks requires some form of structural generalisation — not just retrieval.
  
 > **Example — the Winograd schema test** "The city councillors refused the demonstrators a permit
 > because they feared violence. Who feared violence?" The answer ("the councillors") requires
@@ -1021,7 +1050,7 @@ This is a coherent philosophical position and should be taken seriously. But as 
  
 ### 7.4 Prediction, planning, and the bounded role of randomness
  
-There is one technical fact in the parrot argument that does survive scrutiny: a language model genuinely does produce its output one token at a time, and each token is, mechanically, sampled from a probability distribution over the vocabulary. In that narrow sense, the model is "picking the most likely next word" — exactly what a stochastic parrot would do. Why, then, does this not reduce the whole enterprise to elaborate autocomplete?
+There is one technical fact in the parrot argument that does survive scrutiny: a language model genuinely does produce its output one token at a time, and each token is, mechanically, drawn from a probability distribution over the vocabulary. In that narrow sense, the model is "picking the most likely next word" — exactly what a stochastic parrot would do. (Worth noting that production systems often run at *temperature 0*, where the model is fully deterministic — no sampling at all — and yet still produces structured, context-appropriate output. That alone refutes the strict reading of "stochastic" in the parrot label; the substantive question is not whether sampling happens but whether the *region* being sampled from is meaningful. MLPs are, more deeply, learned approximators of conditional distributions over text — the "stochastic" word is doing a lot of metaphorical work in the parrot critique.) Why, then, does the broader picture not reduce the whole enterprise to elaborate autocomplete?
  
 Two facts answer this — one about planning, one about geometry.
  
@@ -1137,7 +1166,13 @@ Connecting this to the previous subsection: hallucination is what happens when t
 <summary class="collapse-title font-semibold">🔍 <span class="text-xs uppercase tracking-wider opacity-60">Deep dive</span> — Three types of hallucination, three different fixes</summary>
 <div class="collapse-content">
 
-Three types of hallucination correspond to three distinct failure modes [17]. *Fact-conflicting* hallucinations arise when generated claims contradict world knowledge — the closest to pure parrot behaviour. *Context-conflicting* hallucinations occur when the model loses consistency within a long conversation. *Input-conflicting* hallucinations arise when the model's output deviates from what the query explicitly specified. Each has a different cause and a different mitigation.
+Three types of hallucination correspond to three distinct failure modes [17]. *Fact-conflicting* hallucinations arise when generated claims contradict world knowledge — the closest to pure parrot behaviour. *Context-conflicting* hallucinations occur when the model loses consistency within a long conversation. *Input-conflicting* hallucinations arise when the model's output deviates from what the query explicitly specified. Each has a different cause and a different mitigation:
+
+| Type | Mechanism | Mitigation |
+|---|---|---|
+| Fact-conflicting | Sparse parametric memory; falls back on high-probability prior | Retrieval-augmented generation; ground in retrieved sources; verify against authoritative data |
+| Context-conflicting | Long-context drift; conversational state degrades over many turns | Shorter contexts; summarise running state; checkpoint key facts; ground recurring entities |
+| Input-conflicting | Instruction-following failure; the model misinterprets or ignores the query | Prompt clarification; chain-of-thought; constrained or structured output |
 
 </div>
 </details>
@@ -1175,7 +1210,7 @@ This matters practically. The parrot framing underestimates LLMs and leads to mi
  
 **Scale and emergence require epistemic humility.** The emergence of qualitatively new capabilities at scale is genuinely surprising and not yet fully understood. Honest AI education acknowledges both the remarkable capabilities and the genuine uncertainty about their mechanisms and limits. Avoid the dismissive ("it's just statistics") and the credulous ("it reasons like a person"). The interesting and accurate position — that these systems do something genuinely novel that we are still learning to characterise — is also the most intellectually honest one.
  
-This article was prepared by the ICE Industrial-AI team at the Institute for Computational Engineering (ICE), Eastern Switzerland University of Applied Sciences (OST). We welcome feedback and collaboration: [ice@ost.ch](mailto:ice@ost.ch)
+This article was prepared by the ICE Industrial-AI team at the Institute for Computational Engineering (ICE), Eastern Switzerland University of Applied Sciences (OST). Our team works on applied AI deployments including retrieval-augmented systems for industry partners — so the implicit thesis here (*LLMs do real semantic work; the parrot critique is overstated but not vacuous*) is one we hold with skin in the game, not from a position of neutral exposition. We welcome feedback and collaboration: [ice@ost.ch](mailto:ice@ost.ch)
  
 ## 9  References
  
@@ -1230,3 +1265,6 @@ This article was prepared by the ICE Industrial-AI team at the Institute for Com
 - [49] Linzen, T. (2016). Issues in Evaluating Semantic Spaces Using Word Analogies. *Proc. 1st Workshop on Evaluating Vector-Space Representations for NLP*, 13–18. arXiv:1606.07736
 - [50] Nissim, M., van Noord, R., & van der Goot, R. (2020). Fair Is Better than Sensational: Man Is to Doctor as Woman Is to Doctor. *Computational Linguistics*, 46(2), 487–497. arXiv:1905.09866
 - [51] Levesque, H.J., Davis, E., & Morgenstern, L. (2012). The Winograd Schema Challenge. *KR 2012*: Principles of Knowledge Representation and Reasoning, 552–561.
+- [52] Peters, M.E., Neumann, M., Iyyer, M., Gardner, M., Clark, C., Lee, K., & Zettlemoyer, L. (2018). Deep contextualized word representations (ELMo). *NAACL-HLT 2018*, 2227–2237. arXiv:1802.05365
+- [53] Kaplan, J., McCandlish, S., Henighan, T., Brown, T.B., Chess, B., Child, R., Gray, S., Radford, A., Wu, J., & Amodei, D. (2020). Scaling Laws for Neural Language Models. arXiv:2001.08361
+- [54] Hoffmann, J., Borgeaud, S., Mensch, A., Buchatskaya, E., Cai, T., et al. (2022). Training Compute-Optimal Large Language Models (Chinchilla). *NeurIPS 35*. arXiv:2203.15556
