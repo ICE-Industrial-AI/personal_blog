@@ -77,12 +77,46 @@
     }
 }
 
+/* ─── Mobile: drawer becomes single-column flow, sidebar overlays ─── */
+/* (Without this, the auto grid column reserves the sidebar's natural width
+    even when it's translated off-screen, squeezing main content on phones.) */
+@media (max-width: 1023px) {
+  .drawer {
+    display: block !important;
+    height: auto !important;
+    grid-template-columns: none !important;
+  }
+  .drawer-content {
+    grid-column-start: auto !important;
+    min-height: 100vh;
+  }
+  .drawer-side {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 82%;
+    max-width: 300px;
+    z-index: 50;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  /* Tighter main padding on phones */
+  main.p-6 {
+    padding: 1rem !important;
+    padding-top: 1.5rem !important;
+    max-width: 100vw !important;
+  }
+}
+
 /* ─── Mobile / narrow-viewport polish for interactive widgets ───────── */
 @media (max-width: 720px) {
   #sem-ops-widget, #sem-da-widget, #sem-timeline-widget,
   #sem-emerge-widget, #sem-predict-widget, #sem-rhyme-widget {
     padding: 14px 12px !important;
-    overflow-x: auto;
+    /* Inline styles on the widgets set overflow:hidden — override both axes */
+    overflow-x: auto !important;
+    overflow-y: visible !important;
     -webkit-overflow-scrolling: touch;
   }
   #sem-ops-widget svg, #sem-da-widget svg, #sem-timeline-widget svg,
