@@ -1,11 +1,10 @@
 ---
-title: "From Symbols to Meaning: How Language AI Really Works"
+title: "From Symbols to Meaning: How Modern Language Models Really Work"
 description: "A history of AI from symbolic systems to transformers, with a debunking of the stochastic parrot critique"
 pubDate: "May 20 2026"
 heroImage: "/personal_blog/FS2M.jpg"
 ---
  
-# From Symbols to Meaning: How Language AI Really Works
 *Author: Fernando Benites*
 
 AI was supposed to reason like a logician. Instead, it learned to navigate meaning like a reader moving through a library — finding related ideas not by following rules, but by sensing proximity. This article traces that journey, explains what large language models actually do to words, and honestly confronts the question: are they just very eloquent parrots?
@@ -55,6 +54,7 @@ AI was supposed to reason like a logician. Instead, it learned to navigate meani
         <ul class="mt-1.5 space-y-0.5 text-xs text-base-content/65 list-none p-0 m-0">
           <li class="m-0">4.1 GPT-3 and few-shot learning</li>
           <li class="m-0">4.2 Phase transitions in capability</li>
+          <li class="m-0">4.3 From raw predictor to instruction-follower</li>
         </ul>
       </div>
     </li>
@@ -104,7 +104,7 @@ AI was supposed to reason like a logician. Instead, it learned to navigate meani
  
 When Alan Turing asked in 1950 whether machines could think [1], the implicit model was the logician: an entity that manipulates symbols, applies rules, and arrives at correct conclusions by necessity. This expectation shaped the dominant research programme in artificial intelligence for decades.
  
-From the mid-1950s through the 1980s, **symbolic AI** — sometimes called Good Old-Fashioned AI, or GOFAI — held that intelligence was computation over explicit representations. Build a large database of facts and rules, then let an inference engine derive new facts. Systems like MYCIN (1976) for medical diagnosis demonstrated genuine expertise in narrow domains [2]. The approach had deep intuitive appeal: it resembled how we imagine ourselves to think.
+From the mid-1950s through the 1980s, **symbolic AI** — sometimes called Good Old-Fashioned AI, or GOFAI — held that intelligence was computation over explicit representations. Build a large database of facts and rules, then let an inference engine derive new facts. Systems like MYCIN for medical diagnosis (Shortliffe 1974; documented in [2]) demonstrated genuine expertise in narrow domains. The approach had deep intuitive appeal: it resembled how we imagine ourselves to think.
  
 > **Classroom example — what symbolic AI looked like** A symbolic system for diagnosing a fever might
 > contain rules like: *IF temperature > 38.5°C AND onset < 3 days AND no recent vaccination THEN
@@ -119,7 +119,7 @@ Ask a symbolic system about a fever in a child who has just returned from the tr
  
 ### 1.3 The parallel story: connectionism and the first neural-network winter
  
-The symbolic-AI history is only half the story. Running in parallel — and at the time, in direct competition for funding and intellectual prestige — was the **connectionist** tradition: the idea that intelligence might emerge from networks of simple, neuron-like units rather than from explicit rules. Frank Rosenblatt's *perceptron*, introduced in 1958, was the first practical learning algorithm of this kind. The press greeted it with extraordinary headlines: the *New York Times* reported that the perceptron would soon "walk, talk, see, write, reproduce itself and be conscious of its existence."
+The symbolic-AI history is only half the story. Running in parallel — and at the time, in direct competition for funding and intellectual prestige — was the **connectionist** tradition: the idea that intelligence might emerge from networks of simple, neuron-like units rather than from explicit rules. Frank Rosenblatt's *perceptron*, introduced in 1958, was the first practical learning algorithm of this kind. The press greeted it with extraordinary headlines: the *New York Times* coverage was famously hyperbolic; in widely-quoted phrasing — the exact wording varies across reproductions — the device would in time "walk, talk, see, write, reproduce itself and be conscious of its existence" [41].
  
 The hype outran the technology. By the mid-1960s, neural-network research was already slowing — limited by the computers of the era, by the lack of any training algorithm for networks with more than one layer of weights, and by the rising influence of the symbolic school. In 1969, Marvin Minsky and Seymour Papert published *Perceptrons* [21], a mathematically rigorous critique of single-layer networks. Their central result was that single-layer perceptrons could not learn even simple non-linearly-separable functions — the XOR function being the canonical example. They conjectured, on the basis of intuition rather than proof, that multi-layer extensions would face similar limits.
  
@@ -153,7 +153,7 @@ Minsky and Papert's intuition about the limits of multi-layer networks turned ou
 
 The formal refutation of the Minsky–Papert conjecture arrived in 1989 as well, in the form of the **Universal Approximation Theorem**. Cybenko proved that any continuous function on a compact subset of ℝ^n can be approximated to arbitrary precision by a feedforward network with a single hidden layer of finite width, given a sigmoid activation function [28]. Hornik, Stinchcombe and White independently proved a more general version the same year [29]; Hornik (1991) extended the result further, showing that the multilayer architecture itself — not the specific choice of activation function — is what gives neural networks their universal approximation capacity [30].
 
-The practical implication is decisive: the limits Minsky and Papert had proved for single-layer perceptrons did not generalise to multi-layer networks, and their conjecture that they would was mathematically false. A neural network of sufficient size can represent *any* continuous function. The theorem does not say such a network is easy to train, or that it will generalise well from limited data, or that it is the most efficient representation — those are separate problems, and remain hard. But the question of whether the architecture is fundamentally limited in what it can express was settled. The answer is no.
+The practical implication is decisive: the limits Minsky and Papert had proved for single-layer perceptrons did not generalise to multi-layer networks, and their conjecture that they would was mathematically false. A neural network of sufficient size can represent *any* continuous function. The theorem does not say such a network is easy to train, or that it will generalise well from limited data, or that it is the most efficient representation — those are separate problems, and remain hard. UAT settled only the *representability* question; *trainability* and *generalisation* took roughly another twenty-five years — SGD done well, modern initialisation, GPUs, and very large datasets — to settle in practice. But the question of whether the architecture is fundamentally limited in what it can express was settled. The answer is no.
 
 </div>
 </details>
@@ -185,7 +185,7 @@ The practical implication is decisive: the limits Minsky and Papert had proved f
 var TLD=[
   {y:1950,cat:'sym',label:'Turing test',detail:'Turing, "Computing Machinery and Intelligence" — sets the implicit logician model of intelligence [1].'},
   {y:1958,cat:'con',label:'Perceptron',detail:'Rosenblatt — the first practical connectionist learning algorithm; press promises a machine that will "walk, talk, see, write, reproduce itself".'},
-  {y0:1956,y1:1969,cat:'sym',label:'Symbolic AI ascendant',detail:'McCarthy, Newell & Simon; LISP, the General Problem Solver — symbolic AI dominates the field.'},
+  {y0:1956,y1:1975,cat:'sym',label:'Symbolic AI dominant',detail:'McCarthy, Newell & Simon; LISP, GPS, SHRDLU (1972), PROLOG (1972) — symbolic AI dominates the field through the early 1970s.'},
   {y:1969,cat:'win',label:'Perceptrons critique',detail:'Minsky & Papert — single-layer perceptrons cannot learn XOR; mistakenly extrapolated to multi-layer networks [21].'},
   {y0:1970,y1:1974,cat:'con',label:'Backprop, underground',detail:'Linnainmaa formalises reverse-mode autodiff [23]; Werbos applies it to neural nets in his Harvard PhD [24].'},
   {y0:1974,y1:1980,cat:'win',label:'First AI winter',detail:'Lighthill Report; Mansfield Amendment — funding for general AI research collapses [18].'},
@@ -197,7 +197,7 @@ var TLD=[
   {y0:1989,y1:1991,cat:'con',label:'Universal Approximation Theorem',detail:'Cybenko, Hornik et al. — Minsky-Papert intuition formally refuted [28][29][30].'},
   {y0:1987,y1:1993,cat:'win',label:'Second AI winter',detail:'Expert-systems market collapses; LISP-machine companies fail.'},
   {y0:1993,y1:2012,cat:'mod',label:'Statistical methods era',detail:'n-grams, SVMs, shallow neural nets dominate machine learning.'},
-  {y0:2013,y1:2017,cat:'mod',label:'Word2Vec, LSTMs',detail:'Mikolov et al. — meaning as geometry; LSTMs handle sequences; deep learning takes language [4][19].'},
+  {y0:2013,y1:2017,cat:'mod',label:'Word2Vec; LSTMs adopted',detail:'Mikolov et al. (2013) — meaning as geometry; LSTMs (Hochreiter & Schmidhuber 1997 [38]) finally see widespread adoption for language [4][19].'},
   {y:2017,cat:'mod',label:'Transformer',detail:'Vaswani et al., "Attention Is All You Need" — meaning becomes context-sensitive [5].'},
   {y:2020,cat:'mod',label:'GPT-3',detail:'175B parameters — few-shot prompting and emergent abilities appear at scale [7].'},
   {y0:2022,y1:2026,cat:'mod',label:'Chain-of-thought, RAG, reasoning',detail:'LLMs as infrastructure; test-time compute (thinking tokens) emerges as a new scaling axis.'}
@@ -263,7 +263,7 @@ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded'
  
 The statistical alternative asked a fundamentally different question: instead of encoding what language *means*, can we learn what language *does* by observing enormous amounts of it? A language model assigns a probability to every possible sequence of words. The simplest version, the **n-gram model**, estimates the probability of each word given the preceding few words, and requires nothing beyond counting.
  
-This worked surprisingly well for tasks like speech recognition — in turn, the cliff between nlp-experts with a math/physics/ML background and pure linguists increases, culminating in an attribution to Frederick Jelinek of the sentence, "Every time I fire a linguist, the performance of the speech recogniser improves." But n-gram models had hard limits: they could not capture dependencies across more than a few words, and they treated every word as an atom with no internal relationship to any other word, as would any linguist point out. Furthermore, they were used in conjunction with the bag of words model: each word is independent of each other, usually being modelled by a dimension in a high-dimensional space, thus words like father and son are orthogonal and do not have any relation.
+This worked surprisingly well for tasks like speech recognition — in turn, the cliff between nlp-experts with a math/physics/ML background and pure linguists increases, culminating in an attribution to Frederick Jelinek of the sentence, "Every time I fire a linguist, the performance of the speech recogniser improves" [40]. But n-gram models had hard limits: they could not capture dependencies across more than a few words, and they treated every word as an atom with no internal relationship to any other word, as would any linguist point out. Furthermore, they were used in conjunction with the bag of words model: each word is independent of each other, usually being modelled by a dimension in a high-dimensional space, thus words like father and son are orthogonal and do not have any relation.
  
 ### 2.2 Word embeddings: words as coordinates
  
@@ -653,6 +653,8 @@ The transformer uses **multi-head attention**: running many parallel attention o
 > sentences designed specifically to test this kind of reasoning — were considered very hard for AI;
 > transformers handle most of them with high accuracy.
  
+A note on the symbolic/connectionist framing: modern transformers blur the dichotomy at the architectural level. Attention is, mechanically, a soft and differentiable form of key-based indexing — queries look up values via learned keys, very much like a fuzzy database query. The classical opposition between rule-following and pattern-matching has partially dissolved; what makes the transformer feel like meaning-navigation also makes it look like differentiable symbol manipulation.
+ 
 <details class="collapse collapse-arrow bg-base-200 border border-base-300 my-6">
 <summary class="collapse-title font-semibold">🎥 <span class="text-xs uppercase tracking-wider opacity-60">Watch</span> — 3Blue1Brown visualises attention beautifully</summary>
 <div class="collapse-content">
@@ -666,7 +668,7 @@ If you want to see this geometry move, Grant Sanderson (3Blue1Brown) animates ev
  
 ### 4.1 GPT-3 and few-shot learning
  
-In May 2020, OpenAI published "Language Models are Few-Shot Learners" [7], introducing GPT-3: a transformer with 175 billion parameters — ten times larger than anything previously published. The central finding was not that a bigger model performed better on existing benchmarks. It was that GPT-3 demonstrated a qualitatively new *mode* of interaction: **few-shot prompting**.
+In May 2020, OpenAI published "Language Models are Few-Shot Learners" [7], introducing GPT-3: a transformer with 175 billion parameters — about ten times larger than the previous largest dense language model (Microsoft's Turing-NLG, 17B). The central finding was not that a bigger model performed better on existing benchmarks. It was that GPT-3 demonstrated a qualitatively new *mode* of interaction: **few-shot prompting**.
  
 Instead of fine-tuning the model with labelled examples, a user could simply write a few demonstrations in plain text — "Translate to French: Hello → Bonjour, Goodbye → Au revoir, Thank you →" — and the model would complete the pattern correctly, for essentially any task, without any gradient updates. This emerged naturally from pretraining on enough text; no one programmed it.
  
@@ -684,15 +686,109 @@ Wei et al. (2022) documented this systematically under the concept of **emergent
 The discontinuity is philosophically significant. A model that cannot solve three-digit addition at any scale below 50 billion parameters, then suddenly can at 100 billion, is not just improving quantitatively — it is exhibiting a phase transition. Like water becoming ice, qualitatively new structure emerges from a quantitative change.
  
 Seen through the semantic-space lens: at sufficient scale, the model's high-dimensional space becomes rich enough to contain implicit representations of concepts like "arithmetic" or "logical inference" — not as explicit rules, but as geometric regularities that the model can exploit when prompted in the right way. This is not the same as a symbolic reasoning engine, but it is not mere pattern-matching either.
- 
+
+<div id="sem-emerge-widget" style="background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:20px 22px;margin:1.8em 0;font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;overflow:hidden;">
+  <div style="color:#f0883e;font-size:10px;letter-spacing:2.5px;margin-bottom:14px;">INTERACTIVE — SCALE vs CAPABILITY (the emergence debate)</div>
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;">
+    <span style="color:#c9d1d9;font-size:12px;">measurement metric:</span>
+    <button id="em-met-discrete" onclick="emMetric('discrete')" style="background:#1f6feb;color:#fff;border:1px solid #1f6feb;border-radius:4px;padding:4px 12px;font-family:inherit;font-size:11px;cursor:pointer;">discrete (exact-match)</button>
+    <button id="em-met-continuous" onclick="emMetric('continuous')" style="background:#161b22;color:#c9d1d9;border:1px solid #30363d;border-radius:4px;padding:4px 12px;font-family:inherit;font-size:11px;cursor:pointer;">continuous (token log-prob)</button>
+  </div>
+  <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:6px;font-size:11px;">
+    <span id="em-leg-arith" onclick="emToggle('arith')" style="color:#7ab0f0;cursor:pointer;user-select:none;">● 3-digit arithmetic</span>
+    <span id="em-leg-cot" onclick="emToggle('cot')" style="color:#f0883e;cursor:pointer;user-select:none;">● chain-of-thought</span>
+    <span id="em-leg-ana" onclick="emToggle('ana')" style="color:#5dba8f;cursor:pointer;user-select:none;">● analogical reasoning</span>
+  </div>
+  <svg id="em-svg" viewBox="0 0 760 290" style="width:100%;display:block;"></svg>
+  <div id="em-caption" style="color:#c9d1d9;font-size:11.5px;line-height:1.55;margin-top:6px;"><strong>Sharp jumps with exact-match accuracy — looks emergent.</strong> Below the threshold the model "can't do" the task; just past it, suddenly it can.</div>
+  <div style="color:#6e7681;font-size:10.5px;line-height:1.55;margin-top:6px;">Same underlying smooth capability curve, two metrics. Multi-token correctness (every token has to be right) amplifies modest probability gains into apparent thresholds — Schaeffer, Miranda &amp; Koyejo, 2023 [36]. Click the metric toggle to compare.</div>
+</div>
+<script>
+(function(){
+var CAP=[
+  {id:'arith',name:'3-digit arithmetic', color:'#7ab0f0',t:10.5,s:0.45,k:6, on:true},
+  {id:'cot',  name:'chain-of-thought',   color:'#f0883e',t:10.8,s:0.40,k:10,on:true},
+  {id:'ana',  name:'analogical reasoning',color:'#5dba8f',t:10.0,s:0.50,k:3, on:true}
+];
+var metric='discrete';
+var X0=80,X1=730,Y0=30,Y1=240,LX0=7,LX1=12;
+function px(L){return X0+(L-LX0)*(X1-X0)/(LX1-LX0);}
+function py(v){return Y1-v*(Y1-Y0);}
+function sig(x){return 1/(1+Math.exp(-x));}
+function score(L,c){var s=sig((L-c.t)/c.s);return metric==='continuous'?s:Math.pow(s,c.k);}
+function render(){
+  var svg=document.getElementById('em-svg'),ns='http://www.w3.org/2000/svg';
+  if(!svg)return;svg.innerHTML='';
+  function el(tag,a){var e=document.createElementNS(ns,tag);for(var k in a)e.setAttribute(k,a[k]);return e;}
+  // grid + ticks
+  var xt=['10M','100M','1B','10B','100B','1T'];
+  for(var i=0;i<=5;i++){
+    var x=px(7+i);
+    svg.appendChild(el('line',{x1:x,y1:Y0,x2:x,y2:Y1,stroke:'#161b22','stroke-width':'1',opacity:'0.7'}));
+    svg.appendChild(el('line',{x1:x,y1:Y1,x2:x,y2:Y1+5,stroke:'#484f58','stroke-width':'1'}));
+    var t=el('text',{x:x,y:Y1+18,'text-anchor':'middle',fill:'#8b949e','font-size':'10','font-family':'monospace'});
+    t.textContent=xt[i];svg.appendChild(t);
+  }
+  for(var i=0;i<=4;i++){
+    var v=i/4,y=py(v);
+    svg.appendChild(el('line',{x1:X0,y1:y,x2:X1,y2:y,stroke:'#161b22','stroke-width':'1',opacity:'0.45'}));
+    svg.appendChild(el('line',{x1:X0-5,y1:y,x2:X0,y2:y,stroke:'#484f58','stroke-width':'1'}));
+    var t=el('text',{x:X0-10,y:y+4,'text-anchor':'end',fill:'#8b949e','font-size':'10','font-family':'monospace'});
+    t.textContent=Math.round(v*100)+'%';svg.appendChild(t);
+  }
+  // axis lines
+  svg.appendChild(el('line',{x1:X0,y1:Y1,x2:X1,y2:Y1,stroke:'#30363d','stroke-width':'1'}));
+  svg.appendChild(el('line',{x1:X0,y1:Y0,x2:X0,y2:Y1,stroke:'#30363d','stroke-width':'1'}));
+  // axis labels
+  var ax=el('text',{x:(X0+X1)/2,y:Y1+38,'text-anchor':'middle',fill:'#484f58','font-size':'10','font-family':'monospace'});
+  ax.textContent='parameters (log scale)';svg.appendChild(ax);
+  var ay=el('text',{x:24,y:(Y0+Y1)/2,'text-anchor':'middle',fill:'#484f58','font-size':'10','font-family':'monospace',transform:'rotate(-90,24,'+((Y0+Y1)/2)+')'});
+  ay.textContent='capability score';svg.appendChild(ay);
+  // curves
+  CAP.forEach(function(c){
+    if(!c.on)return;
+    var d='';
+    for(var i=0;i<=160;i++){
+      var L=LX0+(LX1-LX0)*i/160,v=score(L,c);
+      d+=(i===0?'M ':' L ')+px(L).toFixed(1)+' '+py(v).toFixed(1);
+    }
+    svg.appendChild(el('path',{d:d,fill:'none',stroke:c.color,'stroke-width':'2.2',opacity:'0.92'}));
+  });
+}
+window.emToggle=function(id){
+  var c;for(var i=0;i<CAP.length;i++)if(CAP[i].id===id){c=CAP[i];break;}
+  if(!c)return;c.on=!c.on;
+  var b=document.getElementById('em-leg-'+id);if(b)b.style.opacity=c.on?'1':'0.35';
+  render();
+};
+window.emMetric=function(m){
+  metric=m;
+  var bd=document.getElementById('em-met-discrete'),bc=document.getElementById('em-met-continuous');
+  if(bd){bd.style.background=m==='discrete'?'#1f6feb':'#161b22';bd.style.borderColor=m==='discrete'?'#1f6feb':'#30363d';bd.style.color=m==='discrete'?'#fff':'#c9d1d9';}
+  if(bc){bc.style.background=m==='continuous'?'#1f6feb':'#161b22';bc.style.borderColor=m==='continuous'?'#1f6feb':'#30363d';bc.style.color=m==='continuous'?'#fff':'#c9d1d9';}
+  var cap=document.getElementById('em-caption');
+  if(cap)cap.innerHTML=m==='discrete'
+    ?'<strong>Sharp jumps with exact-match accuracy — looks emergent.</strong> Below the threshold the model "can\'t do" the task; just past it, suddenly it can.'
+    :'<strong>Smooth growth with continuous token-level metric — looks like ordinary scaling.</strong> The same underlying capability, but scored without the all-or-nothing threshold.';
+  render();
+};
+function init(){render();}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}else{setTimeout(init,0);}
+})();
+</script>
+
 <details class="collapse collapse-arrow bg-base-200 border border-base-300 my-6">
 <summary class="collapse-title font-semibold">🔍 <span class="text-xs uppercase tracking-wider opacity-60">Deep dive</span> — Is emergence real, or a metric artefact? The Schaeffer critique</summary>
 <div class="collapse-content">
 
-Schaeffer et al. (2023) argued that apparent discontinuities can be artefacts of the metrics used — with nonlinear metrics, smooth underlying capability curves look discontinuous. This debate is ongoing and pedagogically important: emergence suggests qualitative novelty; smooth extrapolation suggests continuity with earlier systems. The truth is likely mixed: some capabilities are genuinely threshold-dependent; others are metric artefacts.
+Schaeffer, Miranda & Koyejo (2023) [36] argued that apparent discontinuities can be artefacts of the metrics used — with nonlinear metrics, smooth underlying capability curves look discontinuous. This debate is ongoing and pedagogically important: emergence suggests qualitative novelty; smooth extrapolation suggests continuity with earlier systems. The truth is likely mixed: some capabilities are genuinely threshold-dependent; others are metric artefacts.
 
 </div>
 </details>
+
+### 4.3 From raw predictor to instruction-follower
+
+GPT-3 (2020) demonstrated emergent few-shot abilities, but interacting with it required prompt-engineering skill — coaxing useful behaviour out of a model trained only to predict the next token of internet text. The qualitative leap most users felt with ChatGPT (November 2022) was not architectural; it was **alignment**. Ouyang et al. (2022) [39] combined *instruction tuning* with **reinforcement learning from human feedback (RLHF)**: first, fine-tune on supervised (instruction, good-response) pairs; then, train a reward model on human comparison judgements; finally, use that reward model to RL-optimise the base model toward outputs humans prefer. The underlying GPT-3.5 was not substantially larger than GPT-3 — what changed was the *objective*. A raw next-token predictor had been turned into a system that tries to do what its user asked. Most of the visible 2022–2024 shift in how LLMs felt to use lives in this single change. Subsequent work has refined the recipe — direct preference optimisation, constitutional AI, RLAIF — but the central story holds: scale gave us the geometry; alignment gave us the interface.
  
 ## 5  Thinking tokens: teaching models to slow down
  
@@ -765,13 +861,13 @@ In 2021, Bender, Gebru, McMillan-Major and Mitchell published "On the Dangers of
 > manipulates *form* — sequences of tokens — without *meaning* — any connection to the world. It is a
 > stochastic parrot: statistically impressive, semantically empty.
  
-This argument has intellectual roots in the symbol grounding problem from cognitive science [13]: the claim that symbols acquire meaning only through embodied, causal contact with the world — through seeing, touching, doing — not through relations to other symbols. A dictionary defines words using other words; nothing ever makes contact with the actual world. Under this view, no matter how sophisticated the statistics, a model trained only on text is trapped inside a hall of mirrors.
+This argument has intellectual roots in the symbol grounding problem from cognitive science (Harnad 1990 [35]), with Bender & Koller [13] articulating the modern NLP version: the claim that symbols acquire meaning only through embodied, causal contact with the world — through seeing, touching, doing — not through relations to other symbols. A dictionary defines words using other words; nothing ever makes contact with the actual world. Under this view, no matter how sophisticated the statistics, a model trained only on text is trapped inside a hall of mirrors.
  
 This is a coherent philosophical position and should be taken seriously. But as an empirical claim about what large transformer models actually do, it has become increasingly difficult to sustain. The evidence is worth examining carefully.
  
 ### 7.3 The evidence against pure parroting
  
-**Generalisation beyond training distribution.** A pure parrot can only reproduce patterns it has observed. But large language models demonstrably generalise to inputs that are, by construction, outside their training data. GPT-4 achieved above the 90th percentile on the Uniform Bar Examination and 93% accuracy on the MATH benchmark of high-school olympiad problems [14]. The specific questions had not been seen in training. Handling novel instances of these tasks requires some form of structural generalisation — not just retrieval.
+**Generalisation beyond training distribution.** A pure parrot can only reproduce patterns it has observed. But large language models demonstrably generalise to inputs that are, by construction, outside their training data. GPT-4 achieved above the 90th percentile on the Uniform Bar Examination and 93% accuracy on the MATH benchmark of high-school olympiad problems [14][31]. The specific questions had not been seen in training. Handling novel instances of these tasks requires some form of structural generalisation — not just retrieval.
  
 > **Example — the Winograd schema test** "The city councillors refused the demonstrators a permit
 > because they feared violence. Who feared violence?" The answer ("the councillors") requires
@@ -780,11 +876,11 @@ This is a coherent philosophical position and should be taken seriously. But as 
 > near-human rates. A pure statistical parrot, associating "they" with the nearest plural noun, would
 > systematically fail.
  
-**Emergent internal world models.** Li et al. (2022) trained a language model purely on sequences of Othello game moves — no game states, just move notations [15]. They then probed the model's internal activations and found linearly decodable representations of the game board: the model had built an internal map of which squares were occupied and by whom, with no supervision on board states. This is a direct counterexample to the claim that LLMs represent only linguistic form. From text-like inputs, a structural understanding of the underlying system emerged.
+**Emergent internal world models.** Li et al. (2022) trained a language model purely on sequences of Othello game moves — no game states, just move notations [15]. They then probed the model's internal activations and found representations of the game board — initially decoded with nonlinear probes [15], and later shown to be *linearly* decodable by Nanda et al. (2023) [37]: the model had built an internal map of which squares were occupied and by whom, with no supervision on board states. This is a direct counterexample to the claim that LLMs represent only linguistic form. From text-like inputs, a structural understanding of the underlying system emerged.
  
-**Mechanistic interpretability evidence.** Anthropic's interpretability research on Claude identified computational circuits — specific subgraphs of the attention and feedforward layers — that implement identifiable operations: fact lookup, name-binding between subject and predicate, multi-step planning in which intermediate conclusions are internally represented before being expressed [14]. The model is not haphazardly stitching; specific computations correspond to specific internal representations.
+**Mechanistic interpretability evidence.** Anthropic's interpretability research on Claude identified computational circuits — specific subgraphs of the attention and feedforward layers — that implement identifiable operations: fact lookup, name-binding between subject and predicate, multi-step planning in which intermediate conclusions are internally represented before being expressed [20][32][33]. The model is not haphazardly stitching; specific computations correspond to specific internal representations.
  
-**Mathematical reasoning.** A 2024 workshop documented frontier LLMs generating coherent proofs of novel mathematical problems [14]. Mathematical proof is perhaps the hardest test for the parrot: the answer cannot be retrieved from memory, because the problem is new; it must be derived. Generating valid proofs requires — at minimum — something functionally equivalent to understanding axioms and logical inference.
+**Mathematical reasoning.** Recent work documents frontier LLMs generating coherent proofs of novel mathematical problems — Trinh et al.'s AlphaGeometry (2024) solves olympiad geometry problems at a near-medal level without human demonstrations [34]. Mathematical proof is perhaps the hardest test for the parrot: the answer cannot be retrieved from memory, because the problem is new; it must be derived. Generating valid proofs requires — at minimum — something functionally equivalent to understanding axioms and logical inference.
  
 **Context-directed extrapolation.** Madabushi et al. (2025) propose a precise framing: LLMs perform "context-directed extrapolation from training data priors" [16] — a mechanism that substantially exceeds statistical pattern repetition. The model infers from context which part of its learned structure is relevant, then extrapolates beyond the specific examples seen. This is not human reasoning, but it is not parroting either.
  
@@ -795,7 +891,77 @@ There is one technical fact in the parrot argument that does survive scrutiny: a
 Two facts answer this — one about planning, one about geometry.
  
 **The model plans further ahead than the next token.** Anthropic's 2025 interpretability study "On the Biology of a Large Language Model" [20] probed Claude 3.5 Haiku while it wrote a rhyming couplet. Given "He saw a carrot and had to grab it," the model produced "His hunger was like a starving rabbit." The natural assumption is that the model writes word by word and only at the end scrambles to find a rhyme. The internal traces showed something quite different: *before* generating any word of the second line, the model had already activated representations of candidate end-words that rhyme with "grab it" — "rabbit" among them — and then composed the entire line to land at the planned word. When the researchers intervened to suppress the "rabbit" representation and inject "habit" instead, the model adapted and produced a sensible line ending in "habit." This is not next-token greed; this is goal-directed generation, with the next-token mechanism serving the longer plan.
- 
+
+<div id="sem-rhyme-widget" style="background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:20px 22px;margin:1.8em 0;font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;overflow:hidden;">
+  <div style="color:#f0883e;font-size:10px;letter-spacing:2.5px;margin-bottom:14px;">INTERACTIVE — MULTI-TOKEN PLANNING (rhyming couplet)</div>
+  <div style="margin-bottom:12px;">
+    <div style="color:#8b949e;font-size:11px;margin-bottom:4px;">Prompt — line 1 (ends with "...grab it,"):</div>
+    <div style="color:#c9d1d9;font-size:13px;line-height:1.5;background:#161b22;border:1px solid #30363d;border-radius:4px;padding:8px 12px;">"He saw a carrot and had to <span style="color:#f0883e;font-weight:bold;">grab it,</span>"</div>
+  </div>
+  <div style="color:#8b949e;font-size:11px;line-height:1.55;margin-bottom:10px;">Before generating <em>any</em> token of line 2, the model has already pre-activated candidates that rhyme with "grab it":</div>
+  <div id="rh-bars" style="margin-bottom:6px;"></div>
+  <div style="display:flex;align-items:center;gap:12px;margin:14px 0 10px;flex-wrap:wrap;">
+    <button id="rh-btn" onclick="rhTog()" style="background:#cf222e;color:#fff;border:none;border-radius:4px;padding:6px 14px;font-family:inherit;font-size:12px;cursor:pointer;transition:background .25s;">⊘ Suppress "rabbit"</button>
+    <span style="color:#6e7681;font-size:11px;">Intervene on the planned end-word — watch the line reroute.</span>
+  </div>
+  <div style="margin-top:6px;">
+    <div style="color:#8b949e;font-size:11px;margin-bottom:4px;">Resulting line 2 (composed to land at the planned word):</div>
+    <div id="rh-line2" style="color:#c9d1d9;font-size:13px;line-height:1.5;background:#161b22;border:1px solid #30363d;border-radius:4px;padding:8px 12px;">"His hunger was like a starving <span style=&quot;color:#39d353;font-weight:bold;&quot;>rabbit</span>."</div>
+  </div>
+  <div style="color:#6e7681;font-size:10.5px;line-height:1.55;margin-top:10px;">The next-token mechanism is the output channel; the planning lives in the hidden state, many tokens earlier. Suppress the planned target and the model reroutes — gracefully — to a different but still rhyming word. Activations and lines are illustrative, drawn after Anthropic, <em>On the Biology of a Large Language Model</em>, 2025.</div>
+</div>
+<script>
+(function(){
+var WORDS=[
+  {w:'rabbit',normal:0.95,supp:0.08},
+  {w:'habit', normal:0.42,supp:0.86},
+  {w:'tablet',normal:0.34,supp:0.51},
+  {w:'rapid', normal:0.27,supp:0.30}
+];
+var LINES={
+  normal:'"His hunger was like a starving <span style=\"color:#39d353;font-weight:bold;\">rabbit</span>."',
+  supp:  '"His hunger gave him a desperate new <span style=\"color:#39d353;font-weight:bold;\">habit</span>."'
+};
+var supp=false;
+function buildBars(){
+  var c=document.getElementById('rh-bars');if(!c)return;c.innerHTML='';
+  WORDS.forEach(function(wd,i){
+    var row=document.createElement('div');
+    row.style.cssText='display:flex;align-items:center;gap:10px;margin-bottom:7px;';
+    row.innerHTML=
+      '<span id="rh-w-'+i+'" style="display:inline-block;width:62px;color:#c9d1d9;font-size:12px;text-align:right;font-family:inherit;">'+wd.w+'</span>'+
+      '<div style="flex:1;background:#161b22;border:1px solid #30363d;border-radius:3px;height:18px;overflow:hidden;">'+
+        '<div id="rh-bar-'+i+'" style="height:100%;width:'+(wd.normal*100)+'%;background:#1f6feb;transition:width .45s ease,background .45s;"></div>'+
+      '</div>'+
+      '<span id="rh-val-'+i+'" style="display:inline-block;width:38px;color:#8b949e;font-size:11px;font-family:monospace;text-align:right;">'+wd.normal.toFixed(2)+'</span>';
+    c.appendChild(row);
+  });
+}
+function update(){
+  var key=supp?'supp':'normal',max=0;
+  WORDS.forEach(function(wd){if(wd[key]>max)max=wd[key];});
+  WORDS.forEach(function(wd,i){
+    var v=wd[key];
+    var bar=document.getElementById('rh-bar-'+i),val=document.getElementById('rh-val-'+i),lbl=document.getElementById('rh-w-'+i);
+    if(bar){
+      bar.style.width=(v*100)+'%';
+      if(supp&&wd.w==='rabbit')bar.style.background='#cf222e';
+      else if(Math.abs(v-max)<0.001)bar.style.background='#39d353';
+      else bar.style.background='#1f6feb';
+    }
+    if(val)val.textContent=v.toFixed(2);
+    if(lbl){lbl.style.textDecoration=(supp&&wd.w==='rabbit')?'line-through':'none';lbl.style.opacity=(supp&&wd.w==='rabbit')?'0.55':'1';}
+  });
+  var line2=document.getElementById('rh-line2');if(line2)line2.innerHTML=LINES[key];
+  var btn=document.getElementById('rh-btn');
+  if(btn){btn.textContent=supp?'↻ Restore "rabbit"':'⊘ Suppress "rabbit"';btn.style.background=supp?'#1f6feb':'#cf222e';}
+}
+window.rhTog=function(){supp=!supp;update();};
+function init(){buildBars();update();}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}else{setTimeout(init,0);}
+})();
+</script>
+
 > **What this means in plain language** Imagine writing a sentence with a target word in mind for the
 > end. You do not write each word in isolation — you write each word so that the sentence as a whole
 > arrives at the target naturally. The model does something analogous. The token-by-token prediction
@@ -803,9 +969,9 @@ Two facts answer this — one about planning, one about geometry.
 > sentence is going. Predicting the next token is the surface; the structure that produces it spans
 > many tokens at once.
  
-**The semantic-space framing dissolves much of the randomness concern.** Even when the model does sample stochastically from the next-token distribution, the consequences of that sampling are bounded. Here is why. The model's hidden state at each generation step encodes a *direction* in semantic space — a region of meaning where the output should land. The next-token distribution is, in effect, a probability cloud over words that occupy that region. The randomness chooses *which* word from the region, but the region itself is determined by everything that has come before. Whether the model outputs "happy," "joyful," or "elated" at a particular position usually does not change the meaning of the sentence — these words occupy roughly the same neighbourhood in semantic space. The choice is locally arbitrary but globally directed.
+**The semantic-space framing dissolves much of the randomness concern.** Even when the model does sample stochastically from the next-token distribution, the consequences of that sampling are usually bounded. Here is why. The model's hidden state at each generation step encodes a *direction* in semantic space — a region of meaning where the output should land. The next-token distribution is, in effect, a probability cloud over words that occupy that region. The randomness chooses *which* word from the region, but the region itself is determined by everything that has come before. Whether the model outputs "happy," "joyful," or "elated" at a particular position usually does not change the meaning of the sentence — these words occupy roughly the same neighbourhood in semantic space. The choice is locally arbitrary but globally directed.
  
-This is the key insight: the stochastic parrot critique pictures the model as essentially drawing words from a hat weighted by training-data frequency. The reality is closer to drawing from a hat that has been *placed* in a specific location in semantic space by the entire preceding context. The randomness operates at the level of word-choice within a meaning-region; the meaning-region is selected non-randomly, by the model's deep representation of what should be said next. This is why the same prompt to the same model produces outputs that differ in wording but generally agree in substance.
+This is the key insight: the stochastic parrot critique pictures the model as essentially drawing words from a hat weighted by training-data frequency. The reality is closer to drawing from a hat that has been *placed* in a specific location in semantic space by the entire preceding context. The randomness operates at the level of word-choice within a meaning-region; the meaning-region is selected non-randomly, by the model's deep representation of what should be said next. This is why the same prompt to the same model produces outputs that differ in wording but generally agree in substance. (A caveat on the metaphor: "region of semantic space" is a useful projection of what is, mechanically, a distributed activation pattern in tens of thousands of dimensions per layer. The geometry described here is faithful, but the picture is a simplification of a much higher-dimensional process — and in some failure modes the projection breaks down, with low-probability paths diverging into different *meanings*, not just different *wordings*.)
  
 > **The reconciliation** The parrot critique is technically correct that prediction is word-by-word
 > and probabilistic. It is empirically wrong that this makes the model semantically empty. The
@@ -845,14 +1011,16 @@ The most defensible current position is neither "pure parrot" nor "general intel
  
 | Claim | Pure parrot | LLM (evidence-based) |
 |---|---|---|
-| Only reproduces training patterns | Claimed | Generalises OOD on exams, proofs, novel problems [14] |
-| No internal world model | Claimed | Othello LM builds board representations [15] |
+| Only reproduces training patterns | Claimed | Generalises OOD on exams, proofs, novel problems [14][34] |
+| No internal world model | Claimed | Othello LM builds board representations [15][37] |
 | Cannot multi-step reason | Claimed | Partial — requires CoT scaffolding; fails on some formal tasks |
-| Semantically empty operations | Claimed | Partial — circuits implement fact lookup and inference [14] |
+| Semantically empty operations | Claimed | Partial — circuits implement fact lookup and inference [20][32] |
 | Greedy next-token prediction with no plan | Claimed | Multi-token planning observed in rhyming-poetry circuits [20] |
 | Hallucination as default | Claimed | Partial — arises when parametric memory is absent [17] |
  
-This matters practically. The parrot framing underestimates LLMs and leads to misplaced complacency ("it's just autocomplete — it can't do anything important"). The AGI framing overestimates them and leads to either misplaced fear or uncritical deference. The honest middle ground is: these systems perform sophisticated semantic operations over learned representations, they generalise in ways that matter, and they fail in predictable ways that we can understand and partially mitigate.
+This matters practically. The parrot framing underestimates LLMs and leads to misplaced complacency ("it's just autocomplete — it can't do anything important"). The AGI framing overestimates them and leads to either misplaced fear or uncritical deference. The honest middle ground is: these systems perform sophisticated semantic operations over learned representations, they generalise in ways that matter, and they fail in predictable ways that we can understand and partially mitigate. Worth noting: humans confabulate in much the same way when memory is sparse — fluent plausible-sounding text in the absence of grounding. The parrot critique is sometimes applied to language models under a stricter standard than we hold ourselves to.
+
+**On multimodality.** The symbol-grounding objection (Harnad [35]) was that text-only systems are trapped in a hall of mirrors — symbols defined by other symbols, with no causal contact to the world. RAG is one partial reply (the model is grounded in text retrieved from the world). Multimodal frontier models offer a stronger one: vision-language and audio architectures process pixels and waveforms alongside tokens, so the symbols are now indexed against perceptual representations of actual referents. The pure-text framing of the parrot debate is increasingly historical; the live question is shifting from *"can a text-only model mean anything?"* to *"what kind of grounding does a multimodal model actually achieve?"*
  
 ## 8  Implications for educators and practitioners
  
@@ -883,7 +1051,7 @@ This article was prepared by the ICE Industrial-AI team at the Institute for Com
 - [11] Lewis, P. et al. (2020). Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks. *NeurIPS 33*. arXiv:2005.11401
 - [12] Bender, E.M., Gebru, T., McMillan-Major, A., & Shmitchell, S. (2021). On the Dangers of Stochastic Parrots. *FAccT '21*, 610–623. https://doi.org/10.1145/3442188.3445922
 - [13] Bender, E.M. & Koller, A. (2020). Climbing towards NLU: On Meaning, Form, and Understanding in the Age of Data. *ACL 2020*, 5185–5198.
-- [14] Wikipedia contributors (2026). Stochastic parrot — evidence against. https://en.wikipedia.org/wiki/Stochastic_parrot (sources: GPT-4 Technical Report, OpenAI 2023; Anthropic mechanistic interpretability research 2024–2025; Berkeley frontier model workshop 2024)
+- [14] OpenAI (2023). GPT-4 Technical Report. arXiv:2303.08774.
 - [15] Li, K. et al. (2022). Emergent World Representations: Exploring a Sequence Model Trained on a Synthetic Task. arXiv:2210.13382
 - [16] Madabushi, H.T., Torgbi, M., & Bonial, C. (2025). Neither Stochastic Parroting nor AGI. arXiv:2505.23323
 - [17] Ji, Z. et al. (2023). Survey of Hallucination in Natural Language Generation. *ACM Computing Surveys*, 55(12). arXiv:2202.03629
@@ -900,3 +1068,14 @@ This article was prepared by the ICE Industrial-AI team at the Institute for Com
 - [28] Cybenko, G. (1989). Approximation by superpositions of a sigmoidal function. *Mathematics of Control, Signals and Systems*, 2(4), 303–314.
 - [29] Hornik, K., Stinchcombe, M., & White, H. (1989). Multilayer feedforward networks are universal approximators. *Neural Networks*, 2(5), 359–366.
 - [30] Hornik, K. (1991). Approximation capabilities of multilayer feedforward networks. *Neural Networks*, 4(2), 251–257.
+- [31] Hendrycks, D., Burns, C., Kadavath, S., Arora, A., Basart, S., Tang, E., Song, D., & Steinhardt, J. (2021). Measuring Mathematical Problem Solving With the MATH Dataset. *NeurIPS Datasets and Benchmarks*. arXiv:2103.03874
+- [32] Templeton, A. et al. (Anthropic, 2024). Scaling Monosemanticity: Extracting Interpretable Features from Claude 3 Sonnet. *Transformer Circuits Thread*. https://transformer-circuits.pub/2024/scaling-monosemanticity/
+- [33] Olsson, C. et al. (Anthropic, 2022). In-context Learning and Induction Heads. *Transformer Circuits Thread*. arXiv:2209.11895
+- [34] Trinh, T.H., Wu, Y., Le, Q.V., He, H., & Luong, T. (2024). Solving olympiad geometry without human demonstrations. *Nature*, 625, 476–482.
+- [35] Harnad, S. (1990). The Symbol Grounding Problem. *Physica D*, 42, 335–346.
+- [36] Schaeffer, R., Miranda, B., & Koyejo, S. (2023). Are Emergent Abilities of Large Language Models a Mirage? *NeurIPS 2023*. arXiv:2304.15004
+- [37] Nanda, N., Lee, A., & Wattenberg, M. (2023). Emergent Linear Representations in World Models of Self-Supervised Sequence Models. arXiv:2309.00941
+- [38] Hochreiter, S. & Schmidhuber, J. (1997). Long Short-Term Memory. *Neural Computation*, 9(8), 1735–1780.
+- [39] Ouyang, L. et al. (2022). Training language models to follow instructions with human feedback. *NeurIPS 35*. arXiv:2203.02155
+- [40] Attributed to Frederick Jelinek (IBM) at a speech-recognition workshop c. 1985; the exact original utterance is undocumented. Widely circulated in the NLP and speech community since; discussed in Hirschberg, J. (1998), "*Every Time I Fire a Linguist, My Performance Goes Up*", invited talk, AAAI-98.
+- [41] *The New York Times* (8 July 1958), "New Navy Device Learns by Doing." Report on Rosenblatt's perceptron press conference at the U.S. Office of Naval Research; the quoted wording above is the commonly-cited paraphrase circulated in subsequent accounts. See the [Perceptron](https://en.wikipedia.org/wiki/Perceptron) Wikipedia article for further discussion of the reception.
