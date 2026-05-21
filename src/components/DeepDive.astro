@@ -1,0 +1,28 @@
+---
+interface Props {
+  title: string;
+  variant?: "math" | "history" | "intuition";
+}
+
+const { title, variant = "math" } = Astro.props as Props;
+
+const icons = { math: "🔍", history: "📚", intuition: "💡" };
+const labels = {
+  math: "Deep dive",
+  history: "Historical context",
+  intuition: "Intuition",
+};
+---
+
+<details class="collapse collapse-arrow bg-base-200 border border-base-300 my-6 not-prose">
+  <summary class="collapse-title font-semibold flex flex-wrap items-baseline gap-x-2">
+    <span aria-hidden="true">{icons[variant]}</span>
+    <span class="text-xs uppercase tracking-wider opacity-60">{labels[variant]}</span>
+    <span>— {title}</span>
+  </summary>
+  <div class="collapse-content">
+    <div class="prose prose-sm max-w-none pt-2">
+      <slot />
+    </div>
+  </div>
+</details>
