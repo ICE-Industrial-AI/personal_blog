@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ICE Industrial-AI — redirecting…</title>
+  <link rel="canonical" href="https://ice-industrial-ai.github.io/personal_blog/">
+  <script>
+    // Preserve any path the visitor hit: /blog/foo → /personal_blog/blog/foo
+    (function(){
+      var path = location.pathname;
+      if (path.indexOf('/personal_blog') === 0) return; // already correct
+      var target = '/personal_blog' + (path === '/' ? '/' : path) + location.search + location.hash;
+      location.replace(target);
+    })();
+  </script>
+  <meta http-equiv="refresh" content="0; url=/personal_blog/">
+</head>
+<body>
+  <p>Redirecting to <a href="/personal_blog/">/personal_blog/</a>…</p>
+</body>
+</html>
