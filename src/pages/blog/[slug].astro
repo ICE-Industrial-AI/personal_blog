@@ -19,6 +19,15 @@ interface Props {
 const { entry } = Astro.props;
 const post: BlogSchema = entry.data;
 const { Content } = await entry.render();
+
+// Reading time: word count over body with code/script/style/HTML stripped
+const cleanedBody = entry.body
+  .replace(/<script[\s\S]*?<\/script>/g, '')
+  .replace(/<style[\s\S]*?<\/style>/g, '')
+  .replace(/```[\s\S]*?```/g, '')
+  .replace(/<[^>]+>/g, ' ');
+const words = cleanedBody.split(/\s+/).filter(Boolean).length;
+const readingTime = Math.max(1, Math.round(words / 220));
 ---
 
 <PostLayout
@@ -29,6 +38,7 @@ const { Content } = await entry.render();
   updatedDate={post.updatedDate}
   badge={post.badge}
   tags={post.tags}
+  readingTime={readingTime}
 >
   <Content />
 </PostLayout>

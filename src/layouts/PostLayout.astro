@@ -4,9 +4,11 @@ import BaseLayout from "./BaseLayout.astro";
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 
-export interface Props extends BlogSchema {}
+export interface Props extends BlogSchema {
+  readingTime?: number;
+}
 
-const { title, description, pubDate, updatedDate, heroImage, badge, tags = [] } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, badge, tags = [], readingTime } = Astro.props;
 dayjs.extend(localizedFormat);
 const displayDate = dayjs(pubDate).format("ll")
 import { Image } from "astro:assets";
@@ -17,22 +19,25 @@ import { Image } from "astro:assets";
     <article class="prose prose-lg max-w-[750px] prose-img:mx-auto">
       {heroImage && <Image width={350} height={422} format="webp" src={heroImage} alt={title} class="w-full mb-6" />}
       <h1 class="title my-2 text-4xl font-bold">{title}</h1>
-      {pubDate && <time>{displayDate}</time>}
-      <br />
-      {badge && <div class="badge badge-secondary my-1">{badge}</div>}
+      <div class="flex flex-wrap gap-x-3 gap-y-1 items-center text-sm text-base-content/70 my-3">
+        {pubDate && <time>{displayDate}</time>}
+        {readingTime && <span class="opacity-50">·</span>}
+        {readingTime && <span>{readingTime} min read</span>}
+        {badge && <span class="opacity-50">·</span>}
+        {badge && <div class="badge badge-secondary">{badge}</div>}
+      </div>
       {
         tags &&
           tags.map((tag) => (
-            <a href={`/blog/tag/${tag}`} class="badge badge-outline ml-2 no-underline">
+            <a href={`/blog/tag/${tag}`} class="badge badge-outline mr-1 no-underline">
               {tag}
             </a>
           ))
       }
       {
         updatedDate && (
-          <div>
-            {" "}
-            Last updated on <time>{updatedDate}</time>{" "}
+          <div class="text-sm text-base-content/60 my-2">
+            Last updated on <time>{updatedDate}</time>
           </div>
         )
       }
@@ -41,3 +46,86 @@ import { Image } from "astro:assets";
     </article>
   </main>
 </BaseLayout>
+
+<script is:inline>
+/* Footnote tooltips: turn inline [N] into clickable, hoverable superscripts that point to the references list. */
+(function(){
+  function init(){
+    var article = document.querySelector('article.prose');
+    if (!article) return;
+    var headings = article.querySelectorAll('h2');
+    var refList = null;
+    for (var i = 0; i < headings.length; i++) {
+      if (/references/i.test(headings[i].textContent)) {
+        var sib = headings[i].nextElementSibling;
+        while (sib && sib.tagName !== 'UL') sib = sib.nextElementSibling;
+        refList = sib;
+        break;
+      }
+    }
+    if (!refList) return;
+
+    var refMap = {};
+    refList.querySelectorAll('li').forEach(function(li){
+      var m = li.textContent.match(/^\s*\[(\d+[a-z]?)\]\s+([\s\S]+)/);
+      if (m) {
+        refMap[m[1]] = m[2].trim().replace(/\s+/g, ' ');
+        li.id = 'ref-' + m[1];
+      }
+    });
+
+    function shouldSkip(el){
+      while (el && el !== article) {
+        var t = el.tagName;
+        if (t === 'SCRIPT' || t === 'STYLE' || t === 'CODE' || t === 'PRE' || t === 'A' || t === 'SUP') return true;
+        if (el.id && /^sem-/.test(el.id)) return true;
+        if (el === refList) return true;
+        el = el.parentElement;
+      }
+      return false;
+    }
+
+    var walker = document.createTreeWalker(article, NodeFilter.SHOW_TEXT);
+    var toProcess = [];
+    var node;
+    while ((node = walker.nextNode())) {
+      if (!/\[\d+/.test(node.textContent)) continue;
+      if (shouldSkip(node.parentElement)) continue;
+      toProcess.push(node);
+    }
+
+    toProcess.forEach(function(node){
+      var text = node.textContent;
+      var re = /\[(\d+[a-z]?)\]/g;
+      var parts = [], lastIdx = 0, m, hit = false;
+      while ((m = re.exec(text)) !== null) {
+        var pre = text.slice(lastIdx, m.index);
+        if (pre) parts.push(document.createTextNode(pre));
+        var n = m[1], ref = refMap[n];
+        if (ref) {
+          var sup = document.createElement('sup');
+          sup.className = 'ref-link';
+          var a = document.createElement('a');
+          a.href = '#ref-' + n;
+          a.title = ref;
+          a.textContent = '[' + n + ']';
+          sup.appendChild(a);
+          parts.push(sup);
+          hit = true;
+        } else {
+          parts.push(document.createTextNode(m[0]));
+        }
+        lastIdx = re.lastIndex;
+      }
+      if (!hit) return;
+      var post = text.slice(lastIdx);
+      if (post) parts.push(document.createTextNode(post));
+      var parent = node.parentNode;
+      parts.forEach(function(p){ parent.insertBefore(p, node); });
+      parent.removeChild(node);
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else setTimeout(init, 0);
+})();
+</script>
