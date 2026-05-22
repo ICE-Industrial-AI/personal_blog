@@ -263,12 +263,14 @@ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded'
 </script>
  
 ## 2  The statistical turn: meaning as location
- 
+
+From here on, the article narrows from *AI in general* to *language* specifically. Three reasons. First, language is where the connectionist comeback hit hardest and most legibly: we can read what the model outputs and judge it directly, in a way we cannot with a latent vision embedding or a robotic control policy. Second, the available training data is effectively free at unprecedented scale; the web is a corpus no other modality has at comparable size. Third, and most relevant to the parrot debate, language is the modality of human reasoning, so the question *"can a machine that manipulates language* mean *anything?"* is exactly the question that animated symbolic AI, that animated the Bender & Koller octopus, and that still animates §7. Vision, speech, and robotics followed parallel deep-learning gains through the 2010s; in language the form-vs-meaning argument has its sharpest edge, which is why language modelling is where the rest of this article lives.
+
 ### 2.1 N-grams: language as statistics
  
 The statistical alternative asked a fundamentally different question: instead of encoding what language *means*, can we learn what language *does* by observing enormous amounts of it? A language model assigns a probability to every possible sequence of words. The simplest version, the **n-gram model**, estimates the probability of each word given the preceding few words, and requires nothing beyond counting.
  
-This worked surprisingly well for tasks like speech recognition — in turn, the cliff between nlp-experts with a math/physics/ML background and pure linguists increases, culminating in a quip often attributed to Frederick Jelinek (variously rendered, and which Jelinek himself later said he regretted): "Every time I fire a linguist, the performance of the speech recogniser improves" [40]. But n-gram models had hard limits: they could not capture dependencies across more than a few words, and they treated every word as an atom with no internal relationship to any other word, as would any linguist point out. Furthermore, they were used in conjunction with the bag of words model: each word is independent of each other, usually being modelled by a dimension in a high-dimensional space, thus words like father and son are orthogonal and do not have any relation.
+This worked surprisingly well for tasks like speech recognition — in turn, the cliff between nlp-experts with a math/physics/ML background and pure linguists increases, culminating in a quip often attributed to Frederick Jelinek (variously rendered, and which Jelinek himself later said he regretted): "Every time I fire a linguist, the performance of the speech recogniser improves" [40]. But n-gram models had hard limits: they could not capture dependencies across more than a few words, and they treated every word as an atom with no internal relationship to any other word, as would any linguist point out. Furthermore, they were used in conjunction with the bag of words model: each word is independent of each other, usually being modelled by a dimension in a high-dimensional space, thus words like rabbit and carrot are orthogonal and do not have any relation.
  
 ### 2.2 Word embeddings: words as coordinates
  
