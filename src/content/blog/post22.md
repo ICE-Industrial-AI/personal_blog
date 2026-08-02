@@ -281,7 +281,7 @@ Durch Poples Implementierung wurde Kohns Theorie über Nacht für Tausende von F
 
 Noch heute ist das von Pople ins Leben gerufene Programm *Gaussian* eines der dominierenden und am weitesten verbreiteten Werkzeuge in der akademischen und industriellen Forschung. Aktuelle Versionen sowie detaillierte Dokumentationen finden sich unter dem offiziellen Webauftritt: <https://gaussian.com/>
 
-<p align="center"><img src="Gaussian_1970.jpg" alt="Gaussian Version 1970." width="450"></p>
+<p align="center"><img src="/personal_blog/Gaussian_1970.jpg" alt="Gaussian Version 1970." width="450"></p>
 
 *Abbildung 4: Gaussian Version 1970.*
 
@@ -289,4 +289,4 @@ Noch heute ist das von Pople ins Leben gerufene Programm *Gaussian* eines der do
 
 ## Anhang: PDF-Version
 
-Die vollständige, gesetzte PDF-Version dieses Beitrags: [DFT_Blog_WUCH.pdf](DFT_Blog_WUCH.pdf)
+Die vollständige, gesetzte PDF-Version dieses Beitrags: [DFT_Blog_WUCH.pdf](/personal_blog/DFT_Blog_WUCH.pdf)
