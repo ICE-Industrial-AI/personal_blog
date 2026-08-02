@@ -244,7 +244,7 @@ Daher löst man das System iterativ über einen sogenannten **Self-Consistent-Fi
 Die Kohn-Sham-DFT wäre eine exakte Theorie, wenn wir die exakte mathematische Form des Austausch-Korrelations-Funktionals $E_{\text{xc}}[n]$ kennen würden. Da dies nicht der Fall ist, müssen Näherungen verwendet werden. Diese Näherungen werden oft nach der sogenannten *Jacob's Ladder* klassifiziert, bei der jede höhere Stufe physikalisch genauer, aber auch rechenintensiver wird:
 
 | Stufe | Näherung (Acronym) | Beschreibung |
-|:|:|:|
+|:-----:|:--------------------|:-------------|
 | 1 | **LDA** (Local Density Approx.) | $E_{\text{xc}}$ hängt an jedem Ort $\mathbf{r}$ nur von der lokalen Dichte $n(\mathbf{r})$ ab (basiert auf dem homogenen Elektronengas). |
 | 2 | **GGA** (Generalized Gradient Approx.) | Berücksichtigt zusätzlich den Gradienten der Dichte $\nabla n(\mathbf{r})$. Typische Funktionale: PBE, BLYP. Standard in der Festkörperphysik. |
 | 3 | **Meta-GGA** | Bezieht zusätzlich die zweite Ableitung (Laplace-Operator) oder die kinetische Energiedichte $\tau(\mathbf{r})$ der Orbitale mit ein (z. B. SCAN). |
