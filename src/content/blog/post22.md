@@ -290,3 +290,22 @@ Noch heute ist das von Pople ins Leben gerufene Programm *Gaussian* eines der do
 ## Anhang: PDF-Version
 
 Die vollständige, gesetzte PDF-Version dieses Beitrags: [DFT_Blog_WUCH.pdf](/personal_blog/DFT_Blog_WUCH.pdf)
+
+
+## Referenzen
+
+[1] W. Kohn and L. J. Sham, "*Self-Consistent Equations Including Exchange and Correlation Effects*" Physical Review, vol. 140, no. 4A, pp. A1133–A1138, Nov. 1965. 
+
+[2]  W. Kohn, "*v-representability and density functional theory*" Physical Review Letters, vol. 51, no. 17, pp. 1596–1598, Oct. 1983. 
+
+[3] W. Kohn, "*Density Functional Theory: Basic Results and Some Observations*" 1985. 
+
+[4] W. Kohn, "*Density functional theory for systems of very many atoms*" International Journal of Quantum Chemistry, vol. 56, no. 6, pp. 461–467, Nov. 1995. 
+
+[5] L. J. Sham and W. Kohn, "*One-Particle Properties of an Inhomogeneous Interacting Electron Gas*" Physical Review, vol. 145, no. 2, pp. 561–567, May 1966. 
+
+[6] C. Ullrich and W. Kohn, "*Kohn-Sham theory for ground-state ensembles*" Physical Review Letters, vol. 87, no. 9, p. 093001, Aug. 2001. 
+
+[7] M. Marques, W. Kohn, K. Yamanouchi, and A. Axt, "*Time-dependent density functional theory*" Annual Review of Physical Chemistry, vol. 55, pp. 427–455, Apr. 2004. 
+
+[8] W. Kohn, A. Savin, and C. Ullrich, "*Hohenberg–Kohn theory including spin magnetism and magnetic fields*" International Journal of Quantum Chemistry, vol. 100, no. 1, pp. 20–26, 2004. 
