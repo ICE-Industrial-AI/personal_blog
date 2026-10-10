@@ -104,7 +104,7 @@ Offen sind vor allem technische Fragen: Wie schnell und fehlerarm lassen sich Zw
 
 ## Zum Weiterlesen: das ausführliche Skript
 
-Wer tiefer einsteigen möchte, findet im begleitenden **[Skript „Quantencomputer mit gefangenen Ionen in Penning-Fallen“](/personal_blog/quantencomputer_penning_traps_WUCH.pdf)** <!-- Link nach dem Upload durch die öffentliche URL ersetzen --> die vollständigen Herleitungen mit vielen Rechenbeispielen: die Energieniveaus des Beryllium-Ions im starken Magnetfeld, die Berechnung der Schwingungsmuster von drei gekoppelten Ionen, die Funktionsweise des Mølmer-Sørensen-Gates, die Quanten-Fourier-Transformation und den Shor-Algorithmus Schritt für Schritt – inklusive Python-Programmen zum Nachrechnen. Die Programme, mit denen die beiden Animationen in diesem Beitrag erstellt wurden, liegen ebenfalls bei.
+Wer tiefer einsteigen möchte, findet im begleitenden **[Skript „Quantencomputer mit gefangenen Ionen in Penning-Fallen“](/personal_blog/quantencomputer_penning_traps_WUCH.pdf)** die vollständigen Herleitungen mit vielen Rechenbeispielen: die Energieniveaus des Beryllium-Ions im starken Magnetfeld, die Berechnung der Schwingungsmuster von drei gekoppelten Ionen, die Funktionsweise des Mølmer-Sørensen-Gates, die Quanten-Fourier-Transformation und den Shor-Algorithmus Schritt für Schritt – inklusive Python-Programmen zum Nachrechnen. Die Programme, mit denen die beiden Animationen in diesem Beitrag erstellt wurden, liegen ebenfalls bei.
 
 ---
 
@@ -122,7 +122,7 @@ Wer tiefer einsteigen möchte, findet im begleitenden **[Skript „Quantencomput
 
 [6] C. A. Sackett *et al.*, “Experimental entanglement of four particles,” *Nature*, vol. 404, pp. 256–259, 2000, doi: 10.1038/35005011.
 
-[7] J. G. Bohnet *et al.*, “Quantum spin dynamics and entanglement generation with hundreds of trapped ions,” *Science*, vol. 352, no. 6291, pp. 1297–1301, 2016, doi: 10.1126/science.aad9958.
+[7] J. G. Bohnet *et al.*, “Quantum spin dynamics and entanglemSent generation with hundreds of trapped ions,” *Science*, vol. 352, no. 6291, pp. 1297–1301, 2016, doi: 10.1126/science.aad9958.
 
 [8] P. W. Shor, “Polynomial-time algorithms for prime factorization and discrete logarithms on a quantum computer,” *SIAM J. Comput.*, vol. 26, no. 5, pp. 1484–1509, 1997, doi: 10.1137/S0097539795293172.
 
