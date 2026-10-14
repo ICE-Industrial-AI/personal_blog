@@ -21,7 +21,7 @@ Ein gewöhnlicher Computer speichert Information in Bits, die entweder 0 oder 1 
 
 Für Qubits gibt es viele Kandidaten: supraleitende Schaltkreise, Lichtteilchen, Elektronen in Halbleitern – und einzelne elektrisch geladene Atome, sogenannte **Ionen**. Ionen haben einen unschlagbaren Vorteil: Jedes Beryllium-Ion ist exakt gleich wie jedes andere. Die Natur liefert perfekt identische Qubits. Man muss sie „nur“ festhalten, kühlen und präzise steuern.
 
-![Animation: Drei Ionen in einer linearen Anordnung von Penning-Mikrofallen werden gehalten und transportiert.](personal_blog/RechnenQbitPenningFalle.png)
+![Animation: Drei Ionen in einer linearen Anordnung von Penning-Mikrofallen werden gehalten und transportiert.](/personal_blog/RechnenQbitPenningFalle.png)
 
 ## Wie hält man ein einzelnes Atom fest?
 
@@ -58,7 +58,7 @@ Spannend wird es, wenn mehrere Ionen nebeneinander sitzen. Weil alle positiv gel
 
 Die zweite Animation zeigt das für ein Gitter aus 5×5 Ionen, wie es ZuriQ anstrebt. Jedes Ion sitzt in seiner eigenen Falle und schwingt senkrecht zum Chip. Rot bedeutet „gerade oben“, blau „gerade unten“. Im einfachsten Muster schwingen alle 25 Ionen im Gleichtakt. In anderen Mustern kippt das Gitter wie eine Platte, schwingt wie ein Sattel oder benachbarte Ionen bewegen sich gegeneinander. Insgesamt gibt es genau 25 solcher Muster, eines pro Ion, und jedes hat seine eigene, leicht unterschiedliche Frequenz. Am Schluss der Animation wird ein einzelnes Ion in der Mitte angestossen: Die Schwingung bleibt nicht dort, sondern breitet sich wie eine Welle über das Gitter aus und kehrt teilweise zurück. Diese Welle ist nichts anderes als eine Überlagerung der Eigenmoden – und quantenmechanisch betrachtet ein Phonon, das von Ion zu Ion wandert.
 
-![Animation: Eigenmoden und Ausbreitung einer Schwingung in einem 5×5-Gitter aus Ionen.](personal_blog/gitterschwingungen_5x5.gif)
+![Animation: Eigenmoden und Ausbreitung einer Schwingung in einem 5×5-Gitter aus Ionen.](/personal_blog/gitterschwingungen_5x5.gif)
 
 *Animation 2: Gemeinsame Schwingungsmuster (Eigenmoden) von 25 Ionen in einzelnen Mikrofallen. Zum Schluss breitet sich ein Anstoss in der Mitte als Welle über das Gitter aus. Auslenkungen stark vergrössert.*
 
