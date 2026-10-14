@@ -33,7 +33,7 @@ Die Gruppe von Jonathan Home an der ETH Zürich hat 2024 gezeigt, dass dieses Pr
 
 Die folgende Animation zeigt das Prinzip. Unten liegen die Elektroden des Chips, deren Spannungen (rot positiv, blau negativ) die Fallen formen. Die Ionen schweben darüber und schwingen leicht auf und ab. Von oben gesehen laufen sie auf kleinen Schleifenbahnen – das ist die Wirkung des Magnetfelds. Das kleine Diagramm rechts unten zeigt den Sattel: In der Höhe sitzt das Ion in einer Mulde, entlang des Chips auf einem Hügel. Und schliesslich sieht man, wie ZuriQ Ionen bewegt: Ändert man die Elektrodenspannungen langsam, wandert die Falle mit – und das Ion mit ihr. So lassen sich zwei Ionen zusammenführen, die miteinander rechnen sollen.
 
-![Animation: Drei Ionen in einer linearen Anordnung von Penning-Mikrofallen werden gehalten und transportiert.](personal_blog/penning_falle_1d.gif)
+![Animation: Drei Ionen in einer linearen Anordnung von Penning-Mikrofallen werden gehalten und transportiert.](/personal_blog/penning_falle_1d.gif)
 
 *Animation 1: Drei Ionen in Penning-Mikrofallen über einem Chip (vereinfachtes Modell, Bewegungen stark vergrössert und verlangsamt). Oben: Seitenansicht mit Elektroden und Potential. Unten links: Draufsicht mit den Kreisbahnen im Magnetfeld. Unten rechts: der Sattelpunkt am Ort eines Ions.*
 
