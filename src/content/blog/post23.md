@@ -1,7 +1,7 @@
 ---
 title: "Rechnen mit schwingenden Ionen: Wie ein Quantencomputer in der Penning-Falle funktioniert"
 description: "Einzelne Beryllium-Ionen schweben in einem starken Magnetfeld über einem Chip, zittern auf Nanometern hin und her – und rechnen dabei. Dieser Beitrag erklärt ohne Formeln, wie das Zürcher ETH-Spin-off ZuriQ Quantencomputer aus gefangenen Ionen baut, warum ausgerechnet die Schwingungen der Ionen – die sogenannten Phononen – der Schlüssel zum Rechnen sind, und weshalb ein Quantenalgorithmus namens Shor-Algorithmus die heutige Verschlüsselung herausfordert."
-pubDate: "Oktober 10 2026"
+pubDate: "October 10 2026"
 heroImage: "/personal_blog/PenningTrapLogo.webp"
 ---
  
