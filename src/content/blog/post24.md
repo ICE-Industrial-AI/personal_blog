@@ -7,7 +7,6 @@ heroImage: "/personal_blog/aikn.webp"
  
 *Author: Prof. Dr. Christoph Würsch, Institute for Computational Engineering ICE, Eastern Switzerland University of Applied Sciences OST*
 
-# Die Südliche Oszillation, die Meeresoberflächentemperatur und El Niño: die Bjerknes-Hypothese
 
 ## Ein Wärmeband im Pazifik und die Reisschüssel der Welt
 
